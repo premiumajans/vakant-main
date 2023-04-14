@@ -5,10 +5,11 @@ const Navbar = (props: PropsWithChildren) => {
   return (
     <>
       <nav
+      style={{zIndex:'1000'}}
         className="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme"
         id="layout-navbar"
       >
-        <div className="container-fluid">
+        <div style={{height:'100%'}} className="container-fluid">
           <div className="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
           <img style={{
             width:'400px',
@@ -268,8 +269,8 @@ const Navbar = (props: PropsWithChildren) => {
                       </a>
                     </div>
                   </li>
-                  <li className="dropdown-notifications-list scrollable-container">
-                    <ul className="list-group list-group-flush">
+                  <li style={{overflowY:'auto'}} className="dropdown-notifications-list scrollable-container">
+                    <ul  className="list-group list-group-flush">
                       <li className="list-group-item list-group-item-action dropdown-notifications-item">
                         <div className="d-flex">
                           <div className="flex-shrink-0 me-3">
@@ -584,7 +585,7 @@ const Navbar = (props: PropsWithChildren) => {
                       </li>
                     </ul>
                   </li>
-                  <li className="dropdown-menu-footer border-top">
+                  <li style={{position:'relative', background:'white'}} className="dropdown-menu-footer border-top">
                     <a
                       href="javascript:void(0);"
                       className="dropdown-item d-flex justify-content-center p-3"
@@ -726,7 +727,7 @@ const Navbar = (props: PropsWithChildren) => {
           </div>
         </div>
       </nav>
-      <main>{props.children}</main>
+      <main >{props.children}</main>
     </>
   );
 };

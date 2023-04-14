@@ -49,6 +49,8 @@ const profile = () => {
           </div>
         </Navbar>
       </div>
+       
+
     </div>
   );
 };
