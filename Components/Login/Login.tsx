@@ -1,11 +1,6 @@
-import Head from 'next/head'
-
 const Login = () => {
-  return <>
-   
-
-  
-
+  return (
+    <>
       {/* <!-- Content --> */}
 
       <div className="container-xxl">
@@ -143,7 +138,7 @@ const Login = () => {
                     <label className="form-label" htmlFor="password">
                       Password
                     </label>
-                    <div className="input-group input-group-merge">
+                    <span className="input-group input-group-merge">
                       <input
                         type="password"
                         id="password"
@@ -155,7 +150,7 @@ const Login = () => {
                       <span className="input-group-text cursor-pointer">
                         <i className="bx bx-hide"></i>
                       </span>
-                    </div>
+                    </span>
                   </div>
 
                   <div className="mb-3">
@@ -171,7 +166,10 @@ const Login = () => {
                         htmlFor="terms-conditions"
                       >
                         I agree to
-                        <a href="javascript:void(0);">privacy policy & terms</a>
+                        <a href="javascript:void(0);">
+                          {" "}
+                          privacy policy & terms{" "}
+                        </a>
                       </label>
                     </div>
                   </div>
@@ -183,7 +181,7 @@ const Login = () => {
                 <p className="text-center">
                   <span>Already have an account?</span>
                   <a href="auth-login-basic.html">
-                    <span>Sign in instead</span>
+                    <span> Sign in instead </span>
                   </a>
                 </p>
 
@@ -205,7 +203,6 @@ const Login = () => {
                   >
                     <i className="tf-icons bx bxl-google-plus"></i>
                   </a>
-
                 </div>
               </div>
             </div>
@@ -215,7 +212,8 @@ const Login = () => {
       </div>
 
       {/* <!-- / Content --> */}
-  </>
-}
+    </>
+  );
+};
 
-export default Login
+export default Login;

@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
@@ -24,25 +25,9 @@ export default function Document() {
           href="https://themeselection.com/item/sneat-bootstrap-html-admin-template/"
         />
 
-        {/* <!-- Google Tag Manager (noscript) (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) --> */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
-        {/* <!-- End Google Tag Manager (noscript) --> */}
-        
-
         {/* <!-- Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) --> */}
-        {/* <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      '../../../../www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-5DDHKGP');</script> */}
-        {/* <!-- End Google Tag Manager --> */}
+        <Script src="/themeSelection.js" />
+        {/* <!-- End Google Tag Manager -->
 
         {/* <!-- Favicon --> */}
         <link
@@ -68,11 +53,20 @@ export default function Document() {
 
         {/* <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section --> */}
         {/* <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  --> */}
-        <script defer src="/assets/vendor/js/template-customizer.js"></script>
+        {/* <script defer src="/assets/vendor/js/template-customizer.js"></script> */}
         {/* <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  --> */}
         <script defer src="/assets/js/config.js"></script>
       </Head>
       <body>
+        {/* <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript> */}
+
         <Main />
         <NextScript />
         {/* <!-- Core JS --> */}
@@ -109,11 +103,12 @@ export default function Document() {
           src="/assets/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"
         ></script>
 
-        {/* <!-- Main JS --> */}
-        <script defer src="/assets/js/main.js"></script>
-
         {/* <!-- Page JS --> */}
         <script defer src="/assets/js/pages-auth.js"></script>
+
+        {/* <!-- Main JS --> */}
+
+        {/* <script defer src="/assets/js/main.js"></script> */}
       </body>
     </Html>
   );

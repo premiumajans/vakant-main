@@ -6,7 +6,7 @@ const MainMenu = () => {
   <div className="container-fluid d-flex h-100">
     
     
-    <ul className="menu-inner">
+    <ul style={{zIndex:'1000'}} className="menu-inner">
 
       {/* <!-- Dashboards --> */}
       <li className="menu-item
