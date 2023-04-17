@@ -1,0 +1,24 @@
+@import './Login.scss';
+@import '/static/vendor/fonts/boxicons.css';
+@import '/static/vendor/fonts/fontawesome.css';
+@import '/static/vendor/fonts/flag-icons.css';
+@import '/static/vendor/css/rtl/core.css';
+@import '/static/vendor/css/rtl/theme-default.css';
+@import '/static/css/demo.css';
+@import '/static/vendor/libs/perfect-scrollbar/perfect-scrollbar.css';
+@import '/static/vendor/libs/typeahead-js/typeahead.css';
+@import '/static/vendor/libs/typeahead-js/typeahead.css';
+
+ /* Login */
+@import "/static/vendor/libs/formvalidation/dist/css/formValidation.min.css";
+@import "/static/vendor/css/pages/page-auth.css";
+
+// Security
+
+@import './Security.scss';
+
+
+.menu-horizontal .menu-inner>.menu-item>.menu-toggle::after {
+    display: none;
+}
+
