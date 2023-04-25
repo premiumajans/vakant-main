@@ -1,11 +1,18 @@
 module.exports = {
   i18n: {
-    defaultLocale: 'az',
-    locales: ['en', 'ru', 'az'],
+    defaultLocale: "az",
+    locales: ["en", "ru", "az"],
+    localeDetection: false,
   },
   fallbackLng: {
-    default: ['az'],
+    default: ["az"],
+  },
+  pages: {
+    "*": ["common"],
+  },
+  interpolation: {
+    prefix: "${",
+    suffix: "}",
   },
   nonExplicitSupportedLngs: true,
-  // de, fr and en will be loaded as fallback languages for de-CH
-}
+};

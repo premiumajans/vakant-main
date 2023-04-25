@@ -15,8 +15,13 @@
     "@types/node": "18.15.11",
     "@types/react": "18.0.35",
     "@types/react-dom": "18.0.11",
+    "@yaireo/tagify": "^4.17.8",
+    "draft-js": "^0.11.7",
+    "draftjs-to-html": "^0.9.1",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
+    "html-react-parser": "^3.0.16",
+    "html-to-draftjs": "^1.5.0",
     "i18next": "^22.4.14",
     "next": "13.3.0",
     "next-i18next": "^13.2.2",
@@ -24,11 +29,13 @@
     "ni18n": "^1.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-draft-wysiwyg": "^1.15.0",
     "react-hook-form": "^7.43.9",
     "react-i18next": "^12.2.0",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0",
     "sass": "^1.62.0",
+    "sweetalert2": "^11.7.3",
     "tinymce": "^6.4.1",
     "typescript": "5.0.4",
     "yup": "^1.1.1"
@@ -37,5 +44,11 @@
     "fs": false,
     "path": false,
     "os": false
+  },
+  "devDependencies": {
+    "@types/draftjs-to-html": "^0.8.1",
+    "@types/html-to-draftjs": "^1.4.0",
+    "@types/react-draft-wysiwyg": "^1.13.4",
+    "@types/yaireo__tagify": "^4.17.0"
   }
 }

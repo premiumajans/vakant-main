@@ -11,4 +11,5 @@ export interface user {
     id:number
     profile_photo_url:string,
     name:string
+    email:string
 }

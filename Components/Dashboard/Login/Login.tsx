@@ -1,21 +1,27 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FieldValues, SubmitHandler, UseFormHandleSubmit, useForm } from "react-hook-form";
+import {
+  FieldValues,
+  SubmitHandler,
+  UseFormHandleSubmit,
+  useForm,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import * as yup from 'yup'
+import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLoginMutation } from "@/Store/Query/Auth";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/Store/Slices/User";
-
+import Link from "next/link";
 
 const Login = () => {
-  const {push}  = useRouter()
-  const [loginRequest, {data, isLoading}] = useLoginMutation()
-  const dispatch = useDispatch()
+  const { push } = useRouter();
+  const [loginRequest, { data, isLoading, isError, error }] =
+    useLoginMutation();
+  const dispatch = useDispatch();
   const [login, setLogin] = useState(false);
-  const { t } = useTranslation("footer");
+  const { t } = useTranslation("common");
   const [hidePassword, setHidePassword] = useState(false);
 
   let schema = yup.object().shape({
@@ -23,30 +29,25 @@ const Login = () => {
     password: yup.string().required().min(6),
   });
 
-  
-  
-
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm({resolver:yupResolver(schema)});
+  } = useForm({ resolver: yupResolver(schema) });
 
   useEffect(() => {
     setLogin(true);
   }, []);
 
-  const onSubmit = async (data:any) => {
-    const res = await loginRequest(data) 
-    dispatch(setUser(res.data))
-    push('profile')
-  }
-
-
-
-  
-
-  
+  const onSubmit = async (data: any) => {
+    const res = await loginRequest(data);
+    console.log(res);
+    if ("error" in res) {
+    } else {
+      dispatch(setUser(res.data));
+      push("profile");
+    }
+  };
 
   return (
     <>
@@ -62,7 +63,13 @@ const Login = () => {
                 style={{ height: "50px" }}
                 className="app-brand justify-content-center"
               >
-                <Image src={"/logo.png"} alt="logo" width={350} height={200} />
+                <Image
+                  src={"/logo.png"}
+                  style={{ objectFit: "cover" }}
+                  alt="logo"
+                  width={350}
+                  height={200}
+                />
               </div>
               {/* <!-- /Logo --> */}
               <h4 className="mb-2">Login to your account</h4>
@@ -81,14 +88,20 @@ const Login = () => {
                     <input
                       {...register("email")}
                       type="text"
-                      className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.email ? "is-invalid" : ""
+                      }`}
                       id="email"
                       name="email"
                       placeholder="Enter your email"
                     />
-                    {errors.email ?  <div className="fv-plugins-message-container invalid-feedback">
-                      <div>{errors.email.message as string}</div>
-                    </div> : ''}
+                    {errors.email ? (
+                      <div className="fv-plugins-message-container invalid-feedback">
+                        <div>{errors.email.message as string}</div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
 
                   <div className="mb-3 form-password-toggle">
@@ -100,7 +113,9 @@ const Login = () => {
                         {...register("password")}
                         type={hidePassword ? "password" : "text"}
                         id="password"
-                        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                        className={`form-control ${
+                          errors.password ? "is-invalid" : ""
+                        }`}
                         name="password"
                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                         aria-describedby="password"
@@ -115,9 +130,13 @@ const Login = () => {
                           }`}
                         ></i>
                       </span>
-                      {errors.password ?  <div className="fv-plugins-message-container invalid-feedback">
-                      <div>{errors.password.message as string}</div>
-                    </div> : ''}
+                      {errors.password ? (
+                        <div className="fv-plugins-message-container invalid-feedback">
+                          <div>{errors.password.message as string}</div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </span>
                   </div>
 
@@ -137,7 +156,23 @@ const Login = () => {
                       </label>
                     </div>
                   </div>
-                  <button className="btn btn-primary d-grid w-100">
+                  {error?.status === 401 ? (
+                    <div
+                      style={{ display: "block", margin: 10 }}
+                      className="fv-plugins-message-container invalid-feedback"
+                    >
+                      <div>{t("email or password are invalid")}</div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <button
+                    className={`btn btn-primary d-grid w-100 ${
+                      isLoading || Object.keys(errors).length > 0
+                        ? "disabled"
+                        : ""
+                    }`}
+                  >
                     Sign in
                   </button>
                 </form>
@@ -147,9 +182,9 @@ const Login = () => {
 
               <p className="text-center">
                 <span>New on our platform? </span>
-                <a href="auth-login-basic.html">
+                <Link href="/user/register">
                   <span> Create an account </span>
-                </a>
+                </Link>
               </p>
 
               <div className="divider my-4">
@@ -157,17 +192,11 @@ const Login = () => {
               </div>
 
               <div className="d-flex justify-content-center">
-                <a
-                  href=""
-                  className="btn btn-icon btn-label-facebook me-3"
-                >
+                <a href="" className="btn btn-icon btn-label-facebook me-3">
                   <i className="tf-icons bx bxl-facebook"></i>
                 </a>
 
-                <a
-                  href=""
-                  className="btn btn-icon btn-label-google-plus me-3"
-                >
+                <a href="" className="btn btn-icon btn-label-google-plus me-3">
                   <i className="tf-icons bx bxl-google-plus"></i>
                 </a>
               </div>

@@ -1,14 +1,9 @@
-
-
-
-
 import Login from "@/Components/Dashboard/Login/Login";
-import { PropsWithChildren } from "react";
 
-const login = (props: PropsWithChildren) => {
+const login = () => {
   return (
     <>
-        <Login/>
+      <Login />
     </>
   );
 };

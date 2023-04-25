@@ -39,6 +39,7 @@ export default function Document() {
           type="image/x-icon"
           href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/static/img/favicon/favicon.ico"
         />
+        <link rel="icon" href="/favicon.png" type="image/x-icon"></link>
 
         {/* <!-- Fonts --> */}
         <link rel="preconnect" href="https://fonts.googleapis.com/" />
@@ -52,27 +53,8 @@ export default function Document() {
           rel="stylesheet"
         />
 
-        {/* <!-- Helpers --> */}
-        <script defer src="/static/vendor/js/helpers.js"></script>
-
-        {/* <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section --> */}
-        {/* <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  --> */}
-        {/* <script defer src="/static/vendor/js/template-customizer.js"></script> */}
-        {/* <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  --> */}
-        <script defer src="/static/js/config.js"></script>
-      </Head>
-      <body>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
-        </noscript>
-
         <script defer src="/static/vendor/libs/jquery/jquery.js"></script>
-        <script defer src="/static/tinymce/tinymce.min.js"></script>
+        {/* <script defer src="/static/tinymce/tinymce.min.js"></script> */}
 
         <script defer src="/static/vendor/libs/popper/popper.js"></script>
         <script defer src="/static/vendor/js/bootstrap.js"></script>
@@ -104,8 +86,27 @@ export default function Document() {
 
         <script defer src="/static/js/pages-auth.js"></script>
 
-        {/* <script defer src="/static/js/main.js"></script> */}
+        {/* <!-- Helpers --> */}
+        <script defer src="/static/vendor/js/helpers.js"></script>
 
+        {/* <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section --> */}
+        {/* <!--? Template customizer: To hide customizer set displayCustomizer value false in config.js.  --> */}
+        {/* <script defer src="/static/vendor/js/template-customizer.js"></script> */}
+        {/* <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  --> */}
+        <script defer src="/static/js/config.js"></script>
+
+        <script defer src="/static/tinymce/tinymce.min.js"></script>
+        <script defer src="/static/form-editor.init.js"></script>
+      </Head>
+      <body>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
         <Main />
         <NextScript />
       </body>

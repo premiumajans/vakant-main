@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from "next/link";
 
 
 const MainMenu = () => {
   const {pathname} = useRouter()
-  const {t, i18n} = useTranslation('common')
+  const {t} = useTranslation('common')
 
   
   
@@ -34,7 +33,7 @@ const MainMenu = () => {
             <li className={"menu-item " + (pathname == '/user/create-new-item'  ? 'active' : '')}>
               <Link href="/user/create-new-item" className="menu-link menu-toggle">
                 <i className="menu-icon tf-icons fas fa-bullhorn"></i>
-                <div>{t('add-new-item')}</div>
+                <div>{t('post-an-ad')}</div>
 
               </Link>
             </li>
@@ -46,6 +45,7 @@ const MainMenu = () => {
                 <div>{t('my-items')}</div>
 
               </Link>
+              
             </li>
 
             {/* <!-- Pages --> */}
@@ -69,10 +69,10 @@ const MainMenu = () => {
             {/* <!-- Forms --> */}
             <li className={"menu-item " + (pathname == '/user/security'  ? 'active' : '')}>
 
-              <a href="/user/security" className="menu-link menu-toggle">
+              <Link href="/user/security" className="menu-link menu-toggle">
                 <i className="menu-icon fas fa-shield-alt"></i>
                 <div>{t('security')}</div>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
