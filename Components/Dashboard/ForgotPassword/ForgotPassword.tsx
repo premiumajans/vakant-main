@@ -1,3 +1,4 @@
+import { useForgotPasswordMutation } from "@/Store/Query/Auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,10 +9,10 @@ import * as yup from "yup";
 
 const ForgetPassword = () => {
   const { t } = useTranslation("common");
-  const [forgePassword, setforgetPassword] = useState(false);
+  const [forgotRequest, {isLoading} ] = useForgotPasswordMutation()
 
   let schema = yup.object().shape({
-    email: yup.string().email().required(),
+    email: yup.string().email(`${t("email-valid")}`).required(`${t("email-required")}`),
   });
 
   const {
@@ -21,7 +22,13 @@ const ForgetPassword = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    forgotRequest(data)
+    .then(res => {
+        if('data' in res) {
+          const {status} = res.data
+          // if
+        }
+    })
   };
 
   return (
@@ -68,7 +75,6 @@ const ForgetPassword = () => {
                         errors.email ? "is-invalid" : ""
                       }`}
                       type="text"
-                      value=""
                     />
                     {errors.email ? (
                       <div className="fv-plugins-message-container invalid-feedback">
@@ -78,7 +84,7 @@ const ForgetPassword = () => {
                       ""
                     )}
                 </div>
-                <button className="btn btn-primary d-grid w-100">
+                <button disabled={isLoading} className="btn btn-primary d-grid w-100">
                   {t("send-resend-link")}
                 </button>
                 <input type="hidden" />

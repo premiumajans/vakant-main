@@ -1,22 +1,21 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import {
-  FieldValues,
-  SubmitHandler,
-  UseFormHandleSubmit,
-  useForm,
-} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLoginMutation } from "@/Store/Query/Auth";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/Store/Slices/User";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, setUser } from "@/Store/Slices/User";
 import Link from "next/link";
 
 const Login = () => {
   const { push } = useRouter();
+  const {
+    authorisation: { token },
+  } = useSelector(getUser);
+
   const [loginRequest, { data, isLoading, isError, error }] =
     useLoginMutation();
   const dispatch = useDispatch();
@@ -25,8 +24,15 @@ const Login = () => {
   const [hidePassword, setHidePassword] = useState(false);
 
   let schema = yup.object().shape({
-    email: yup.string().email().required().min(3),
-    password: yup.string().required().min(6),
+    email: yup
+      .string()
+      .email(`${t("email-valid")}`)
+      .required(`${t("email-required")}`)
+      .min(3, `${t("email-min-3")}`),
+    password: yup
+      .string()
+      .required(`${t("password-required")}`)
+      .min(6, `${t("password-min-6")}`),
   });
 
   const {
@@ -41,13 +47,18 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     const res = await loginRequest(data);
-    console.log(res);
     if ("error" in res) {
     } else {
       dispatch(setUser(res.data));
       push("profile");
     }
   };
+
+  useEffect(() => {
+    if (token?.length > 0) {
+      push("profile");
+    }
+  })
 
   return (
     <>
@@ -72,8 +83,8 @@ const Login = () => {
                 />
               </div>
               {/* <!-- /Logo --> */}
-              <h4 className="mb-2">Login to your account</h4>
-              <p className="mb-4">Welcome</p>
+              <h4 className="mb-2">{t("login-to-account")}</h4>
+              <p className="mb-4">{t("welcome")}</p>
 
               {login ? (
                 <form
@@ -83,7 +94,7 @@ const Login = () => {
                 >
                   <div className="mb-3">
                     <label htmlFor="email" className="form-label">
-                      Email
+                      {t("email")}
                     </label>
                     <input
                       {...register("email")}
@@ -105,8 +116,21 @@ const Login = () => {
                   </div>
 
                   <div className="mb-3 form-password-toggle">
-                    <label className="form-label" htmlFor="password">
-                      Password
+                    <label
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                      className="form-label"
+                      htmlFor="password"
+                    >
+                      {t("password")}
+                      <Link href="/user/forgot-password">
+                        <span style={{ textTransform: "none" }}>
+                          {" "}
+                          {t("forgot-password")}{" "}
+                        </span>
+                      </Link>
                     </label>
                     <span className="input-group input-group-merge">
                       <input
@@ -152,7 +176,7 @@ const Login = () => {
                         className="form-check-label"
                         htmlFor="terms-conditions"
                       >
-                        Remember Me
+                        {t("remember-me")}
                       </label>
                     </div>
                   </div>
@@ -173,7 +197,7 @@ const Login = () => {
                         : ""
                     }`}
                   >
-                    Sign in
+                    {t("login")}
                   </button>
                 </form>
               ) : (
@@ -181,9 +205,9 @@ const Login = () => {
               )}
 
               <p className="text-center">
-                <span>New on our platform? </span>
+                <span> {t("new-in-our-platform")}</span>
                 <Link href="/user/register">
-                  <span> Create an account </span>
+                  <span> {t("create-an-account")} </span>
                 </Link>
               </p>
 

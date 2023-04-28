@@ -6,6 +6,7 @@ import {
 import { addItem, select } from "@/interfaces/generalResponses";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
+import { headers } from "next/dist/client/components/headers";
 
 const MAIN_PATH = process.env.NEXT_PUBLIC_MAIN_PATH;
 
@@ -18,23 +19,20 @@ export const auth = createApi({
   },
   endpoints: (build) => ({
     login: build.mutation({
-      query: ({ email, password }: loginParams) => ({
-        url: `api/auth/login?email=${email}&password=${password}`,
+      query: (data: loginParams) => ({
+        url: `api/auth/login`,
         method: "POST",
+        body:data
       }),
     }),
     register: build.mutation({
-      query: ({
-        name,
-        email,
-        password,
-        password_confirmation,
-        privacy,
-      }: registerParam) => ({
-        url: `api/auth/register?&name=${name}&email=${email}&password=${password}&password_confirmation=${password_confirmation}&term=${
-          privacy ? 1 : 0
-        }`,
+      query: (data: registerParam) => ({
+        headers:{
+          'Content-type':'application/json'
+        },
+        url: `api/auth/register`,
         method: "POST",
+        body:data
       }),
     }),
     privacy: build.mutation({
@@ -54,16 +52,18 @@ export const auth = createApi({
     }),
     changePassword: build.mutation({
       query: ({
-        user: { confirmPassword, email, currentPassword, newPassword, username },
+        user,
         token,
       }: {
         user: changePasswordParam;
         token: string;
       }) => ({
-        url: `api/auth/change-password?email=${email}&current_password=${currentPassword}&new_password=${newPassword}&new_confirm_password=${confirmPassword}&username=${username}`,
+        url: `api/auth/change-password`,
         method: "POST",
+        body:user,
         headers: {
           Authorization: `Bearer ${token}`,
+          'Content-type':'application/json'
         },
       }),
     }),
@@ -76,84 +76,84 @@ export const auth = createApi({
         },
       }),
     }),
-    salaries: build.query<select, "">({
+    salaries: build.query<select, any>({
       query: () => ({
         url: `api/salaries`,
         method: "GET",
       }),
     }),
-    education: build.query<select, "">({
+    education: build.query<select, any>({
       query: () => ({
         url: `api/education`,
         method: "GET",
       }),
     }),
-    experience: build.query<select, "">({
+    experience: build.query<select, any>({
       query: () => ({
         url: `api/experience`,
         method: "GET",
       }),
     }),
-    categories: build.query<select, "">({
+    categories: build.query<select, any>({
       query: () => ({
         url: `api/categories`,
         method: "GET",
       }),
     }),
-    modes: build.query<select, "">({
+    modes: build.query<select, any>({
       query: () => ({
         url: `api/modes`,
         method: "GET",
       }),
     }),
-    vacancies: build.query<select, "">({
+    vacancies: build.query<select, any>({
       query: () => ({
         url: `api/vacancies`,
         method: "GET",
       }),
     }),
-    city: build.query<select, "">({
+    city: build.query<select, any>({
       query: () => ({
         url: `api/city`,
         method: "GET",
       }),
     }),
-    postVacancies: build.mutation<{message:string}, addItem>({
-      query: ({
-        category,
-        city,
-        company,
-        education,
-        email,
-        experience,
-        maximum_age,
-        maximum_salary,
-        minimum_age,
-        minimum_salary,
-        mode,
-        phone,
-        position,
-        relevant_people,
-        tags,
-        about_job,
-        candidate_requirements,
-        token,
-        user_id,
-      }) => ({
+    postVacancies: build.mutation<{message:string}, {data:FormData, token:string}>({
+      query: ({data, token}) => ({
+        body: JSON.stringify({...data}),
         headers: {
-          "Access-Control-Allow-Origin": "http://localhost:3000",
-          Authorization: `Bearer ${token}`,
+          'Content-type':'application/json;',
+          'Authorization': `Bearer ${token}`,
         },
         method: "POST",
-        url: `api/vacancies/store?relevant_people=${relevant_people}&user_id=${user_id}&tags=${tags}&company=${company}&email=${email}&phone=${phone}&position=${position}&category=${category}&maximum_salary=${maximum_salary}&minimum_salary=${minimum_salary}&maximum_age=${maximum_age}&minimum_age=${minimum_age}&city=${city}&mode=${mode}&education=${education}&experience=${experience}&candidate_requirements=${encodeURIComponent(
-          candidate_requirements
-        )}&about_job=${encodeURIComponent(about_job)}`,
+        url: `api/vacancies/store`,
+      }),
+    }),
+    forgotPassword: build.mutation<{data:{token:string, email:string}, status:string}, {email:string}>({
+      query: (data) => ({
+        url: `api/auth/forgot-password`,
+        method: "POST",
+        body:data,
+        headers:{
+          'Content-type':'application/json'
+        }
+      }),
+    }),
+    resetPassword: build.mutation<any, {email:string, new_password:string,password_confirmation:string, token:string}>({
+      query: (data) => ({
+        url: `api/auth/reset-password`,
+        method: "POST",
+        body:data,
+        headers:{
+          'Content-type':'application/json'
+        }
       }),
     }),
   }),
 });
 
 export const {
+  useResetPasswordMutation,
   useLoginMutation,
   useRegisterMutation,
   usePrivacyMutation,
@@ -168,4 +168,5 @@ export const {
   useModesQuery,
   useSalariesQuery,
   usePostVacanciesMutation,
+  useForgotPasswordMutation
 } = auth;

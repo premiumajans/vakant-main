@@ -10,19 +10,13 @@ import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { createWrapper } from "next-redux-wrapper";
+import OffCanvasBottom from "@/Components/Dashboard/OffCanvasBottom/OffCanvasBottom";
 
 function App({ Component, pageProps }: AppProps) {
   const { push } = useRouter();
   const user = useSelector(getUser);
   const { pathname } = useRouter();
-  useEffect(() => {
-    if ( pathname !== "/user/login" && pathname !== "/user/register" && pathname !== "/user/forget-password" && pathname !== "/user/reset-password"
-    ) {
-      if (!(user?.authorisation?.token.length > 0)) {
-        push("user/login");
-      }
-    }
-  }, []);
+
 
   let locale =
     typeof window !== "undefined" && window.localStorage.getItem("MY_LANGUAGE");
@@ -32,16 +26,21 @@ function App({ Component, pageProps }: AppProps) {
     <>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+        {/* <Component {...pageProps} /> */}
           {" "}
-          {user?.authorisation.token.length > 0 ||
+          {user?.authorisation?.token.length > 0 ||
           pathname == "/user/login" ||
           pathname == "/user/register" ||
-          pathname == "/user/forget-password" ||
-          pathname == "/user/reset-password" ? (
-            <Component {...pageProps} />
+          pathname == "/user/forgot-password" ||
+          pathname.startsWith("/user/reset-password") ? (
+            <>
+              {/* <OffCanvasBottom /> */}
+              <Component {...pageProps} />
+            </>
           ) : (
             ""
-          )}{" "}
+          )}
+          {" "}
         </PersistGate>
       </Provider>
     </>
@@ -49,6 +48,8 @@ function App({ Component, pageProps }: AppProps) {
 }
 
 const makeStore = () => store;
-const wrapper = createWrapper(makeStore);
+export const wrapper = createWrapper(makeStore);
 
 export default wrapper.withRedux(appWithI18Next(App, ni18nConfig));
+
+

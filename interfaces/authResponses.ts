@@ -5,6 +5,7 @@ export interface SuccesRes {
     }
     status:string
     user:user
+    company:boolean
 }
 
 export interface user {
@@ -12,4 +13,8 @@ export interface user {
     profile_photo_url:string,
     name:string
     email:string
+}
+
+export interface generalData {
+    show:boolean
 }

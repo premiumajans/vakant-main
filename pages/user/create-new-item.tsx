@@ -1,26 +1,57 @@
 import MainWraper from "@/Components/Dashboard/MainWraper/MainWraper";
 import NewItemForm from "@/Components/Dashboard/NewItemForm/NewItemForm";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "react-i18next";
+import { wrapper } from "../_app";
+import { getUser } from "@/Store/Slices/User";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-const createNewItem = () => {
+const CreateNewItem = () => {
+  const {push} = useRouter()
+  const {authorisation} = useSelector(getUser)
+  useEffect(() => {
+     if (!(authorisation?.token.length > 0)) {
+       push("user/login");
+     }
+ });
+
   return (
     <>
-      <MainWraper>
-        <NewItemForm/>
-      </MainWraper>
+     <MainWraper>
+     {true ?  
+        <NewItemForm/>: ''}
+     </MainWraper>
+   
     </>
   );
 };
 
-export default createNewItem;
+export default CreateNewItem;
 
 
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-      // Will be passed to the page component as props
-    },
-  };
-}
+
+export const getStaticProps = wrapper.getStaticProps(
+  (store) =>
+    async ({ locale }) => {
+      const current_store = store.getState();
+      const company = current_store.User.data.company;
+
+      // if (!company) {
+      //   return {
+      //     redirect: {
+      //       destination: "/user/my-company",
+      //       permanent: false,
+      //     },
+      //   };
+      // } 
+      // else {
+        return {
+          props: {
+            ...(await serverSideTranslations(locale, ["common"])),
+            // Will be passed to the page component as props
+          },
+        };
+      }
+    // }
+);

@@ -151,7 +151,7 @@ const Navbar = (props: PropsWithChildren) => {
                   <li style={{cursor:'pointer'}} onClick={ () => {
                     logout(token)
                     .then(() => {
-                        dispatch(setInitialUser())
+                        dispatch(setInitialUser(''))
                         push('login')
                     })
                   }} className="dropdown-item">

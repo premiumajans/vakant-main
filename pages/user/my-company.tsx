@@ -12,11 +12,22 @@ import { EditorState, convertToRaw } from "draft-js";
 import dynamic from "next/dynamic";
 import { EditorProps } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { getUser } from "@/Store/Slices/User";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const Company = () => {
+  const {push} = useRouter()
+  const {authorisation} = useSelector(getUser)
+  useEffect(() => {
+     if (!(authorisation?.token.length > 0)) {
+       push("user/login");
+     }
+ });
+
   const Editor = dynamic<EditorProps>(
     () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
-    { ssr: false }
+    { ssr: true }
   );
 
   const { t } = useTranslation("common");
@@ -29,12 +40,12 @@ const Company = () => {
   }, []);
 
   let schema = yup.object().shape({
-    email: yup.string().email().required(),
+    email: yup.string().email(`${t("email-valid")}`).required(`${t("email-required")}`),
     photo: yup.string(),
-    name: yup.string().required(),
-    address: yup.string().required(),
-    phone: yup.string().required(),
-    voen: yup.string().required(),
+    name: yup.string().min(3,`${t('name-min-3')}`).required(`${t("name-required")}`),
+    address: yup.string().required(`${t("adress-required")}`),
+    phone: yup.string().required(`${t("phone-required")}`),
+    voen: yup.string().required(`${t("voen-required")}`),
     about_company: yup.string(),
   });
 
@@ -225,7 +236,7 @@ const Company = () => {
                           className={`form-control ${
                             errors.voen ? "is-invalid" : ""
                           }`}
-                          placeholder="@lang('backend.voen')"
+                          placeholder="VÖEN"
                         />
                         {errors.voen ? (
                           <div className="fv-plugins-message-container invalid-feedback">
@@ -300,7 +311,7 @@ const Company = () => {
                               <div className="col-12">
                                 <div style={{padding:'10px'}} className="card mb-4">
                                   <Editor
-                                    placeholder="Write there"
+                                    placeholder={`${t("write-here")}`}
                                     editorState={editorState_az}
                                     wrapperClassName="demo-wrapper"
                                     editorClassName="demo-editor"

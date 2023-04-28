@@ -1,6 +1,8 @@
+import { useResetPasswordMutation } from "@/Store/Query/Auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -9,6 +11,10 @@ import * as yup from 'yup'
 const ResetPassword = () => {
   const { t } = useTranslation("common");
   const [isTextType, setIsTextType] = useState([false, false]);
+  const [resetRequest, {isLoading}] = useResetPasswordMutation()
+  const {query:{email,token}} = useRouter()
+
+  
 
   const changeType = (index: number) => {
     const currentTypes = [...isTextType];
@@ -18,8 +24,8 @@ const ResetPassword = () => {
 
 
   let schema = yup.object().shape({
-    newPassword: yup.string().required(),
-    confirmPassword: yup.string().required(),
+    new_password: yup.string().required(`${t("password-required")}`),
+    password_confirmation: yup.string().required(`${t("password-required")}`).oneOf([yup.ref("new_password")], `${t("password-match")}`),
   });
 
   const {
@@ -29,7 +35,12 @@ const ResetPassword = () => {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    data.email = email
+    data.token = token
+    resetRequest(data)
+    .then((res) => {
+      console.log(res);
+    })
   };
 
   return (
@@ -67,13 +78,13 @@ const ResetPassword = () => {
                 </label>
                 <div className="input-group input-group-merge">
                   <input
-                    {...register("newPassword")}
+                    {...register("new_password")}
                     className={`form-control ${
-                      errors. newPassword ? "is-invalid" : ""
+                      errors. new_password ? "is-invalid" : ""
                     }`}
                     type={isTextType[0] ? "text" : "password"}
-                    name="newPassword"
-                    id="newPassword"
+                    name="new_password"
+                    id="new_password"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                   />
                   <span
@@ -84,9 +95,9 @@ const ResetPassword = () => {
                       className={`bx ${isTextType[0] ? "bx-show" : "bx-hide"}`}
                     ></i>
                   </span>
-                  {errors.newPassword ? (
+                  {errors.new_password ? (
                     <div className="fv-plugins-message-container invalid-feedback">
-                      <div>{errors.newPassword.message as string}</div>
+                      <div>{errors.new_password.message as string}</div>
                     </div>
                   ) : (
                     ""
@@ -99,13 +110,13 @@ const ResetPassword = () => {
                 </label>
                 <div className="input-group input-group-merge">
                   <input
-                    {...register("confirmPassword")}
+                    {...register("password_confirmation")}
                     className={`form-control ${
-                      errors.confirmPassword ? "is-invalid" : ""
+                      errors.password_confirmation ? "is-invalid" : ""
                     }`}
                     type={isTextType[1] ? "text" : "password"}
-                    name="confirmPassword"
-                    id="curreconfirmPasswordnconfirmPasswordtPassword"
+                    name="password_confirmation"
+                    id="currepassword_confirmationnpassword_confirmationtPassword"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                   />
                   <span
@@ -116,16 +127,16 @@ const ResetPassword = () => {
                       className={`bx ${isTextType[1] ? "bx-show" : "bx-hide"}`}
                     ></i>
                   </span>
-                  {errors.confirmPassword ? (
+                  {errors.password_confirmation ? (
                     <div className="fv-plugins-message-container invalid-feedback">
-                      <div>{errors.confirmPassword.message as string}</div>
+                      <div>{errors.password_confirmation.message as string}</div>
                     </div>
                   ) : (
                     ""
                   )}
                 </div>
               </div>
-              <button className="btn btn-primary d-grid w-100 mb-3">
+              <button disabled={isLoading} className="btn btn-primary d-grid w-100 mb-3">
                 {t("submit")}
               </button>
               <div className="text-center">

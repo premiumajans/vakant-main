@@ -1,5 +1,5 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
@@ -9,11 +9,27 @@ import {
   useRefreshMutation,
 } from "@/Store/Query/Auth";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, setUserToken } from "@/Store/Slices/User";
+import {
+  getUser,
+  setUser,
+  setInitialUser,
+} from "@/Store/Slices/User";
 import MainWraper from "@/Components/Dashboard/MainWraper/MainWraper";
+import { useRouter } from "next/router";
+import Swal from "sweetalert2";
+import Head from "next/head";
+import { wrapper } from "../_app";
 
 const Security = () => {
   const { t } = useTranslation("common");
+  const {authorisation} = useSelector(getUser)
+  const [currentPassword, setCurrentPassword] = useState<string[]>([
+    "",
+    "",
+    "",
+  ]);
+
+  const { push } = useRouter();
   const [isTextType, setIsTextType] = useState([false, false, false]);
   const [changePassword, { isLoading, isSuccess }] =
     useChangePasswordMutation();
@@ -30,11 +46,39 @@ const Security = () => {
     setIsTextType(currentTypes);
   };
 
+  const setPassword = (index, value) => {
+    const array = [...currentPassword];
+    array[index] = value;
+    setCurrentPassword(array);
+  };
+
+  useEffect(() => {
+     if (!(authorisation?.token.length > 0)) {
+       push("login");
+     }
+ });
+
   let schema = yup.object().shape({
-    currentPassword: yup.string().required(),
-    username: yup.string().required(),
-    newPassword: yup.string().required(),
-    confirmPassword: yup.string().required(),
+    current_password: currentPassword.some((val) => val.length > 0)
+      ? yup
+          .string()
+          .min(6, `${t("password-min-6")}`)
+          .required(`${t("password-required")}`)
+      : yup.string(),
+    username: yup.string().required(`${t("name-required")}`),
+    new_password: currentPassword.some((val) => val.length > 0)
+      ? yup
+          .string()
+          .min(6, `${t("password-min-6")}`)
+          .required(`${t("password-required")}`)
+      : yup.string(),
+    new_confirm_password: currentPassword.some((val) => val.length > 0)
+      ? yup
+          .string()
+          .min(6, `${t("password-min-6")}`)
+          .required(`${t("password-required")}`)
+          .oneOf([yup.ref("new_password")], `${t("password-match")}`)
+      : yup.string(),
   });
 
   const {
@@ -48,15 +92,52 @@ const Security = () => {
   const onSubmit = async (data: any) => {
     setValue("email", email);
     const res = await changePassword({ user: data, token });
-    const refRes = await refresh(token);
-    dispatch(setUserToken(refRes.data.authorisation));
-    console.log(res);
-    console.log(refRes);
-    reset();
+    if ("data" in res) {
+      if (res.data.status !== "token_is_expired") {
+        if (
+          res.data.status === "password-was-changed-successfully" ||
+          res.data.status === "profile-was-updated-successfully"
+        ) {
+          const refRes = await refresh(token);
+          if ("data" in refRes) {
+            if (refRes.data.status === "success") {
+              dispatch(setUser(refRes.data));
+              Swal.fire(`${t(res.data.status)}`, "", "success").then(() =>
+                push("my-items")
+              );
+              console.log(res);
+              console.log(refRes);
+              reset();
+            } else {
+              dispatch(setInitialUser());
+              push("login");
+            }
+          } else {
+            console.log(refRes.error);
+          }
+        } else {
+          Swal.fire(`${t(res.data.status)}`, "", "error");
+        }
+      } else if (res.data.status === "token_is_expired") {
+        dispatch(setInitialUser());
+        push("login");
+      }
+    } else {
+      console.log(res.error);
+    }
   };
+
+  useEffect(() => {
+    if (!(authorisation?.token.length > 0)) {
+      push("user/login");
+    }
+});
 
   return (
     <MainWraper>
+      <Head>
+        <title>Security</title>
+      </Head>
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="container-xxl flex-grow-1 container-p-y">
           <div
@@ -129,12 +210,15 @@ const Security = () => {
                       </label>
                       <div className="input-group input-group-merge">
                         <input
-                          {...register("currentPassword")}
+                          {...(currentPassword.some((val) => val.length > 0)
+                            ? register("current_password")
+                            : "")}
+                          onChange={(e) => setPassword(0, e.target.value)}
                           className={`form-control ${
-                            errors.currentPassword ? "is-invalid" : ""
+                            errors.current_password ? "is-invalid" : ""
                           }`}
                           type={isTextType[0] ? "text" : "password"}
-                          name="currentPassword"
+                          name="current_password"
                           id="currentPassword"
                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                         />
@@ -148,10 +232,10 @@ const Security = () => {
                             }`}
                           ></i>
                         </span>
-                        {errors.currentPassword ? (
+                        {errors.current_password ? (
                           <div className="fv-plugins-message-container invalid-feedback">
                             <div>
-                              {errors.currentPassword.message as string}
+                              {errors.current_password.message as string}
                             </div>
                           </div>
                         ) : (
@@ -167,13 +251,16 @@ const Security = () => {
                       </label>
                       <div className="input-group input-group-merge">
                         <input
-                          {...register("newPassword")}
+                          {...(currentPassword.some((val) => val.length > 0)
+                            ? register("new_password")
+                            : "")}
                           className={`form-control ${
-                            errors.newPassword ? "is-invalid" : ""
+                            errors.new_password ? "is-invalid" : ""
                           }`}
+                          onChange={(e) => setPassword(1, e.target.value)}
                           type={isTextType[1] ? "text" : "password"}
-                          id="newPassword"
-                          name="newPassword"
+                          id="new_password"
+                          name="new_password"
                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                         />
                         <span
@@ -186,9 +273,9 @@ const Security = () => {
                             }`}
                           ></i>
                         </span>
-                        {errors.newPassword ? (
+                        {errors.new_password ? (
                           <div className="fv-plugins-message-container invalid-feedback">
-                            <div>{errors.newPassword.message as string}</div>
+                            <div>{errors.new_password.message as string}</div>
                           </div>
                         ) : (
                           ""
@@ -203,13 +290,16 @@ const Security = () => {
                       </label>
                       <div className="input-group input-group-merge">
                         <input
-                          {...register("confirmPassword")}
+                          {...(currentPassword.some((val) => val.length > 0)
+                            ? register("new_confirm_password")
+                            : "")}
+                          onChange={(e) => setPassword(2, e.target.value)}
                           className={`form-control ${
-                            errors.confirmPassword ? "is-invalid" : ""
+                            errors.new_confirm_password ? "is-invalid" : ""
                           }`}
                           type={isTextType[2] ? "text" : "password"}
-                          name="confirmPassword"
-                          id="confirmPassword"
+                          name="new_confirm_password"
+                          id="new_confirm_password"
                           placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                         />
                         <span
@@ -222,10 +312,10 @@ const Security = () => {
                             }`}
                           ></i>
                         </span>
-                        {errors.confirmPassword ? (
+                        {errors.new_confirm_password ? (
                           <div className="fv-plugins-message-container invalid-feedback">
                             <div>
-                              {errors.confirmPassword.message as string}
+                              {errors.new_confirm_password.message as string}
                             </div>
                           </div>
                         ) : (
@@ -260,11 +350,35 @@ const Security = () => {
 
 export default Security;
 
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-      // Will be passed to the page component as props
-    },
-  };
-}
+export const getStaticProps = wrapper.getStaticProps(
+  (store) =>
+    async ({ locale }) => {
+      const current_store = store.getState();
+      const company = current_store.User.data.company;
+      const token = current_store.User.data.authorisation.token;
+
+      if (!(token.length > 0)) {
+        return {
+          redirect: {
+            destination: "/user/login",
+            permanent: false,
+          },
+        };
+      }
+      // else if (!company) {
+      // return {
+      //   redirect: {
+      //     destination: "/user/my-company",
+      //     permanent: false,
+      //   },
+      // };
+      // } else {
+      return {
+        props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+          // Will be passed to the page component as props
+        },
+      };
+      // }
+    }
+);

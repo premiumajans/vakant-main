@@ -6,12 +6,15 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { usePrivacyMutation, useRegisterMutation } from "@/Store/Query/Auth";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { setUser } from "@/Store/Slices/User";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, setUser } from "@/Store/Slices/User";
 import Link from "next/link";
 import parse from "html-react-parser";
 
 const Register = () => {
+  const {
+    authorisation: { token },
+  } = useSelector(getUser);
   const [registerRequest, { isLoading }] = useRegisterMutation();
   const [getPrivacy, { data }] = usePrivacyMutation();
   const { push } = useRouter();
@@ -29,25 +32,25 @@ const Register = () => {
   let schema = yup.object().shape({
     name: yup
       .string()
-      .required(`${t("name-require")}`)
-      .min(3),
+      .required(`${t("name-required")}`)
+      .min(3, `${t("name-min-3")}`),
     email: yup
       .string()
-      .email(`${t("email-must-be-valid")}`)
-      .required(`${t("email-require")}`)
+      .email(`${t("email-valid")}`)
+      .required(`${t("email-required")}`)
       .min(3),
     password: yup
       .string()
-      .required(`${t("password-require")}`)
-      .min(6),
+      .required(`${t("password-required")}`)
+      .min(6, `${t("password-min-6")}`),
     password_confirmation: yup
       .string()
-      .required(`${t("password_confirmation-require")}`)
-      .min(6)
+      .required(`${t("password_confirmation-required")}`)
+      .min(6, `${t("password-min-6")}`)
       .oneOf([yup.ref("password")], `${t("password-match")}`),
-    privacy: yup
+      term: yup
       .bool()
-      .required(`${t("privacy-require")}`)
+      .required(`${t("privacy-required")}`)
       .oneOf([true], `${t("file-must-check")}`),
   });
 
@@ -56,7 +59,6 @@ const Register = () => {
     register,
     formState: { errors },
     setValue,
-    getValues,
   } = useForm({ resolver: yupResolver(schema), mode: "onChange" });
 
   useEffect(() => {
@@ -64,11 +66,18 @@ const Register = () => {
   }, []);
 
   const onSubmit = async (data: any) => {
+    data.term = data.term ? 1 : 0
     const res = await registerRequest(data);
     console.log(res);
     dispatch(setUser(res.data));
     push("profile");
   };
+
+  useEffect(() => {
+    if (token.length > 0) {
+      push("profile");
+    }
+  })
 
   return (
     <>
@@ -224,10 +233,10 @@ const Register = () => {
                   <div className="mb-3 fv-plugins-icon-container">
                     <div className="form-check">
                       <input
-                        {...register("privacy")}
-                        onChange={(e) => setValue("privacy", e.target.checked)}
+                        {...register("term")}
+                        onChange={(e) => setValue("term", e.target.checked)}
                         className={`form-check-input ${
-                          errors.privacy ? "is-invalid" : ""
+                          errors.term ? "is-invalid" : ""
                         }`}
                         type="checkbox"
                         id="terms-conditions"
@@ -238,16 +247,18 @@ const Register = () => {
                         className="form-check-label"
                         htmlFor=""
                       >
-                        I agree to{" "}
-                        <span data-bs-toggle="modal" data-bs-target="#editUser"
+                        {t("agree")}{" "}
+                        <span
+                          data-bs-toggle="modal"
+                          data-bs-target="#editUser"
                           style={{ color: process.env.NEXT_PUBLIC_MAIN_COLOR }}
                         >
-                          privacy policy &amp; terms
+                          {t("privacy-policy")}
                         </span>
                       </label>
-                      {errors.privacy ? (
+                      {errors.term ? (
                         <div className="fv-plugins-message-container invalid-feedback">
-                          <div>{errors.privacy.message as string}</div>
+                          <div>{errors.term.message as string}</div>
                         </div>
                       ) : (
                         ""
@@ -267,8 +278,8 @@ const Register = () => {
               )}
 
               <p className="text-center">
-                Already have an account?{" "}
-                <Link href="/user/login">Sign in instead</Link>
+                {t("have-account")}{" "}
+                <Link href="/user/login">{t("sign-in-instead")}</Link>
               </p>
 
               <div className="divider my-4">
@@ -298,8 +309,15 @@ const Register = () => {
           <div className="modal-dialog modal-lg modal-simple modal-edit-user">
             <div className="modal-content p-3 p-md-5">
               <div className="modal-body">
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                {data?.term?.description ? parse(`${data?.term?.description}`) : ''}
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+                {data?.term?.description
+                  ? parse(`${data?.term?.description}`)
+                  : ""}
               </div>
             </div>
           </div>

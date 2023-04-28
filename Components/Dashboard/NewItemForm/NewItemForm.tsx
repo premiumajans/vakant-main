@@ -23,16 +23,15 @@ import dynamic from "next/dynamic";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import { addItem } from "@/interfaces/generalResponses";
 
 const NewItemForm = () => {
   const { t, i18n } = useTranslation("common");
-  const [currentPassword, setCurrentPassword] = useState('')
+
   const {
     user: { id },
     authorisation: { token },
   } = useSelector(getUser);
-
-  const [show, setShow] = useState("");
 
   useEffect(() => {
     new Tagify(document.querySelector("#TagifyBasic")!);
@@ -48,41 +47,43 @@ const NewItemForm = () => {
   const { data: education } = useEducationQuery("");
   const { data: experience } = useExperienceQuery("");
   const { data: modes } = useModesQuery("");
-  const [postItem, { isLoading }] = usePostVacanciesMutation();
+  const [postItem, { isLoading, data, status }] = usePostVacanciesMutation();
 
   const { data: city } = useCityQuery("");
   const { push } = useRouter();
   let schema = yup.object().shape({
-    position: yup.string().required(),
-    category: yup.string().required(),
-    mode: yup.string().required(),
-    city: yup.string().required(),
-    experience: yup.string().required(),
-    education: yup.string().required(),
-    minimum_age: yup.number().required(),
+    position: yup.string().required(`${t("position-required")}`),
+    category: yup.string().required(`${t("category-required")}`),
+    mode: yup.string().required(`${t("mode-required")}`),
+    city: yup.string().required(`${t("city-required")}`),
+    experience: yup.string().required(`${t("experience-required")}`),
+    education: yup.string().required(`${t("education-required")}`),
+    minimum_age: yup.number().required(`${t("minimum_age-required")}`),
     maximum_age: yup
       .number()
-      .required()
-      .test({ message: `${t("dwdw")}` }, function (f) {
+      .required(`${t("maximum_age-required")}`)
+      .test("maximum_age", `${t("maximum_age-test")}`, function (f) {
         const ref = yup.ref("minimum_age");
         return f > +this.resolve(ref);
       }),
-    minimum_salary: yup.number().required(),
+    minimum_salary: yup.number().required(`${t("minimum_salary-required")}`),
     maximum_salary: yup
       .number()
-      .required()
-      .test("", function (f) {
+      .required(`${t("maximum_salary-required")}`)
+      .test("maximum_salary", `${t("maximum_salary-test")}`, function (f) {
         const ref = yup.ref("minimum_salary");
 
         return f > +this.resolve(ref);
       }),
-    company: yup.string().required(),
-    relevant_people: yup.string().required(),
-    email: yup.string().required(),
-    phone: yup.string().required(),
+    company: yup.string().required(`${t("company-required")}`),
+    relevant_people: yup.string().required(`${t("relevant_people-required")}`),
+    email: yup.string().required(`${t("email-required")}`),
+    phone: yup.string().required(`${t("phone-required")}`),
     tags: yup.string(),
-    candidate_requirements: yup.string().required(),
-    about_job: yup.string().required(),
+    candidate_requirements: yup
+      .string()
+      .required(`${t("candidate_requirements-required")}`),
+    about_job: yup.string().required(`${t("about_job-required")}`),
   });
 
   const {
@@ -94,15 +95,16 @@ const NewItemForm = () => {
 
   const onSubmit = (data: any) => {
     data.user_id = id;
-    data.token = token;
 
-    postItem(data).then((res) => {
+    postItem({ data, token }).then((res) => {
       console.log(res);
       if ("data" in res) {
-        {
-          Swal.fire(`${t("vacancy-success")}`, "", "success").then(() =>
-            push("my-items")
-          );
+        if (res.data.message === "success") {
+          {
+            Swal.fire(`${t("vacancy-success")}`, "", "success").then(() =>
+              push("my-items")
+            );
+          }
         }
       }
     });
@@ -131,8 +133,6 @@ const NewItemForm = () => {
     EditorState.createEmpty()
   );
 
-  console.log(categories);
-
   return (
     <>
       <Head>
@@ -151,7 +151,6 @@ const NewItemForm = () => {
           src="/static/vendor/libs/bootstrap-select/bootstrap-select.js"
         ></script>
         <script defer src="/static/tinymce/tinymce.min.js"></script>
-        {/* <script defer src="/static/form-editor.init.js"></script> */}
       </Head>
 
       <div className="container-xxl flex-grow-1 container-p-y">

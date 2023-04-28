@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const ItemCard = () => {
   return <div className="col-xl-4 col-lg-6 col-md-6">
   <div className="card">
@@ -17,7 +19,7 @@ const ItemCard = () => {
             <div className="dropdown">
               <button type="button" className="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false"><i className="bx bx-dots-vertical-rounded"></i></button>
               <ul className="dropdown-menu dropdown-menu-end" style={{}}>
-                <li><a className="dropdown-item" href="javascript:void(0);">Edit</a></li>
+                <li><Link className="dropdown-item" href="my-items/1/edit">Edit</Link></li>
                 <li><a className="dropdown-item" href="javascript:void(0);">View Details</a></li>
                 <li>
                   <hr className="dropdown-divider"/>
