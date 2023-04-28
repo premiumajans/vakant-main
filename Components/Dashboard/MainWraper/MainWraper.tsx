@@ -15,4 +15,8 @@ const MainWraper = ({children}:PropsWithChildren) => {
   )
 }
 
+
+
+
+
 export default MainWraper

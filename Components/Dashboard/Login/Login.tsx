@@ -47,6 +47,7 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     const res = await loginRequest(data);
+    console.log(res);
     if ("error" in res) {
     } else {
       dispatch(setUser(res.data));

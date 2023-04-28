@@ -15,15 +15,20 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { getUser } from "@/Store/Slices/User";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import { useUpdateCompanyMutation } from "@/Store/Query/Auth";
 
 const Company = () => {
-  const {push} = useRouter()
-  const {authorisation} = useSelector(getUser)
+  const [photo, setPhoto] = useState("");
+  const { push } = useRouter();
+  const { authorisation } = useSelector(getUser);
+  const [updateCompany, {isLoading}] = useUpdateCompanyMutation()
+
   useEffect(() => {
-     if (!(authorisation?.token.length > 0)) {
-       push("user/login");
-     }
- });
+    if (!(authorisation?.token.length > 0)) {
+      push("login");
+    }
+  });
 
   const Editor = dynamic<EditorProps>(
     () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -40,13 +45,18 @@ const Company = () => {
   }, []);
 
   let schema = yup.object().shape({
-    email: yup.string().email(`${t("email-valid")}`).required(`${t("email-required")}`),
-    photo: yup.string(),
-    name: yup.string().min(3,`${t('name-min-3')}`).required(`${t("name-required")}`),
-    address: yup.string().required(`${t("adress-required")}`),
+    email: yup
+      .string()
+      .email(`${t("email-valid")}`)
+      .required(`${t("email-required")}`),
+    // photo: yup.string(),
+    name: yup
+      .string()
+      .min(3, `${t("name-min-3")}`)
+      .required(`${t("name-required")}`),
+    address: yup.string().required(`${t("address-required")}`),
     phone: yup.string().required(`${t("phone-required")}`),
-    voen: yup.string().required(`${t("voen-required")}`),
-    about_company: yup.string(),
+    // about: yup.string(),
   });
 
   const {
@@ -56,8 +66,23 @@ const Company = () => {
     setValue,
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: any) => { 
+    // setValue('about', [])
+    // fetch('http://admin.vakant.az/api/company-update', {
+    //   body:JSON.stringify(data),
+    //   headers: {
+    //     'Authorization': `Bearer ${authorisation.token}`,
+    //     'Content-type':'application/json',
+    //   },
+    //   method:'POST'
+    // })
+    // .then(res => console.log(res))
+    console.log(authorisation.token);
     console.log(data);
+    updateCompany({data, token:authorisation.token})
+    .then(res => {
+      console.log(res);
+    })
   };
 
   const [editorState_az, setEditorState_az] = useState(() =>
@@ -85,24 +110,22 @@ const Company = () => {
           defer
           src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
         ></script>
+          <title>{t("my-company")}</title>
       </Head>
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="row">
           <div className="col-md-12">
             <div className="card mb-4">
               <hr className="my-0" />
-              <div className="card-body"></div>
               <div className="card-body">
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  id="formAccountSettings"
-                  encType="multipart/form-data"
-                  action=""
-                  method="POST"
-                >
-                  <div className="d-flex align-items-start align-items-sm-center gap-4">
-                    <img
-                      src="/static/user-assets/img/avatars/user-2.jpg"
+                <form >
+                  <div
+                    style={{ margin: 10 }}
+                    className="d-flex align-items-start align-items-sm-center gap-4"
+                  >
+                    <Image
+                      style={{ objectFit: "cover" }}
+                      src={photo || "/static/img/avatar.svg"}
                       alt="user-avatar"
                       className="d-block rounded"
                       height="100"
@@ -112,27 +135,37 @@ const Company = () => {
                     <div className="button-wrapper">
                       <label
                         htmlFor="upload"
-                        className="btn btn-primary me-2 mb-4"
+                        className="btn btn-primary me-2 "
                         tabIndex={0}
                       >
                         <span className="d-none d-sm-block">
-                          Upload new photo
+                          {t("photo-upload")}
                         </span>
                         <i className="bx bx-upload d-block d-sm-none"></i>
                         <input
-                          {...register("photo")}
+                          // {...register("photo")}
+                          onChange={(e) =>
+                            setPhoto(URL.createObjectURL(e.target.files[0]))
+                          }
                           type="file"
                           id="upload"
                           name="photo"
-                          className={`account-file-input ${
-                            errors.photo ? "is-invalid" : ""
-                          }`}
+                          // className={`account-file-input ${
+                          //   errors.photo ? "is-invalid" : ""
+                          // }`}
                           hidden
                         />
                       </label>
                     </div>
                   </div>
-
+                </form>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  id="formAccountSettings"
+                  encType="multipart/form-data"
+                  action=""
+                  method="POST"
+                >
                   <div className="row">
                     <div className="mb-3 col-md-6">
                       <label htmlFor="firstName" className="form-label">
@@ -223,31 +256,6 @@ const Company = () => {
                       </div>
                     </div>
 
-                    <div className="mb-3 col-xl-12">
-                      <label className="form-label" htmlFor="phoneNumber">
-                        {t("voen")}
-                      </label>
-                      <div className="input-group input-group-merge">
-                        <input
-                          {...register("voen")}
-                          type="text"
-                          id="voen"
-                          name="voen"
-                          className={`form-control ${
-                            errors.voen ? "is-invalid" : ""
-                          }`}
-                          placeholder="VÖEN"
-                        />
-                        {errors.voen ? (
-                          <div className="fv-plugins-message-container invalid-feedback">
-                            <div>{errors.voen.message as string}</div>
-                          </div>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-
                     <div className="col-xl-12">
                       <h6 className="form-label"></h6>
                       <div className="nav-align-top mb-4">
@@ -309,7 +317,10 @@ const Company = () => {
                               role="tabpanel"
                             >
                               <div className="col-12">
-                                <div style={{padding:'10px'}} className="card mb-4">
+                                <div
+                                  style={{ padding: "10px" }}
+                                  className="card mb-4"
+                                >
                                   <Editor
                                     placeholder={`${t("write-here")}`}
                                     editorState={editorState_az}
@@ -317,14 +328,14 @@ const Company = () => {
                                     editorClassName="demo-editor"
                                     onEditorStateChange={(e) => {
                                       setEditorState_az(e);
-                                      setValue(
-                                        "about_company",
-                                        draftToHtml(
-                                          convertToRaw(
-                                            editorState_az.getCurrentContent()
-                                          )
-                                        )
-                                      );
+                                      // setValue(
+                                      //   "about",
+                                      //   draftToHtml(
+                                      //     convertToRaw(
+                                      //       editorState_az.getCurrentContent()
+                                      //     )
+                                      //   )
+                                      // );
                                     }}
                                     toolbar={{
                                       options: [
@@ -337,7 +348,7 @@ const Company = () => {
                                   />
                                   <textarea
                                     hidden
-                                    {...register("about_company")}
+                                    // {...register("about")}
                                     name="about[az]"
                                     id="elmaz1"
                                     className="form-control"
@@ -352,22 +363,25 @@ const Company = () => {
                               role="tabpanel"
                             >
                               <div className="col-12">
-                                <div style={{padding:'10px'}} className="card mb-4">
-                                    <Editor
-                                    placeholder="Write there"
+                                <div
+                                  style={{ padding: "10px" }}
+                                  className="card mb-4"
+                                >
+                                  <Editor
+                                    placeholder={`${t("write-here")}`}
                                     editorState={editorState_en}
                                     wrapperClassName="demo-wrapper"
                                     editorClassName="demo-editor"
                                     onEditorStateChange={(e) => {
                                       setEditorState_en(e);
-                                      setValue(
-                                        "about_company",
-                                        draftToHtml(
-                                          convertToRaw(
-                                            editorState_en.getCurrentContent()
-                                          )
-                                        )
-                                      );
+                                      // setValue(
+                                      //   "about",
+                                      //   draftToHtml(
+                                      //     convertToRaw(
+                                      //       editorState_en.getCurrentContent()
+                                      //     )
+                                      //   )
+                                      // );
                                     }}
                                     toolbar={{
                                       options: [
@@ -380,7 +394,7 @@ const Company = () => {
                                   />
                                   <textarea
                                     hidden
-                                    {...register("about_company")}
+                                    // {...register("about")}
                                     name="about[en]"
                                     id="elmen1"
                                     className="form-control"
@@ -395,22 +409,25 @@ const Company = () => {
                               role="tabpanel"
                             >
                               <div className="col-12">
-                                <div style={{padding:'10px'}} className="card mb-4">
-                                    <Editor
-                                    placeholder="Write there"
+                                <div
+                                  style={{ padding: "10px" }}
+                                  className="card mb-4"
+                                >
+                                  <Editor
+                                    placeholder={`${t("write-here")}`}
                                     editorState={editorState_ru}
                                     wrapperClassName="demo-wrapper"
                                     editorClassName="demo-editor"
                                     onEditorStateChange={(e) => {
                                       setEditorState_ru(e);
-                                      setValue(
-                                        "about_company",
-                                        draftToHtml(
-                                          convertToRaw(
-                                            editorState_ru.getCurrentContent()
-                                          )
-                                        )
-                                      );
+                                      // setValue(
+                                      //   "about",
+                                      //   draftToHtml(
+                                      //     convertToRaw(
+                                      //       editorState_ru.getCurrentContent()
+                                      //     )
+                                      //   )
+                                      // );
                                     }}
                                     toolbar={{
                                       options: [
@@ -423,7 +440,7 @@ const Company = () => {
                                   />
                                   <textarea
                                     hidden
-                                    {...register("about_company")}
+                                    // {...register("about")}
                                     name="about[ru]"
                                     id="elmru1"
                                     className="form-control"
@@ -439,7 +456,7 @@ const Company = () => {
                     </div>
                   </div>
                   <div className="mt-2">
-                    <button type="submit" className="btn btn-primary me-2">
+                    <button disabled={isLoading} type="submit" className="btn btn-primary me-2">
                       {" "}
                       {t("save")}
                     </button>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 import * as yup from "yup";
 
 const ForgetPassword = () => {
@@ -24,9 +25,13 @@ const ForgetPassword = () => {
   const onSubmit = (data: any) => {
     forgotRequest(data)
     .then(res => {
+      console.log(res);
         if('data' in res) {
           const {status} = res.data
-          // if
+          Swal.fire(``, `${t('email-link')}`, "success");
+        } else {
+          const {message} = res.error.data
+          Swal.fire(`${t(message)}`, "", "error");
         }
     })
   };

@@ -1,18 +1,20 @@
 import { useResetPasswordMutation } from "@/Store/Query/Auth";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { redirect } from 'next/navigation';
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 import * as yup from 'yup'
 
 const ResetPassword = () => {
   const { t } = useTranslation("common");
   const [isTextType, setIsTextType] = useState([false, false]);
   const [resetRequest, {isLoading}] = useResetPasswordMutation()
-  const {query:{email,token}} = useRouter()
+  const {query:{email,token}, push} = useRouter()
 
   
 
@@ -40,6 +42,14 @@ const ResetPassword = () => {
     resetRequest(data)
     .then((res) => {
       console.log(res);
+      if('data' in res) {
+        const {message} = res.data
+        Swal.fire(`${t(message)}`, ``, "success").then(() => {
+          push('/user/login')
+        })
+      } else {
+        Swal.fire(`${t('something-went-wrong')}`, "", "error");
+      }
     })
   };
 

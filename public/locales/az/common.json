@@ -1,4 +1,12 @@
 {
+  "something-went-wrong":"Xəta baş verdi",
+  "password-changed-successfully":"Parol uğurla dəyişdirildi",
+  "email-link":"Hesabınıza yenidən daxil olmaq üçün sizə linki olan məktub göndərdik.",
+  "success":"Müvəffəqiyyət",
+  "user-not-found":"İstifadəçi tapılmadı",
+  "current_password_is_not_correct":"cari parol düzgün deyil",
+  "validation.different":"Yeni şifrə cari şifrə ilə eyni ola bilməz",
+  "photo-upload":"Yeni şəkil yükləyin",
   "company-warning":"Zəhmət olmasa şirkətiniz haqqında məlumatları qeyd edin",
   "vacancy-successfully-deleted":"Vakansiya uğurla silindi",
   "expiring-vacancies":"Bitən vakansiyalar",

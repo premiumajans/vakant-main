@@ -8,6 +8,7 @@ const initialState = {
       type: "",
     },
     status: "",
+    company:false,
     user: {
       id: 0,
       name: "",
@@ -29,6 +30,7 @@ const User = createSlice({
           token: "",
           type: "",
         },
+        company:false,
         status: "",
         user: {
           id: 0,

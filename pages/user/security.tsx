@@ -9,11 +9,7 @@ import {
   useRefreshMutation,
 } from "@/Store/Query/Auth";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUser,
-  setUser,
-  setInitialUser,
-} from "@/Store/Slices/User";
+import { getUser, setUser, setInitialUser } from "@/Store/Slices/User";
 import MainWraper from "@/Components/Dashboard/MainWraper/MainWraper";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
@@ -22,7 +18,7 @@ import { wrapper } from "../_app";
 
 const Security = () => {
   const { t } = useTranslation("common");
-  const {authorisation} = useSelector(getUser)
+  const { authorisation } = useSelector(getUser);
   const [currentPassword, setCurrentPassword] = useState<string[]>([
     "",
     "",
@@ -53,10 +49,11 @@ const Security = () => {
   };
 
   useEffect(() => {
-     if (!(authorisation?.token.length > 0)) {
-       push("login");
-     }
- });
+    if (!(authorisation?.token.length > 0)) {
+      push("login");
+    }
+  });
+  
 
   let schema = yup.object().shape({
     current_password: currentPassword.some((val) => val.length > 0)
@@ -92,6 +89,7 @@ const Security = () => {
   const onSubmit = async (data: any) => {
     setValue("email", email);
     const res = await changePassword({ user: data, token });
+    console.log(res);
     if ("data" in res) {
       if (res.data.status !== "token_is_expired") {
         if (
@@ -102,14 +100,12 @@ const Security = () => {
           if ("data" in refRes) {
             if (refRes.data.status === "success") {
               dispatch(setUser(refRes.data));
-              Swal.fire(`${t(res.data.status)}`, "", "success").then(() =>
-                push("my-items")
-              );
+              Swal.fire(`${t(res.data.status)}`, "", "success");
               console.log(res);
               console.log(refRes);
               reset();
             } else {
-              dispatch(setInitialUser());
+              dispatch(setInitialUser(""));
               push("login");
             }
           } else {
@@ -119,24 +115,23 @@ const Security = () => {
           Swal.fire(`${t(res.data.status)}`, "", "error");
         }
       } else if (res.data.status === "token_is_expired") {
-        dispatch(setInitialUser());
+        dispatch(setInitialUser(""));
         push("login");
       }
     } else {
-      console.log(res.error);
+      const errors = res.error.data?.errors;
+      if('status' in res.error.data) {
+      Swal.fire(`${t(res.error.data.status)}`, "", "error");
+      } else {
+        Swal.fire(`${t(Object.entries(errors)[0])}`, "", "error");
+      }
     }
   };
-
-  useEffect(() => {
-    if (!(authorisation?.token.length > 0)) {
-      push("user/login");
-    }
-});
 
   return (
     <MainWraper>
       <Head>
-        <title>Security</title>
+        <title>{t('security')}</title>
       </Head>
       <div className="container-xxl flex-grow-1 container-p-y">
         <div className="container-xxl flex-grow-1 container-p-y">
@@ -355,16 +350,18 @@ export const getStaticProps = wrapper.getStaticProps(
     async ({ locale }) => {
       const current_store = store.getState();
       const company = current_store.User.data.company;
-      const token = current_store.User.data.authorisation.token;
 
-      if (!(token.length > 0)) {
-        return {
-          redirect: {
-            destination: "/user/login",
-            permanent: false,
-          },
-        };
-      }
+      console.log(company);
+      console.log("test");
+
+      // if (!(token.length > 0)) {
+      //   return {
+      //     redirect: {
+      //       destination: "/user/login",
+      //       permanent: false,
+      //     },
+      //   };
+      // }
       // else if (!company) {
       // return {
       //   redirect: {

@@ -149,10 +149,23 @@ export const auth = createApi({
         }
       }),
     }),
+    updateCompany: build.mutation<any, {data:{email:string, phone:string,name:string, address:string}, token:string}>({
+      query: ({data, token}) => ({
+        url: `api/company-update`,
+        method: "POST",
+        body:data,
+        headers: {
+          "Access-Control-Allow-Origin":"htttp::/localhost:3000",
+          'Authorization': `Bearer ${token}`,
+          'Content-type':'application/json',
+        },
+      }),
+    }),
   }),
 });
 
 export const {
+  useUpdateCompanyMutation,
   useResetPasswordMutation,
   useLoginMutation,
   useRegisterMutation,

@@ -3,6 +3,7 @@ import MainWraper from "@/Components/Dashboard/MainWraper/MainWraper";
 import { getUser } from "@/Store/Slices/User";
 import { wrapper } from "@/pages/_app";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,18 +11,21 @@ import { useSelector } from "react-redux";
 
 const MyItems = () => {
   const { t: translate } = useTranslation("common");
-  const {push} = useRouter()
-  
-  const {authorisation} = useSelector(getUser)
+  const { push } = useRouter();
+
+  const { authorisation } = useSelector(getUser);
   useEffect(() => {
-     if (!(authorisation?.token.length > 0)) {
-       push("user/login");
-     }
- });
+    if (!(authorisation?.token.length > 0)) {
+      push("login");
+    }
+  });
 
   return (
     <>
       <MainWraper>
+        <Head>
+          <title>{translate("my-items")}</title>
+        </Head>
         {true ? (
           <>
             <div className="container-xxl flex-grow-1 container-p-y">
@@ -62,19 +66,19 @@ export const getStaticProps = wrapper.getStaticProps(
       const company = current_store.User.data.company;
 
       // if (!company) {
-        // return {
-        //   redirect: {
-        //     destination: "/user/my-company",
-        //     permanent: false,
-        //   },
-        // };
+      // return {
+      //   redirect: {
+      //     destination: "/user/my-company",
+      //     permanent: false,
+      //   },
+      // };
       // } else {
-        return {
-          props: {
-            ...(await serverSideTranslations(locale, ["common"])),
-            // Will be passed to the page component as props
-          },
-        };
+      return {
+        props: {
+          ...(await serverSideTranslations(locale, ["common"])),
+          // Will be passed to the page component as props
+        },
+      };
       // }
     }
 );

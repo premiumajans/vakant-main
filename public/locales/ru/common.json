@@ -1,4 +1,12 @@
 {
+  "something-went-wrong":"Что-то пошло не так",
+  "password-changed-successfully":"Пароль успешно изменен",
+  "email-link":"Мы отправили электронное письмо со ссылкой для возврата в вашу учетную запись.",
+  "success":"Успех",
+  "user-not-found":"Пользователь не найден",
+  "current_password_is_not_correct":"текущий пароль неверен",
+  "validation.different":"Новый пароль не может совпадать с текущим паролем",
+  "photo-upload":"Загрузить новое фото",
   "company-warning":"",
   "vacancy-successfully-deleted":"вакансия успешно удалена",
   "expiring-vacancies":"Истекающие вакансии",

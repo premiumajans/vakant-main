@@ -10,7 +10,7 @@ const Edit = () => {
   const {authorisation} = useSelector(getUser)
   useEffect(() => {
      if (!(authorisation?.token.length > 0)) {
-       push("/login");
+       push("login");
      }
  });
 
