@@ -6,7 +6,6 @@ import { getUser } from "@/Store/Slices/User";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { $CombinedState } from "@reduxjs/toolkit";
 import Head from "next/head";
 import { useTranslation } from "react-i18next";
 

@@ -1,4 +1,9 @@
 {
+  "nothing-to-show":"Nothing to show",
+  "company-successfully-stored":"Company successfully stored",
+  "site-vacancy": "See on the site",
+  "profile-photo-successfully-updated":"Profile photo successfully updated",
+  "company-successfully-updated":"Company successfully updated",
   "something-went-wrong":"Something went wrong",
   "password-changed-successfully":"Password changed successfully",
   "email-link":"We sent an email  with a link to get back into your account.",

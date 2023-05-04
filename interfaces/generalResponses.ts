@@ -3,40 +3,70 @@ export interface select {
     {
       id: number;
       name: string;
-      translations: translations[]
+      translations: translations[];
     }
   ];
-  salary:number;
+  salary: number;
   id: number;
   name: string;
   slug: string;
   status: number;
-  translations: translations[]
+  translations: translations[];
 }
 
-
 export interface translations {
-        locale: "en" | "az" | "ru"
-        name: string
+  locale: "en" | "az" | "ru";
+  name: string;
 }
 
 export interface addItem {
-  position: string
-    category: string
-    mode: string
-    city: string
-    experience: string
-    education: string
-    minimum_age: string
-    maximum_age: string
-    minimum_salary: string
-    maximum_salary: string
-    company: string
-    relevant_people: string
-    email: string
-    phone: string
-    tags: string
-    about_job:string
-    candidate_requirements:string
-    token:string
+  position: string;
+  category: string;
+  mode: string;
+  city: string;
+  experience: string;
+  education: string;
+  minimum_age: string;
+  maximum_age: string;
+  minimum_salary: string;
+  maximum_salary: string;
+  company: string;
+  relevant_people: string;
+  email: string;
+  phone: string;
+  tags: string;
+  about_job: string;
+  candidate_requirements: string;
+  token: string;
+}
+
+export interface getItems {
+  item: Item[]
+}
+
+
+
+export interface Item {
+  end_time:string,
+  description: {
+    candidate_requirement: string
+    category_id: number;
+    city_id: number;
+    company: string;
+    education_id: number;
+    email: string;
+    experience_id: number;
+    id: number;
+    job_description: string;
+    max_age: number;
+    max_salary: number;
+    min_age: number;
+    min_salary: number;
+    mode_id: number;
+    phone: string;
+    position: string;
+    relevant_people: string;
+    tags: string;
+    vacancy_id: number;
+  }
 }

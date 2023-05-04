@@ -23,13 +23,12 @@ import dynamic from "next/dynamic";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
-import { addItem } from "@/interfaces/generalResponses";
 
 const NewItemForm = () => {
   const { t, i18n } = useTranslation("common");
 
   const {
-    user: { id },
+    user: { id, name },
     authorisation: { token },
   } = useSelector(getUser);
 
@@ -99,13 +98,15 @@ const NewItemForm = () => {
     postItem({ data, token }).then((res) => {
       console.log(res);
       if ("data" in res) {
-        if (res.data.message === "success") {
+        if (res.data.status === "success") {
           {
             Swal.fire(`${t("vacancy-success")}`, "", "success").then(() =>
               push("my-items")
             );
           }
         }
+      } else {
+        Swal.fire(`${t("something-went-wrong")}`, "", "error")
       }
     });
   };
@@ -576,6 +577,7 @@ const NewItemForm = () => {
                   </label>
                   <input
                     {...register("relevant_people")}
+                    defaultValue={name}
                     type="text"
                     name="relevant_people"
                     className={`form-control ${
@@ -674,66 +676,6 @@ const NewItemForm = () => {
                 </div>
               </div>
             </form>
-            {/* <Script
-              id="tiny"
-              dangerouslySetInnerHTML={{
-                __html: `
-          tinymce.init({
-            selector: "#elm1",
-            height: 300,
-            plugins: [
-              "image code advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
-              "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-              "save table contextmenu directionality emoticons template paste textcolor",
-            ],
-            toolbar:
-              "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
-            style_formats: [
-              { title: "Bold text", inline: "b" },
-              {
-                title: "Red text",
-                inline: "span",
-                styles: { color: "#ff0000" },
-              },
-              { title: "Red header", block: "h1", styles: { color: "#ff0000" } },
-              {
-                title: "Example 1",
-                inline: "span",
-                classes: "example1",
-              },
-              { title: "Example 2", inline: "span", classes: "example2" },
-              { title: "Table styles" },
-              {
-                title: "Table row 1",
-                selector: "tr",
-                classes: "tablerow1",
-              },
-            ],
-            file_picker_types: "file image media",
-            file_picker_callback: function (cb, value, meta) {
-              var input = document.createElement("input");
-              input.setAttribute("type", "file");
-              input.setAttribute("accept", "image/*");
-              input.onchange = function () {
-                var file = this.files[0];
-      
-                var reader = new FileReader();
-                reader.onload = function () {
-                  var id = "blobid" + new Date().getTime();
-                  var blobCache = tinymce.activeEditor.editorUpload.blobCache;
-                  var base64 = reader.result.split(",")[1];
-                  var blobInfo = blobCache.create(id, file, base64);
-                  blobCache.add(blobInfo);
-                  cb(blobInfo.blobUri(), { title: file.name });
-                };
-                reader.readAsDataURL(file);
-              };
-              input.click();
-            },
-          });
-          `,
-              }}
-            ></Script> */}
           </div>
         </div>
       </div>

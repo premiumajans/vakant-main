@@ -7,7 +7,7 @@ const nextConfig = {
   },
   i18n,
   images: {
-    domains: ["ui-avatars.com"],
+    domains: ["ui-avatars.com", "admin.vakant.az"],
   },
 }
 

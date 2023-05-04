@@ -3,7 +3,7 @@ import {
   loginParams,
   registerParam,
 } from "@/interfaces/authParams";
-import { addItem, select } from "@/interfaces/generalResponses";
+import { addItem, getItems, select } from "@/interfaces/generalResponses";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { HYDRATE } from "next-redux-wrapper";
 import { headers } from "next/dist/client/components/headers";
@@ -120,7 +120,7 @@ export const auth = createApi({
     }),
     postVacancies: build.mutation<{message:string}, {data:FormData, token:string}>({
       query: ({data, token}) => ({
-        body: JSON.stringify({...data}),
+        body: data,
         headers: {
           'Content-type':'application/json;',
           'Authorization': `Bearer ${token}`,
@@ -155,9 +155,46 @@ export const auth = createApi({
         method: "POST",
         body:data,
         headers: {
-          "Access-Control-Allow-Origin":"htttp::/localhost:3000",
+          "Access-Control-Allow-Origin":"http::/localhost:3000",
           'Authorization': `Bearer ${token}`,
           'Content-type':'application/json',
+        },
+      }),
+    }),
+    checkCompany: build.mutation<any,{token:string}>({
+      query: ({token}) => ({
+        url: `api/get-company`,
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }),
+    }),
+    sendPhoto: build.mutation<any, {data:FormData, token:string}>({
+      query: ({data, token}) => ({
+        url: `api/company-update-photo`,
+        method: "POST",
+        body:data,
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }),
+    }),
+    getItems: build.mutation<getItems, string>({
+      query: (token) => ({
+        url: `api/my-items`,
+        method: "GET",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }),
+    }),
+    deleteItem: build.mutation<getItems, {id:number, token:string}>({
+      query: ({id, token}) => ({
+        url: `api/vacancies/${id}/delete`,
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
         },
       }),
     }),
@@ -165,6 +202,10 @@ export const auth = createApi({
 });
 
 export const {
+  useDeleteItemMutation,
+  useGetItemsMutation,
+  useCheckCompanyMutation,
+  useSendPhotoMutation,
   useUpdateCompanyMutation,
   useResetPasswordMutation,
   useLoginMutation,

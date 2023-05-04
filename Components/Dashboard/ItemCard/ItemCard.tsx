@@ -1,6 +1,17 @@
+import { getUser } from "@/Store/Slices/User";
+import { Item } from "@/interfaces/generalResponses";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
-const ItemCard = () => {
+const ItemCard = ({item:{description:{position,vacancy_id},}, Delete}:{item:Item, Delete:any}) => {
+  const {t} = useTranslation('common')
+  const {authorisation} = useSelector(getUser)
+
+  
+  
+
+  
   return <div className="col-xl-4 col-lg-6 col-md-6">
   <div className="card">
   <div className="card-body">
@@ -10,7 +21,7 @@ const ItemCard = () => {
           <img src="/static/img/icons/brands/react-label.png" alt="Avatar" className="rounded-circle"/>
         </div>
         <div className="me-2 text-body h5 mb-0">
-          React Developers
+          {position}
         </div>
       </a>
       <div className="ms-auto">
@@ -19,12 +30,12 @@ const ItemCard = () => {
             <div className="dropdown">
               <button type="button" className="btn dropdown-toggle hide-arrow p-0" data-bs-toggle="dropdown" aria-expanded="false"><i className="bx bx-dots-vertical-rounded"></i></button>
               <ul className="dropdown-menu dropdown-menu-end" style={{}}>
-                <li><Link className="dropdown-item" href="my-items/1/edit">Edit</Link></li>
-                <li><a className="dropdown-item" href="javascript:void(0);">View Details</a></li>
+                <li><a className="dropdown-item" >{t('site-vacancy')}</a></li>
+                <li><Link className="dropdown-item" href={`my-items/${vacancy_id}/edit`}>{t('edit')}</Link></li>
                 <li>
                   <hr className="dropdown-divider"/>
                 </li>
-                <li><a className="dropdown-item text-danger" href="javascript:void(0);">Delete Team</a></li>
+                <li onClick={(() => Delete({vacancy_id, token:authorisation?.token}))}><a className="dropdown-item text-danger" >{t('delete')}</a></li>
               </ul>
             </div>
           </li>
