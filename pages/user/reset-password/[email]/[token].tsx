@@ -10,38 +10,15 @@ const ResetPasswordPage = () => {
   );
 };
 
-export const getStaticProps = wrapper.getStaticProps(
-  (store) =>
-    async ({ locale }) => {
-      const current_store = store.getState();
-      const company = current_store.User.data.company;
-      const token = current_store.User.data.authorisation.token;
-
-      if ((token.length > 0)) {
-        return {
-          redirect: {
-            destination: "user/profile",
-            permanent: true,
-          },
-        };
-      }
-      // else if (!company) {
-      // return {
-      //   redirect: {
-      //     destination: "/user/my-company",
-      //     permanent: false,
-      //   },
-      // };
-      // } else {
-      return {
+export async function getStaticProps(context:any) {
+    return {
         props: {
-          ...(await serverSideTranslations(locale, ["common"])),
-          // Will be passed to the page component as props
-        },
-      };
-      // }
+            ...(await serverSideTranslations(context.locale, ["common"])),
+
+        }
     }
-);
+}
+
 
 export async function getStaticPaths() {
   return {
@@ -51,4 +28,7 @@ export async function getStaticPaths() {
 }
 
 export default ResetPasswordPage;
+
+
+
 

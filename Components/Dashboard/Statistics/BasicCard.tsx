@@ -1,8 +1,5 @@
 interface Props {
   title: string;
-  value: string;
-  progress: number;
-  notification: string;
   badge: string;
   icon: string;
 }
@@ -10,25 +7,18 @@ interface Props {
 const BasicCard = ({
   badge,
   icon,
-  notification,
-  progress,
   title,
-  value,
+
 }: Props) => {
   return (
     <>
-      <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-        <div className="card">
+        <div style={{maxHeight:500, height:'100%'}} className="card">
           <div className="card-body">
             <div className="d-flex justify-content-between">
               <div className="card-info">
-                <p className="card-text">{title}</p>
                 <div className="d-flex align-items-end mb-2">
-                  <h4 className="card-title mb-0 me-2">{value}</h4>
-                  {progress > 0 ?   <small className="text-success">(+{progress}%)</small> : <small className="text-danger">({progress}%)</small> }
-                
+                  <h4 className="card-title mb-0 me-2">{title}</h4>
                 </div>
-                <small>{notification}</small>
               </div>
               <div className="card-icon">
                 <span className={"badge " + badge}>
@@ -38,7 +28,6 @@ const BasicCard = ({
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };

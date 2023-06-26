@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
 const FourOhFour = () => {
   const { t: translate } = useTranslation();
@@ -23,7 +23,7 @@ const FourOhFour = () => {
           <br />
           {translate("404-contact")}
         </p>
-        <Link href="" className="btn btn-primary">
+        <Link href="/" className="btn btn-primary">
           {translate('404-back')}
         </Link>
       </div>
@@ -32,3 +32,4 @@ const FourOhFour = () => {
 };
 
 export default FourOhFour;
+

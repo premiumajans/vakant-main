@@ -47,7 +47,11 @@ export interface getItems {
 
 
 export interface Item {
+  "id": number,
   end_time:string,
+  shared_time:string,
+  vacancy_type:1 | 2,
+  view_count:number,
   description: {
     candidate_requirement: string
     category_id: number;
@@ -70,3 +74,5 @@ export interface Item {
     vacancy_id: number;
   }
 }
+
+

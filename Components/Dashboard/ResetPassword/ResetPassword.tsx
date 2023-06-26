@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import Swal from "sweetalert2";
 import * as yup from 'yup'
 
@@ -27,7 +27,7 @@ const ResetPassword = () => {
 
   let schema = yup.object().shape({
     new_password: yup.string().required(`${t("password-required")}`),
-    password_confirmation: yup.string().required(`${t("password-required")}`).oneOf([yup.ref("new_password")], `${t("password-match")}`),
+    confirm_password: yup.string().required(`${t("password-required")}`).oneOf([yup.ref("new_password")], `${t("password-match")}`),
   });
 
   const {
@@ -41,7 +41,6 @@ const ResetPassword = () => {
     data.token = token
     resetRequest(data)
     .then((res) => {
-      console.log(res);
       if('data' in res) {
         const {message} = res.data
         Swal.fire(`${t(message)}`, ``, "success").then(() => {
@@ -64,19 +63,21 @@ const ResetPassword = () => {
               style={{ height: "50px" }}
               className="app-brand justify-content-center"
             >
-              <Image
-                style={{ objectFit: "cover" }}
-                src={"/logo.png"}
-                alt="logo"
-                width={350}
-                height={200}
-              />
+              <Link href={'/'}>
+                <Image
+                    style={{ objectFit: "cover" }}
+                    src={"/logo.png"}
+                    alt="logo"
+                    width={350}
+                    height={200}
+                />
+              </Link>
             </div>
             {/* <!-- /Logo --> */}
             <h4 className="mb-2">{t("change-password")}</h4>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-              id="formAuthentication"
+
               className="mb-3 fv-plugins-bootstrap5 fv-plugins-framework"
               action="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/horizontal-menu-template/auth-login-basic.html"
               method="POST"
@@ -120,12 +121,12 @@ const ResetPassword = () => {
                 </label>
                 <div className="input-group input-group-merge">
                   <input
-                    {...register("password_confirmation")}
+                    {...register("confirm_password")}
                     className={`form-control ${
-                      errors.password_confirmation ? "is-invalid" : ""
+                      errors.confirm_password ? "is-invalid" : ""
                     }`}
                     type={isTextType[1] ? "text" : "password"}
-                    name="password_confirmation"
+                    name="confirm_password"
                     id="currepassword_confirmationnpassword_confirmationtPassword"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                   />
@@ -137,9 +138,9 @@ const ResetPassword = () => {
                       className={`bx ${isTextType[1] ? "bx-show" : "bx-hide"}`}
                     ></i>
                   </span>
-                  {errors.password_confirmation ? (
+                  {errors.confirm_password ? (
                     <div className="fv-plugins-message-container invalid-feedback">
-                      <div>{errors.password_confirmation.message as string}</div>
+                      <div>{errors.confirm_password.message as string}</div>
                     </div>
                   ) : (
                     ""

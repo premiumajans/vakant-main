@@ -1,65 +1,90 @@
 import "@/styles/globals.scss";
-import { appWithI18Next, useSyncLanguage } from "ni18n";
-import type { AppProps } from "next/app";
-import { store, persistor } from "../Store/store";
-import { ni18nConfig } from "../ni18n.config";
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
-import { getUser } from "@/Store/Slices/User";
-import { useEffect } from "react";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { createWrapper } from "next-redux-wrapper";
+import type {AppProps} from "next/app";
+import {persistor, store} from "../Store/store";
+import {useRouter} from "next/router";
+import {Provider, useSelector} from "react-redux";
+import {PersistGate} from "redux-persist/integration/react";
+import {createWrapper} from "next-redux-wrapper";
+import AdminLayout from "@/Components/Dashboard/AdminLayout/AdminLayout";
+import ClientLayout from "@/Components/Clients/ClientsLayout/ClientLayout";
+import 'aos/dist/aos.css';
 import OffCanvasBottom from "@/Components/Dashboard/OffCanvasBottom/OffCanvasBottom";
+import {getUser} from "@/Store/Slices/User";
+import {appWithTranslation, useTranslation} from "next-i18next";
+import Head from "next/head";
+import {useEffect, useState} from "react";
+import Loading from "@/Components/Dashboard/Loading/Loading";
 
-function App({ Component, pageProps }: AppProps) {
-  const { push } = useRouter();
-  const user = useSelector(getUser);
-  const { pathname } = useRouter();
-  useEffect(() => {
-    if (
-      pathname !== "/user/login" &&
-      pathname !== "/user/register" &&
-      pathname !== "/user/forgot-password" &&
-       pathname.startsWith("/user/reset-password") 
-    ) {
-      if (!(user?.authorisation?.token.length > 0)) {
-        push("login");
-      }
-    }
-  }, []);
+function App({Component, pageProps}: AppProps) {
+    const router = useRouter();
+    const {pathname} = router
+    const {company} = useSelector(getUser);
+    const {i18n} = useTranslation('common')
+    const [loading, setLoading] = useState(false)
 
-  let locale =
-    typeof window !== "undefined" && window.localStorage.getItem("MY_LANGUAGE");
-  useSyncLanguage(locale);
+    useEffect(() => {
+        const handleRouteChange = () => {
+            setLoading(true)
+        };
 
-  return (
-    <>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          {" "}
-          {user?.authorisation?.token.length > 0 ||
-          pathname == "/user/login" ||
-          pathname == "/user/register" ||
-          pathname == "/user/forgot-password" ||
-          pathname.startsWith("/user/reset-password") ? (
-            <>
-              {/* <OffCanvasBottom /> */}
-              <Component {...pageProps} />
-            </>
-          ) : (
-            ""
-          )}
-          {" "}
-        </PersistGate>
-      </Provider>
-    </>
-  );
+        const handleRouteComplete = () => {
+            setLoading(false)
+        };
+
+        router.events.on('routeChangeStart', handleRouteChange)
+        router.events.on('routeChangeComplete', handleRouteComplete)// If the component is unmounted, unsubscribe
+
+        const html = document.querySelector('html')!
+        if(window) {
+            console.log(window.screenX)
+            if(window.screenX < 992) {
+                html.classList.add('layout-menu-expanded')
+            }
+
+        }
+        return () => {
+            router.events.off('routeChangeStart', handleRouteChange)
+        }
+
+    }, [router])
+
+
+    return (
+        <>
+            <Head>
+                <title>{"Vakant.az"}</title>
+                <meta
+                    name="description"
+                    content="Vakansiyalar"
+                />
+                <meta name="author" content="Taleh Maharramov, Elgiz Ismayilov"/>
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no"
+                />
+                <meta property="og:site_name" content="Vakant.az"/>
+                <meta property="og:locale" content={i18n.language}/>
+
+            </Head>
+            <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                    {" "}
+                    {pathname.indexOf('/user') >= 0 ? <AdminLayout>
+                            {!company && pathname === '/user/create-new-item' ? <OffCanvasBottom/> : ''}
+                            <Component {...pageProps} />
+
+                        </AdminLayout> :
+                        loading ? <Loading/> : <ClientLayout> <Component {...pageProps} /></ClientLayout> }
+                    {" "}
+                </PersistGate>
+            </Provider>
+        </>
+    );
 }
 
 const makeStore = () => store;
 export const wrapper = createWrapper(makeStore);
 
-export default wrapper.withRedux(appWithI18Next(App, ni18nConfig));
+export default wrapper.withRedux(appWithTranslation(App));
 
 

@@ -16,5 +16,11 @@ export interface user {
 }
 
 export interface generalData {
-    show:boolean
+    search:{
+        categoryState:string,
+        cityStateFromRedux:string,
+        modeState:string,
+        educationState:string,
+        positionState:string
+    }
 }

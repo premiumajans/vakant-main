@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { usePrivacyMutation, useRegisterMutation } from "@/Store/Query/Auth";
@@ -10,13 +10,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser, setUser } from "@/Store/Slices/User";
 import Link from "next/link";
 import parse from "html-react-parser";
+import Loading from "../Loading/Loading";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const Register = () => {
   const {
     authorisation: { token },
   } = useSelector(getUser);
   const [registerRequest, { isLoading }] = useRegisterMutation();
-  const [getPrivacy, { data }] = usePrivacyMutation();
+  const [getPrivacy, { data, isLoading: privacyLoading }] =
+    usePrivacyMutation();
   const { push } = useRouter();
   const dispatch = useDispatch();
   const [reg, setRegister] = useState(false);
@@ -48,7 +52,7 @@ const Register = () => {
       .required(`${t("password_confirmation-required")}`)
       .min(6, `${t("password-min-6")}`)
       .oneOf([yup.ref("password")], `${t("password-match")}`),
-      term: yup
+    term: yup
       .bool()
       .required(`${t("privacy-required")}`)
       .oneOf([true], `${t("file-must-check")}`),
@@ -66,18 +70,27 @@ const Register = () => {
   }, []);
 
   const onSubmit = async (data: any) => {
-    data.term = data.term ? 1 : 0
-    const res = await registerRequest(data);
-    console.log(res);
-    dispatch(setUser(res.data));
-    push("profile");
+    data.term = data.term ? 1 : 0;
+    registerRequest(data)
+      .then((res) => {
+        if ("data" in res) {
+          dispatch(setUser(res.data));
+          push("profile");
+        } else {
+          const errorMessage = res.error.data.errors.email[0];
+          Swal.fire(`${t(errorMessage)}`, "", "error");
+        }
+      })
+      .catch((er) => {
+        console.log(er);
+      });
   };
 
-  useEffect(() => {
-    if (token.length > 0) {
-      push("profile");
-    }
-  })
+  // useEffect(() => {
+  //   if (token.length > 0) {
+  //     push("profile");
+  //   }
+  // });
 
   return (
     <>
@@ -92,13 +105,13 @@ const Register = () => {
                 style={{ height: "50px" }}
                 className="app-brand justify-content-center"
               >
-                <Image
-                  style={{ objectFit: "cover" }}
-                  src={"/logo.png"}
-                  alt="logo"
-                  width={350}
-                  height={200}
-                />
+                <Link href={'/'}><Image
+                    style={{ objectFit: "cover" }}
+                    src={"/logo.png"}
+                    alt="logo"
+                    width={350}
+                    height={200}
+                /></Link>
               </div>
               {/* <!-- /Logo --> */}
               <h4 className="mb-2">{t("create-an-account")}</h4>
@@ -107,10 +120,7 @@ const Register = () => {
               {reg ? (
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  id="formAuthentication"
                   className="mb-3 fv-plugins-bootstrap5 fv-plugins-framework"
-                  action="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/horizontal-menu-template/index.html"
-                  method="POST"
                   noValidate={false}
                 >
                   <div className="mb-3 fv-plugins-icon-container">
@@ -315,9 +325,13 @@ const Register = () => {
                   data-bs-dismiss="modal"
                   aria-label="Close"
                 ></button>
-                {data?.term?.description
-                  ? parse(`${data?.term?.description}`)
-                  : ""}
+                {privacyLoading ? (
+                  <Loading />
+                ) : data?.term?.description ? (
+                  parse(`${data?.term?.description}`)
+                ) : (
+                  "Nothing to show"
+                )}
               </div>
             </div>
           </div>

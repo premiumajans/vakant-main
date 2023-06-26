@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import Swal from "sweetalert2";
 import * as yup from "yup";
 
@@ -50,13 +50,15 @@ const ForgetPassword = () => {
                 style={{ height: "50px" }}
                 className="app-brand justify-content-center"
               >
-                <Image
-                  style={{ objectFit: "cover" }}
-                  src={"/logo.png"}
-                  alt="logo"
-                  width={350}
-                  height={200}
-                />
+                <Link href={'/'}>
+                  <Image
+                      style={{ objectFit: "cover" }}
+                      src={"/logo.png"}
+                      alt="logo"
+                      width={350}
+                      height={200}
+                  />
+                </Link>
               </div>
 
               {/* <!-- /Logo --> */}
@@ -64,7 +66,7 @@ const ForgetPassword = () => {
               <p className="mb-4"></p>
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                id="formAuthentication"
+
                 className="mb-3 fv-plugins-bootstrap5 fv-plugins-framework"
                 action="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/horizontal-menu-template/auth-reset-password-basic.html"
                 method="POST"

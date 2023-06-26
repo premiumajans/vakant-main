@@ -11,11 +11,11 @@ const ForgotPassword = () => {
     authorisation: { token },
   } = useSelector(getUser);
 
-  useEffect(() => {
-    if (token.length > 0) {
-      push("profile");
-    }
-  })
+  // useEffect(() => {
+  //   if (token.length > 0) {
+  //     push("profile");
+  //   }
+  // })
   
   return (
     <>
@@ -24,12 +24,13 @@ const ForgotPassword = () => {
   );
 };
 
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps(context:any) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
+      ...(await serverSideTranslations(context.locale, ["common"])),
+
+    }
+  }
 }
 
 export default ForgotPassword;

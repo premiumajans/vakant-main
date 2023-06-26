@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useLoginMutation } from "@/Store/Query/Auth";
@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, setUser } from "@/Store/Slices/User";
 import Link from "next/link";
+import axios from "axios";
 
 const Login = () => {
   const { push } = useRouter();
@@ -51,15 +52,16 @@ const Login = () => {
     if ("error" in res) {
     } else {
       dispatch(setUser(res.data));
+      // axios.post("/api/save-user", res.data)
       push("profile");
     }
   };
 
-  useEffect(() => {
-    if (token?.length > 0) {
-      push("profile");
-    }
-  })
+  // useEffect(() => {
+  //   if (token?.length > 0) {
+  //     push("profile");
+  //   }
+  // });
 
   return (
     <>
@@ -75,13 +77,15 @@ const Login = () => {
                 style={{ height: "50px" }}
                 className="app-brand justify-content-center"
               >
-                <Image
-                  src={"/logo.png"}
-                  style={{ objectFit: "cover" }}
-                  alt="logo"
-                  width={350}
-                  height={200}
-                />
+                <Link href={'/'}>
+                  <Image
+                      src={"/logo.png"}
+                      style={{ objectFit: "cover" }}
+                      alt="logo"
+                      width={350}
+                      height={200}
+                  />
+                </Link>
               </div>
               {/* <!-- /Logo --> */}
               <h4 className="mb-2">{t("login-to-account")}</h4>
@@ -90,7 +94,7 @@ const Login = () => {
               {login ? (
                 <form
                   onSubmit={handleSubmit(onSubmit)}
-                  id="formAuthentication"
+
                   className="mb-3"
                 >
                   <div className="mb-3">
