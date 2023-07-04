@@ -24,7 +24,7 @@ const Footer = () => {
         <footer className="ftco-footer ftco-bg-dark ftco-section">
             <div className="container">
                 <div className=" row mb-5 text-left ">
-                    <div className={'col-4 col-md-6 col-sm-12'} data-aos="fade-up ">
+                    <div className={'col-12 col-md-6 col-sm-12'} data-aos="fade-up ">
                         <div className="ftco-footer-widget mb-4 col">
                             <h2 className="ftco-heading-2">{t('questions')}</h2>
                             <div className="block-23 mb-3">
@@ -51,7 +51,7 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    <div className={'col-4 col-md-6 col-sm-12'} data-aos="fade-up ">
+                    <div className={'col-12 col-md-6 col-sm-12'} data-aos="fade-up ">
                         <div className="ftco-footer-widget mb-4 col">
                             <h2 className="ftco-heading-2">{t('find-a-job')}</h2>
                             <div className="block-23 mb-3">
