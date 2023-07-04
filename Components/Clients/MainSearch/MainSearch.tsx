@@ -124,7 +124,7 @@ const MainSearch = ({
                                                 <div className="form-group">
                                                     <div className="form-field">
                                                         <div className="icon"><span
-                                                            className="icon-map-marker"></span></div>
+                                                            className="icon-building"></span></div>
                                                         <select
                                                             {...register('city')}
                                                             name="city"
@@ -155,7 +155,7 @@ const MainSearch = ({
                                                 <div className="form-group">
                                                     <div className="form-field">
                                                         <div className="icon"><span
-                                                            className="icon-map-marker"></span></div>
+                                                            className="icon-mode_edit"></span></div>
                                                         <select
                                                             {...register('mode')}
                                                             className="form-control"
@@ -186,7 +186,7 @@ const MainSearch = ({
                                                 <div className="form-group">
                                                     <div className="form-field">
                                                         <div className="icon"><span
-                                                            className="icon-map-marker"></span></div>
+                                                            className="icon-briefcase"></span></div>
                                                         <select
                                                             {...register('education')}
                                                             className="form-control"
