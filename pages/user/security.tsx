@@ -11,8 +11,7 @@ import MainWraper from "@/Components/Dashboard/MainWraper/MainWraper";
 import {useRouter} from "next/router";
 import Swal from "sweetalert2";
 import Head from "next/head";
-import {wrapper} from "../_app";
-import axios from "axios";
+
 
 const Security = () => {
     const {t} = useTranslation("common");
@@ -23,7 +22,7 @@ const Security = () => {
         "",
     ]);
 
-    const {push} = useRouter();
+    const {push,reload} = useRouter();
     const [isTextType, setIsTextType] = useState([false, false, false]);
     const [changePassword, {isLoading, isSuccess}] =
         useChangePasswordMutation();
@@ -46,11 +45,6 @@ const Security = () => {
         setCurrentPassword(array);
     };
 
-    // useEffect(() => {
-    //     if (!(authorisation?.token.length > 0)) {
-    //         push("login");
-    //     }
-    // }, []);
 
     let schema = yup.object().shape({
         current_password: currentPassword.some((val) => val.length > 0)
@@ -75,6 +69,8 @@ const Security = () => {
             : yup.string(),
     });
 
+
+
     const {
         handleSubmit,
         register,
@@ -87,23 +83,24 @@ const Security = () => {
         setValue("email", email);
         const res = await changePassword({user: data, token});
         if ("data" in res) {
-            console.log(res)
-            Swal.fire(`${t(res.data.message)}`, "", "success");
+            Swal.fire(`${t(res.data.message)}`, "", "success")
+                .then(async () => {
+                    const refRes = await refresh(token);
+                    if ("data" in refRes) {
+                        if ('error' in refRes.data) {
+                            dispatch(setInitialUser());
+                            push("login");
+                        } else {
+                            dispatch(setUser(refRes.data));
+                            setCurrentPassword(['','',''])
+                            reload()
+                            // reset();
+                        }
+                    } else {
+                    }
+                })
 
-            const refRes = await refresh(token);
-            if ("data" in refRes) {
-                if ('error' in refRes.data) {
-                    dispatch(setInitialUser());
-                    push("login");
-                } else {
-                    dispatch(setUser(refRes.data));
-                    reset();
-                }
-            } else {
-                console.log(refRes.error.message)
-            }
         } else {
-            console.log(res)
             const errors = res.error?.data?.message;
             if ("status" in res.error?.data) {
                 Swal.fire(`${t(res.error?.data.status)}`, "", "error").then(() => {
@@ -111,10 +108,15 @@ const Security = () => {
                     push("login");
                 })
             } else {
-                Swal.fire(`${t(Object.entries(errors)[0])}`, "", "error");
+                if(typeof  errors === 'string') {
+                    Swal.fire(`${t(errors)}`, "", "error");
+                } else {
+                    Swal.fire(`${t(Object.entries(errors)[0])}`, "", "error");
+                }
             }
         }
     };
+
 
     return (
         <MainWraper>

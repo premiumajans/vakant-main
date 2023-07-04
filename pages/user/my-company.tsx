@@ -12,26 +12,32 @@ import {convertFromRaw, convertToRaw, EditorState} from "draft-js";
 import dynamic from "next/dynamic";
 import {EditorProps} from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import {getUser} from "@/Store/Slices/User";
-import {useSelector} from "react-redux";
+import {getUser, setInitialUser, setUser} from "@/Store/Slices/User";
+import {useDispatch, useSelector} from "react-redux";
 import Swal from "sweetalert2";
 import CompanyImageForm from "@/Components/Dashboard/CompanyImageForm/CompanyImageForm";
 import {
     useCancelPremiumMutation,
     useCheckCompanyMutation,
-    useGetPremiumMutation, useIncreasePremiumMutation,
+    useGetPremiumMutation,
+    useIncreasePremiumMutation,
+    useRefreshMutation,
     useUpdateCompanyMutation,
 } from "@/Store/Query/Auth";
 import Loading from "@/Components/Dashboard/Loading/Loading";
+import {useRouter} from "next/router";
 
 
 const Company = () => {
-    const {authorisation,company} = useSelector(getUser);
+    const {authorisation, company} = useSelector(getUser);
     const [updateCompany, {isLoading}] = useUpdateCompanyMutation();
     const [check, {data, isLoading: loading}] = useCheckCompanyMutation();
     const [getPremium, {isLoading: premiumLoading, data: premiumData}] = useGetPremiumMutation()
-    const [cancelPremium, {isLoading:cancelLoading}] = useCancelPremiumMutation()
-    const [increasePremium, {isLoading:increaseLoading}] = useIncreasePremiumMutation()
+    const [cancelPremium, {isLoading: cancelLoading}] = useCancelPremiumMutation()
+    const [increasePremium, {isLoading: increaseLoading}] = useIncreasePremiumMutation()
+    const [refresh, {}] = useRefreshMutation();
+    const dispatch = useDispatch()
+    const {push} = useRouter()
     const message = data?.message;
 
 
@@ -46,7 +52,8 @@ const Company = () => {
 
     useEffect(() => {
         setShow(true);
-        check({token: authorisation?.token});
+        check({token: authorisation?.token})
+
     }, []);
 
     useEffect(() => {
@@ -81,7 +88,7 @@ const Company = () => {
             setValue("name", name);
             setValue("phone", phone);
             setValue("email", email);
-            setValue("address", adress);
+            setValue("adress", adress);
             setValue("about", about == null ? "" : about);
         }
     }, [data]);
@@ -95,7 +102,7 @@ const Company = () => {
             .string()
             .min(3, `${t("name-min-3")}`)
             .required(`${t("name-required")}`),
-        address: yup.string().required(`${t("address-required")}`),
+        adress: yup.string().required(`${t("adress-required")}`),
         phone: yup.string().required(`${t("phone-required")}`),
         about: yup.string(),
     });
@@ -108,10 +115,24 @@ const Company = () => {
     } = useForm({resolver: yupResolver(schema)});
 
     const onSubmit = (data: any) => {
+        console.log(data)
         updateCompany({data, token: authorisation.token}).then((res) => {
             if ("data" in res) {
                 Swal.fire(`${t(res.data.message)}`, "", "success").then(() => {
-                    check({token: authorisation?.token});
+                    check({token: authorisation?.token}).then(async () => {
+                        const refRes = await refresh(authorisation?.token);
+                        if ("data" in refRes) {
+                            if ('error' in refRes.data) {
+                                dispatch(setInitialUser());
+                                push("login");
+                            } else {
+                                dispatch(setUser(refRes.data));
+                            }
+                        } else {
+                            console.log(refRes.error.message)
+                        }
+                    })
+
                 });
             } else {
                 Swal.fire(`${t(res.error.message)}`, "", "error");
@@ -152,7 +173,7 @@ const Company = () => {
 
                                                 <span className="text-warning">Premium&nbsp;<i
                                                     className="fas fa-crown"></i></span>
-                                                <div className={'d-flex flex-column'}>
+                                                <div style={{textAlign: "right"}} className={'d-flex flex-column'}>
 
                                                     <h4 className="mb-sm-2">{t('current-position')}:
                                                         <span
@@ -167,7 +188,7 @@ const Company = () => {
                                         </div>
                                         <div className="d-flex justify-content-between mt-3 premium-active">
                                             <button disabled={increaseLoading} onClick={() => {
-                                                increasePremium({token:authorisation.token, id:message?.id})
+                                                increasePremium({token: authorisation.token, id: message?.id})
                                                     .then(res => {
                                                         if ("data" in res) {
                                                             Swal.fire(`${t(res.data.message)}`, "", "success").then(() => {
@@ -182,8 +203,8 @@ const Company = () => {
                                                     data-whatever="@mdo">
                                                 <i className="fas fa-clock"></i>&nbsp;{increaseLoading ? t('loading') : t('increase-time')}
                                             </button>
-                                            <button disabled={cancelLoading}  onClick={() => {
-                                                cancelPremium({token:authorisation.token, id:message?.id})
+                                            <button disabled={cancelLoading} onClick={() => {
+                                                cancelPremium({token: authorisation.token, id: message?.id})
                                                     .then(res => {
                                                         if ("data" in res) {
                                                             Swal.fire(`${t(res.data.message)}`, "", "success").then(() => {
@@ -195,7 +216,8 @@ const Company = () => {
                                                     })
                                             }} className="btn btn-danger text-white w-45"
                                             ><i
-                                                className="fas fa-clock"></i> &nbsp;{ cancelLoading ? t('loading') : t('cancel')} </button>
+                                                className="fas fa-clock"></i> &nbsp;{cancelLoading ? t('loading') : t('cancel')}
+                                            </button>
                                         </div>
                                     </div> : <>
                                         <div className="card-body">
@@ -263,22 +285,22 @@ const Company = () => {
                                                 )}
                                             </div>
                                             <div className="mb-3 col-md-6">
-                                                <label htmlFor="address" className="form-label">
+                                                <label htmlFor="adress" className="form-label">
                                                     {t("adress")}
                                                 </label>
                                                 <input
-                                                    {...register("address")}
+                                                    {...register("adress")}
                                                     type="text"
                                                     defaultValue={message?.adress}
                                                     className={`form-control ${
-                                                        errors.address ? "is-invalid" : ""
+                                                        errors.adress ? "is-invalid" : ""
                                                     }`}
-                                                    name="address"
+                                                    name="adress"
                                                     placeholder="Bakı, Azerbaijan"
                                                 />
-                                                {errors.address ? (
+                                                {errors.adress ? (
                                                     <div className="fv-plugins-message-container invalid-feedback">
-                                                        <div>{errors.address.message as string}</div>
+                                                        <div>{errors.adress.message as string}</div>
                                                     </div>
                                                 ) : (
                                                     ""

@@ -89,8 +89,7 @@ const Index = ({
                                                 </div>
                                                 <div><span className="icon-date_range ml-2"></span>
                                                     <span>{item.shared_time.split(' ')[0]}</span></div>
-                                                <span className="text-warning">Premium&nbsp;<i
-                                                    className="fas fa-crown"></i></span>
+
                                             </div>
                                         </div>
 

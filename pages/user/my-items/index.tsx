@@ -8,7 +8,6 @@ import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {useTranslation} from "next-i18next";
 import {useDispatch, useSelector} from "react-redux";
-import Swal from "sweetalert2";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const MyItems = () => {
@@ -20,12 +19,6 @@ const MyItems = () => {
     useEffect(() => {
         getItems(authorisation?.token)
             .then(res => {
-               if('error' in res) {
-                   Swal.fire(`${res.error.status}`, "", "error").then(() =>{
-                       dispatch(setInitialUser())
-                       push("login")
-                   })
-               }
             })
     }, [authorisation?.token]);
 
@@ -36,14 +29,13 @@ const MyItems = () => {
     const [ended, setEnded] = useState([])
 
     useEffect(() => {
-        getItems(authorisation?.token)
+        if(isSuccess) {
+            getItems(authorisation?.token)
+        }
     }, [isSuccess])
 
     useEffect(() => {
-        if (data?.status === 'token_is_expired' || deletedItemData?.status === 'token_is_expired') {
-            dispatch(setInitialUser())
-            push('login')
-        } else {
+        if (!(data?.status === 'token_is_expired' || deletedItemData?.status === 'token_is_expired')) {
             if (data !== undefined) {
                 setContinued(data.on_going)
                 setEnded(data?.finished)
@@ -68,7 +60,7 @@ const MyItems = () => {
                                 {translate("continuing-vacancies")}
                             </h4>
                             <div className="row g-4">
-                                {continued?.map((el, i) => <ItemCard Delete={deleteItem} item={el} key={i}/>)}
+                                {continued?.map((el, i) => <ItemCard  Delete={deleteItem} item={el} key={i}/>)}
                             </div>
                         </> : ''}
                         {ended.length > 0 ? <>

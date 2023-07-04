@@ -58,7 +58,7 @@ const Footer = () => {
                                 <ul >
                                     {category.map((item) => {
                                         return  <li  key={item.id}>
-                                            <Link href={item.id.toString()}>
+                                            <Link href={'/jobs'}>
                                                 {item.translations.find(item => item.locale === i18n?.language)?.name}
                                             </Link>
                                         </li>

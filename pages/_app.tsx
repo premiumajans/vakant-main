@@ -2,7 +2,7 @@ import "@/styles/globals.scss";
 import type {AppProps} from "next/app";
 import {persistor, store} from "../Store/store";
 import {useRouter} from "next/router";
-import {Provider, useSelector} from "react-redux";
+import {Provider, useDispatch, useSelector} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 import {createWrapper} from "next-redux-wrapper";
 import AdminLayout from "@/Components/Dashboard/AdminLayout/AdminLayout";
@@ -15,12 +15,14 @@ import Head from "next/head";
 import {useEffect, useState} from "react";
 import Loading from "@/Components/Dashboard/Loading/Loading";
 
+
 function App({Component, pageProps}: AppProps) {
     const router = useRouter();
     const {pathname} = router
-    const {company} = useSelector(getUser);
+    const {company, authorisation} = useSelector(getUser);
     const {i18n} = useTranslation('common')
     const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const handleRouteChange = () => {
@@ -35,9 +37,8 @@ function App({Component, pageProps}: AppProps) {
         router.events.on('routeChangeComplete', handleRouteComplete)// If the component is unmounted, unsubscribe
 
         const html = document.querySelector('html')!
-        if(window) {
-            console.log(window.screenX)
-            if(window.screenX < 992) {
+        if (window) {
+            if (window.screenX < 992) {
                 html.classList.add('layout-menu-expanded')
             }
 
@@ -47,7 +48,6 @@ function App({Component, pageProps}: AppProps) {
         }
 
     }, [router])
-
 
     return (
         <>
@@ -74,7 +74,7 @@ function App({Component, pageProps}: AppProps) {
                             <Component {...pageProps} />
 
                         </AdminLayout> :
-                        loading ? <Loading/> : <ClientLayout> <Component {...pageProps} /></ClientLayout> }
+                        loading ? <Loading/> : <ClientLayout> <Component {...pageProps} /></ClientLayout>}
                     {" "}
                 </PersistGate>
             </Provider>

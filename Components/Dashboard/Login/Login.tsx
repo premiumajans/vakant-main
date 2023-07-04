@@ -57,11 +57,6 @@ const Login = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (token?.length > 0) {
-  //     push("profile");
-  //   }
-  // });
 
   return (
     <>
@@ -169,22 +164,22 @@ const Login = () => {
                     </span>
                   </div>
 
-                  <div className="mb-3">
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="terms-conditions"
-                        name="terms"
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="terms-conditions"
-                      >
-                        {t("remember-me")}
-                      </label>
-                    </div>
-                  </div>
+                  {/*<div className="mb-3">*/}
+                  {/*  <div className="form-check">*/}
+                  {/*    <input*/}
+                  {/*      className="form-check-input"*/}
+                  {/*      type="checkbox"*/}
+                  {/*      id="terms-conditions"*/}
+                  {/*      name="terms"*/}
+                  {/*    />*/}
+                  {/*    <label*/}
+                  {/*      className="form-check-label"*/}
+                  {/*      htmlFor="terms-conditions"*/}
+                  {/*    >*/}
+                  {/*      {t("remember-me")}*/}
+                  {/*    </label>*/}
+                  {/*  </div>*/}
+                  {/*</div>*/}
                   {error?.status === 401 ? (
                     <div
                       style={{ display: "block", margin: 10 }}
@@ -216,19 +211,19 @@ const Login = () => {
                 </Link>
               </p>
 
-              <div className="divider my-4">
-                <span className="divider-text">or</span>
-              </div>
+              {/*<div className="divider my-4">*/}
+              {/*  <span className="divider-text">or</span>*/}
+              {/*</div>*/}
 
-              <div className="d-flex justify-content-center">
-                <a href="" className="btn btn-icon btn-label-facebook me-3">
-                  <i className="tf-icons bx bxl-facebook"></i>
-                </a>
+              {/*<div className="d-flex justify-content-center">*/}
+              {/*  <a href="" className="btn btn-icon btn-label-facebook me-3">*/}
+              {/*    <i className="tf-icons bx bxl-facebook"></i>*/}
+              {/*  </a>*/}
 
-                <a href="" className="btn btn-icon btn-label-google-plus me-3">
-                  <i className="tf-icons bx bxl-google-plus"></i>
-                </a>
-              </div>
+              {/*  <a href="" className="btn btn-icon btn-label-google-plus me-3">*/}
+              {/*    <i className="tf-icons bx bxl-google-plus"></i>*/}
+              {/*  </a>*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>

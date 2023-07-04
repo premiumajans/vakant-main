@@ -11,11 +11,7 @@ const ForgotPassword = () => {
     authorisation: { token },
   } = useSelector(getUser);
 
-  // useEffect(() => {
-  //   if (token.length > 0) {
-  //     push("profile");
-  //   }
-  // })
+
   
   return (
     <>

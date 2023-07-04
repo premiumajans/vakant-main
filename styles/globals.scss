@@ -1,4 +1,4 @@
-@import "mediaQuery";
+
 * {
     padding: 0;
     margin: 0;
@@ -9,6 +9,10 @@
 }
 
 .menu-horizontal .menu-inner>.menu-item>.menu-toggle::after {
+    display: none;
+}
+
+.layout-menu-toggle {
     display: none;
 }
 
@@ -38,3 +42,5 @@ li {
     display: flex;
 }
 
+
+@import "mediaQuery";

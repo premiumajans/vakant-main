@@ -1,6 +1,6 @@
 {
-  "you-extend-time-1-m": "Vaxtınız bir ay müddətinə uzadıldı",
-  "your-premium-cancelled": "Premiumunuz ləğv edildi",
+  "your-premium-subscription-has-been-extended": "Vaxtınız bir ay müddətinə uzadıldı",
+  "your-premium-subscription-has-been-cancelled": "Premiumunuz ləğv edildi",
   "loading": "Yüklənir...",
   "add": "Elan",
   "make-premium":"Premium etmək",
@@ -22,7 +22,7 @@
   "rights": "Bütün hüquqlar qorunur.",
   "current-position":"Cari Vəziyyət ",
   "increase-time": "Müddəti uzat",
-  "companyData": "Əvvəlcə şirkətinizi məlumatları doldurun",
+  "companyData": "Əvvəlcə şirkətinizin məlumatları doldurun",
   "days-left": "{{days}} gün qalıb",
   "current-password-mismatch": "Cari parol uyğun gəlmir",
   "token_is_expired": "Tokenin müddəti bitib",

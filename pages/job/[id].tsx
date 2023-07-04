@@ -20,9 +20,9 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
 
     return <>
         <Head>
-            <title>{vacancy.description.position}</title>
-            <meta property="og:title" content={vacancy.description.position}/>
-            <meta property="og:description" content={vacancy.description.company}/>
+            <title>{vacancy.description?.position}</title>
+            <meta property="og:title" content={vacancy.description?.position}/>
+            <meta property="og:description" content={vacancy.description?.company}/>
             <meta property="og:url"
                   content={process.env['NEXT_PUBLIC_MAIN_PATH_WITH_API'] + 'job/' + query.id}/>
         </Head>
@@ -164,12 +164,12 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
                         </div>
                     </div>
 
-                    <div className="services mt-3">
+                    {vacancy.vacancy_type === 1 ? <div className="services mt-3">
                         <button
                             className="btn btn-primary"
                         ><i className="fas fa-crown"></i> {t('make-premium')}
                         </button>
-                    </div>
+                    </div> : ''}
 
                     {/*<div data-aos="fade-up" className="job-post-item p-4 d-block d-lg-flex align-items-center">*/}
                     {/*    <div className="one-third mb-4 mb-md-0">*/}

@@ -63,11 +63,12 @@ export const auth = createApi({
             }),
         }),
         refresh: build.mutation({
-            query: (token: string) => ({
+            query: (token: string , abortController:any = '') => ({
                 url: `api/auth/refresh`,
                 method: "POST",
+                signal:abortController?.siqnal,
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${token}`
                 },
             }),
         }),

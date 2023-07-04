@@ -292,19 +292,19 @@ const Register = () => {
                 <Link href="/user/login">{t("sign-in-instead")}</Link>
               </p>
 
-              <div className="divider my-4">
-                <span className="divider-text">or</span>
-              </div>
+              {/*<div className="divider my-4">*/}
+              {/*  <span className="divider-text">or</span>*/}
+              {/*</div>*/}
 
-              <div className="d-flex justify-content-center">
-                <a href="" className="btn btn-icon btn-label-facebook me-3">
-                  <i className="tf-icons bx bxl-facebook"></i>
-                </a>
+              {/*<div className="d-flex justify-content-center">*/}
+              {/*  <a href="" className="btn btn-icon btn-label-facebook me-3">*/}
+              {/*    <i className="tf-icons bx bxl-facebook"></i>*/}
+              {/*  </a>*/}
 
-                <a href="" className="btn btn-icon btn-label-google-plus me-3">
-                  <i className="tf-icons bx bxl-google-plus"></i>
-                </a>
-              </div>
+              {/*  <a href="" className="btn btn-icon btn-label-google-plus me-3">*/}
+              {/*    <i className="tf-icons bx bxl-google-plus"></i>*/}
+              {/*  </a>*/}
+              {/*</div>*/}
             </div>
           </div>
         </div>

@@ -4,8 +4,9 @@ import {useTranslation} from "next-i18next";
 import {useSelector} from "react-redux";
 import parse from 'html-react-parser'
 import CustomItemDropdownMenu from "@/Components/Universal/CustomItemDropdownMenu/CustomItemDropdownMenu";
+import React from "react";
 
-const ItemCard = ({item: {description: {position, vacancy_id, job_description}, end_time,}, Delete, vacancyPosition}: {
+const ItemCard = ({item: {description: {position, vacancy_id, job_description}, end_time,vacancy_type}, Delete, vacancyPosition}: {
     item: Item,
     Delete: any,
     vacancyPosition: 'ended' | "going"
@@ -19,9 +20,11 @@ const ItemCard = ({item: {description: {position, vacancy_id, job_description}, 
             <div className="card-body">
                 <div className="d-flex align-items-center mb-3">
                     <a className="d-flex align-items-center">
-                        <div className="avatar avatar-sm me-2">
-                            <img src="/static/img/icons/brands/react-label.png" alt="Avatar"
+                        <div className="avatar avatar-sm me-2 d-flex align-items-center">
+                            {vacancy_type === 2 ?  <span className="text-warning"><i
+                                className="fas fa-crown"></i></span> : <img style={{objectFit:'cover'}} src="/logo.png" alt="Avatar"
                                  className="rounded-circle"/>
+                            }
                         </div>
                         <div className="me-2 text-body h5 mb-0">
                             {position}

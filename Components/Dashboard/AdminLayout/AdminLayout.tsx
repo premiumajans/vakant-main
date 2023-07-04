@@ -1,16 +1,26 @@
 import {PropsWithChildren, useEffect, useState} from 'react';
 import Head from "next/head";
 import Script from "next/script";
-import {useSelector} from "react-redux";
-import {getUser} from "@/Store/Slices/User";
+import {useDispatch, useSelector} from "react-redux";
+import {getUser, setInitialUser} from "@/Store/Slices/User";
 import {useRouter} from "next/router";
+import jwt_decode from "jwt-decode";
+import {useRefreshMutation} from "@/Store/Query/Auth";
+import Swal from "sweetalert2";
+import {useTranslation} from "next-i18next";
+
 
 
 const AdminLayout = ({children}: PropsWithChildren) => {
+    const {t} = useTranslation('common')
 
     const user = useSelector(getUser);
     const {pathname, push} = useRouter();
-    const [show,setShow] = useState(true)
+    const [show, setShow] = useState(true)
+    const dispatch = useDispatch()
+    const {company, authorisation} = useSelector(getUser);
+    const router = useRouter();
+    const [refresh, {}] = useRefreshMutation();
 
     useEffect(() => {
         if (!(user?.authorisation?.token.length > 0)) {
@@ -39,7 +49,30 @@ const AdminLayout = ({children}: PropsWithChildren) => {
         return () => {
             setShow(true)
         }
-     },[pathname, push, user?.authorisation?.token ]);
+    }, [pathname, push, user?.authorisation?.token]);
+
+
+    useEffect(() => {
+        const checkTokenExpiry = () => {
+            const decodedToken = jwt_decode(authorisation?.token);
+            const expirationDate = new Date(decodedToken?.exp * 1000).getTime();
+            const currentTime = Date.now()
+            if (+expirationDate <= +currentTime) {
+                Swal.fire(`${t('token_is_expired')}`, "", "error")
+                    .then(() => {
+                        dispatch(setInitialUser());
+                        router.push("login");
+                    })
+
+            }
+        };
+
+        const interval = setInterval(checkTokenExpiry, 1000); // Check every second
+
+        return () => {
+            clearInterval(interval); // Clean up the interval when the component unmounts
+        };
+    }, [authorisation?.token]);
 
 
     return <>
