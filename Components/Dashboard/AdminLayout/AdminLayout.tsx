@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 import {useRefreshMutation} from "@/Store/Query/Auth";
 import Swal from "sweetalert2";
 import {useTranslation} from "next-i18next";
+import Loading from "@/Components/Dashboard/Loading/Loading";
 
 
 
@@ -21,6 +22,7 @@ const AdminLayout = ({children}: PropsWithChildren) => {
     const {company, authorisation} = useSelector(getUser);
     const router = useRouter();
     const [refresh, {}] = useRefreshMutation();
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         if (!(user?.authorisation?.token.length > 0)) {
@@ -75,13 +77,40 @@ const AdminLayout = ({children}: PropsWithChildren) => {
     }, [authorisation?.token]);
 
 
+    useEffect(() => {
+        const link = document.createElement('link');
+        const handleLoad = () => {
+            setIsLoading(false);
+        };
+
+        if ((pathname.indexOf('user') >= 0)) {
+
+            link.href = "/static/vendor/css/rtl/core.css";
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.media = 'all';
+            link.addEventListener('load', handleLoad);
+            document.head.appendChild(link);
+            return () => {
+                link.removeEventListener('load', handleLoad);
+                document.head.removeChild(link);
+                setIsLoading(true)
+            };
+        }
+
+
+    }, []);
+
+ 
+
+
     return <>
         <Head>
+            {/*<link rel="stylesheet" href="/static/vendor/css/rtl/core.css"/>*/}
+            <link rel="stylesheet" href="/static/vendor/css/rtl/theme-default.css"/>
             <link rel="stylesheet" href="/static/vendor/fonts/boxicons.css"/>
             <link rel="stylesheet" href="/static/vendor/fonts/fontawesome.css"/>
             <link rel="stylesheet" href="/static/vendor/fonts/flag-icons.css"/>
-            <link rel="stylesheet" href="/static/vendor/css/rtl/core.css"/>
-            <link rel="stylesheet" href="/static/vendor/css/rtl/theme-default.css"/>
             <link rel="stylesheet" href="/static/vendor/libs/typeahead-js/typeahead.css"/>
             <link rel="stylesheet" href="/static/vendor/libs/typeahead-js/typeahead.css"/>
             <link rel="stylesheet" href="/static/vendor/libs/formvalidation/dist/css/formValidation.min.css"/>
@@ -138,7 +167,7 @@ const AdminLayout = ({children}: PropsWithChildren) => {
             }
         </Script>
 
-        {show ? <main>{children}</main> : ''}
+        {show ? isLoading ? <Loading/> : <main>{children}</main>  : ''}
 
 
     </>

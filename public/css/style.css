@@ -8345,7 +8345,7 @@ h1, h2, h3, h4, h5,
   position: relative; }
   @media (max-width: 991.98px) {
     .hero-wrap {
-      height: 900px; } }
+      height: 500px; } }
   .hero-wrap .overlay {
     position: absolute;
     top: 0;
@@ -8365,13 +8365,13 @@ h1, h2, h3, h4, h5,
     background: linear-gradient(to right, #207dff 0%, #a16ae8 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#207dff', endColorstr='#a16ae8', GradientType=1 ); }
   .hero-wrap .slider-text {
-    height: 800px;
+    height: 600px;
     z-index: 0;
     overflow: hidden; }
     @media (max-width: 991.98px) {
       .hero-wrap .slider-text {
         text-align: center;
-        height: 900px; } }
+        height: 600px; } }
     .hero-wrap .slider-text .subheading {
       color: #000000;
       font-weight: 700;

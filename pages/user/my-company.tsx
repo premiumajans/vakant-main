@@ -421,9 +421,6 @@ const Company = () => {
                                                 {" "}
                                                 {t("save")}
                                             </button>
-                                            <button type="reset" className="btn btn-label-secondary">
-                                                {t("cancel")}
-                                            </button>
                                         </div>
                                     </form>
                                 </div>

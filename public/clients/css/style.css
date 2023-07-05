@@ -8341,11 +8341,11 @@ h1, h2, h3, h4, h5,
 
 .hero-wrap {
   width: 100%;
-  height: 800px;
+  height: 600px;
   position: relative; }
   @media (max-width: 991.98px) {
     .hero-wrap {
-      height: 900px; } }
+      height: 600px; } }
   .hero-wrap .overlay {
     position: absolute;
     top: 0;
@@ -8371,7 +8371,7 @@ h1, h2, h3, h4, h5,
     @media (max-width: 991.98px) {
       .hero-wrap .slider-text {
         text-align: center;
-        height: 900px; } }
+        height: 600px; } }
     .hero-wrap .slider-text .subheading {
       color: #000000;
       font-weight: 700;

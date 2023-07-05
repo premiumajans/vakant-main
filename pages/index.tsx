@@ -23,8 +23,8 @@ const Index = ({
     return <>
         <div className="hero-wrap img" style={{backgroundImage: "url(images/bg_1.jpg)"}}>
             <div className="overlay"></div>
-            <div className="container">
-                <div className="row d-md-flex no-gutters slider-text align-items-center justify-content-center">
+            <div>
+                <div style={{padding:'10% 0', position:'absolute', top:"10%"}} className="row col-md-12 d-md-flex no-gutters slider-text align-items-start justify-content-center">
                     <MainSearch city={city} modes={modes} categories={categories} educations={educations}/>
                 </div>
             </div>

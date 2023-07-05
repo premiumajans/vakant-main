@@ -47,19 +47,10 @@ const MainSearch = ({
 
 
     return <>
-        <div data-aos="fade-up" className="col-md-12 d-flex align-i tems-center ">
-            <div className="text text-center   ">
+        <div data-aos="fade-up" className="col-md-12 d-flex align-items-start ">
+            <div className="text text-center col-md-12" >
                 <div className="ftco-search ">
                     <div className="row">
-                        <div className="col-md-12 nav-link-wrap">
-                            <div className="nav nav-pills text-center" id="v-pills-tab" role="tablist"
-                                 aria-orientation="vertical">
-                                <span style={{cursor: 'pointer'}} className="nav-link mr-md-1 "
-                                      id="v-pills-1-tab">{t('search')}</span>
-
-
-                            </div>
-                        </div>
                         <div className="col-md-12 tab-wrap">
 
                             <div className="tab-content p-4" id="v-pills-tabContent">

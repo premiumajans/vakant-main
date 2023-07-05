@@ -31,7 +31,7 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
              data-stellar-background-ratio="0.5">
             <div className="overlay"></div>
             <div className="container">
-                <div className="row no-gutters slider-text align-items-end justify-content-start">
+                <div className="row no-gutters slider-text align-items-center justify-content-center">
                     <PageTitle address={vacancy.description?.position} title={vacancy.description?.position}/>
                 </div>
             </div>

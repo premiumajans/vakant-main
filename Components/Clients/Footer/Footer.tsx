@@ -23,8 +23,26 @@ const Footer = () => {
     return <>
         <footer className="ftco-footer ftco-bg-dark ftco-section">
             <div className="container">
-                <div className=" row mb-5 text-left ">
-                    <div className={'col-12 col-md-6 col-sm-12'} data-aos="fade-up ">
+
+                <div className="row">
+
+                    <div className={'col-lg-9 col-md-8 col-12'} data-aos="fade-up ">
+                        <div className="ftco-footer-widget mb-4 col">
+                            <h2 className="ftco-heading-2">{t('find-a-job')}</h2>
+                            <div className="block-23 mb-3">
+                                <ul className={'row'} >
+                                    {category.map((item) => {
+                                        return  <li className={'col-md-6 col-lg-4 col-sm-6 col-12'}  key={item.id}>
+                                            <Link href={'/jobs'}>
+                                                {item.translations.find(item => item.locale === i18n?.language)?.name}
+                                            </Link>
+                                        </li>
+                                    })}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={'col-lg-3 col-md-4 col-12 d-flex justify-content-end'} data-aos="fade-up ">
                         <div className="ftco-footer-widget mb-4 col">
                             <h2 className="ftco-heading-2">{t('questions')}</h2>
                             <div className="block-23 mb-3">
@@ -51,26 +69,8 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    <div className={'col-12 col-md-6 col-sm-12'} data-aos="fade-up ">
-                        <div className="ftco-footer-widget mb-4 col">
-                            <h2 className="ftco-heading-2">{t('find-a-job')}</h2>
-                            <div className="block-23 mb-3">
-                                <ul >
-                                    {category.map((item) => {
-                                        return  <li  key={item.id}>
-                                            <Link href={'/jobs'}>
-                                                {item.translations.find(item => item.locale === i18n?.language)?.name}
-                                            </Link>
-                                        </li>
-                                    })}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-
-
                 </div>
+
                 <div className="row">
                     <div className="col-md-12 text-center">
 
