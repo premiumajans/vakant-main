@@ -1,4 +1,6 @@
 {
+  "empty-data": "Нет доступных вакансий",
+  "empty-filter": "Не найдено вакансий по заданным параметрам",
   "your-premium-subscription-has-been-extended": "Ваш срок был продлен на один месяц",
   "your-premium-subscription-has-been-cancelled": "Ваш премиум отменен",
   "loading": "Загрузка...",

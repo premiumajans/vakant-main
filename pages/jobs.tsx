@@ -181,7 +181,7 @@ const Jobs = ({
                 <div className="row">
                     <div className="col-lg-8 pr-lg-4">
                         <div className="row">
-                            {category || cityState || mode || education ? filteredValue.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).map(item => {
+                            {category || cityState || mode || education ?  filteredValue.length ? filteredValue.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).map(item => {
                                 if(item.vacancy_type === 2) {
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={'/job/' + item.id.toString()}>
@@ -191,7 +191,7 @@ const Jobs = ({
                                                     <div className="job-post-item-header align-items-center">
                                                 <span
                                                     className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}  <span className="text-warning ml-2"> Premium&nbsp; <i
-                                                            className="fas fa-crown"></i></span></span>
+                                                    className="fas fa-crown"></i></span></span>
                                                         <h2 className="mr-3 text-black"><a>{item.description.position}</a>
                                                         </h2>
                                                     </div>
@@ -244,7 +244,7 @@ const Jobs = ({
                                         </div>
                                     </Link>
                                 }
-                            }) : vacancies.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).filter(item => item.description.position.indexOf(search) >= 0).map(item => {
+                            }) : t('empty-filter') : vacancies.length ? vacancies.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).filter(item => item.description.position.indexOf(search) >= 0).map(item => {
                                 if(item.vacancy_type === 2) {
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={'/job/' + item.id.toString()}>
@@ -254,7 +254,7 @@ const Jobs = ({
                                                     <div className="job-post-item-header align-items-center">
                                                 <span
                                                     className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}  <span className="text-warning ml-2"> Premium&nbsp; <i
-                                                            className="fas fa-crown"></i></span></span>
+                                                    className="fas fa-crown"></i></span></span>
                                                         <h2 className="mr-3 text-black"><a>{item.description.position}</a>
                                                         </h2>
                                                     </div>
@@ -308,7 +308,8 @@ const Jobs = ({
                                     </Link>
                                 }
 
-                            })}
+                            }) : t('empty-data')
+                            }
                         </div>
                         <div className="row mt-5">
                             <div className="col text-center">

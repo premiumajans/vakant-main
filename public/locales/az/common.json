@@ -1,4 +1,6 @@
 {
+  "empty-data": "Heç bir vakansiya yoxdur",
+  "empty-filter":"Parameterlərə uyğun vakansiyalar tapılmadı",
   "your-premium-subscription-has-been-extended": "Vaxtınız bir ay müddətinə uzadıldı",
   "your-premium-subscription-has-been-cancelled": "Premiumunuz ləğv edildi",
   "loading": "Yüklənir...",
