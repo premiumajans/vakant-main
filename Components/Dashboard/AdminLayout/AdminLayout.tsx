@@ -82,8 +82,6 @@ const AdminLayout = ({children}: PropsWithChildren) => {
             <link rel="stylesheet" href="/static/vendor/fonts/flag-icons.css"/>
             <link rel="stylesheet" href="/static/vendor/css/rtl/core.css"/>
             <link rel="stylesheet" href="/static/vendor/css/rtl/theme-default.css"/>
-            <link rel="stylesheet" href="/static/css/demo.css"/>
-            <link rel="stylesheet" href="/static/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
             <link rel="stylesheet" href="/static/vendor/libs/typeahead-js/typeahead.css"/>
             <link rel="stylesheet" href="/static/vendor/libs/typeahead-js/typeahead.css"/>
             <link rel="stylesheet" href="/static/vendor/libs/formvalidation/dist/css/formValidation.min.css"/>
@@ -96,24 +94,6 @@ const AdminLayout = ({children}: PropsWithChildren) => {
                 content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
             />
 
-            <meta
-                name="description"
-                content="Most Powerful &amp; Comprehensive Bootstrap 5 HTML Admin Dashboard Template built for developers!"
-            />
-            <meta
-                name="keywords"
-                content="dashboard, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5"
-            />
-            <link
-                rel="canonical"
-                href="https://themeselection.com/item/sneat-bootstrap-html-admin-template/"
-            />
-
-            <link
-                rel="icon"
-                type="image/x-icon"
-                href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/static/img/favicon/favicon.ico"
-            />
 
             {/* <!-- Fonts --> */}
             <link rel="preconnect" href="https://fonts.googleapis.com/"/>
@@ -128,7 +108,6 @@ const AdminLayout = ({children}: PropsWithChildren) => {
             />
 
             <script defer src="/static/vendor/libs/jquery/jquery.js"></script>
-            {/* <script defer src="/static/tinymce/tinymce.min.js"></script> */}
 
             <script defer src="/static/vendor/libs/popper/popper.js"></script>
             <script defer src="/static/vendor/js/bootstrap.js"></script>
@@ -145,27 +124,12 @@ const AdminLayout = ({children}: PropsWithChildren) => {
 
             <script defer src="/static/vendor/js/menu.js"></script>
 
-            {/*<script*/}
-            {/*    defer*/}
-            {/*    src="/static/vendor/libs/formvalidation/dist/js/FormValidation.min.js"*/}
-            {/*></script>*/}
-            {/*<script*/}
-            {/*    defer*/}
-            {/*    src="/static/vendor/libs/formvalidation/dist/js/plugins/Bootstrap5.min.js"*/}
-            {/*></script>*/}
-            {/*<script*/}
-            {/*    defer*/}
-            {/*    src="/static/vendor/libs/formvalidation/dist/js/plugins/AutoFocus.min.js"*/}
-            {/*></script>*/}
+
 
             <script defer src="/static/js/pages-auth.js"></script>
 
             {/* <!-- Helpers --> */}
             <script defer src="/static/vendor/js/helpers.js"></script>
-
-            {/*<script defer src="/static/js/config.js"></script>*/}
-
-            {/*<script defer src="/static/tinymce/tinymce.min.js"></script>*/}
             <script defer src="/static/form-editor.init.js"></script>
         </Head>
         <Script id="Google-Tag-Manager">

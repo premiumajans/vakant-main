@@ -2,7 +2,7 @@ import "@/styles/globals.scss";
 import type {AppProps} from "next/app";
 import {persistor, store} from "../Store/store";
 import {useRouter} from "next/router";
-import {Provider, useDispatch, useSelector} from "react-redux";
+import {Provider, useSelector} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 import {createWrapper} from "next-redux-wrapper";
 import AdminLayout from "@/Components/Dashboard/AdminLayout/AdminLayout";
@@ -22,7 +22,33 @@ function App({Component, pageProps}: AppProps) {
     const {company, authorisation} = useSelector(getUser);
     const {i18n} = useTranslation('common')
     const [loading, setLoading] = useState(false)
-    const dispatch = useDispatch()
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const link = document.createElement('link');
+        const handleLoad = () => {
+            setIsLoading(false);
+        };
+
+        if (!(pathname.indexOf('user') >= 0)) {
+
+            link.href = "/clients/css/style.css";
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.media = 'all';
+            link.addEventListener('load', handleLoad);
+            document.head.appendChild(link);
+            return () => {
+                link.removeEventListener('load', handleLoad);
+                document.head.removeChild(link);
+                setIsLoading(true)
+            };
+        }
+
+
+    }, [pathname]);
+
 
     useEffect(() => {
         const handleRouteChange = () => {
@@ -49,6 +75,7 @@ function App({Component, pageProps}: AppProps) {
 
     }, [router])
 
+
     return (
         <>
             <Head>
@@ -74,7 +101,7 @@ function App({Component, pageProps}: AppProps) {
                             <Component {...pageProps} />
 
                         </AdminLayout> :
-                        loading ? <Loading/> : <ClientLayout> <Component {...pageProps} /></ClientLayout>}
+                        loading || isLoading ? <Loading/> : <ClientLayout> <Component {...pageProps} /></ClientLayout>}
                     {" "}
                 </PersistGate>
             </Provider>
