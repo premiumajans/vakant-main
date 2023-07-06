@@ -13999,11 +13999,6 @@ element.style {
     padding: 10px 20px;
     transition: background-color 0.2s;
 }
-
-a {
-    color: #daaf07;
-}
-
 .nav-i {
     display: inline-block;
     font-family: "PT Sans Narrow", sans-serif;
