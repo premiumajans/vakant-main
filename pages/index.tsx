@@ -4,57 +4,39 @@ import MainSearch from "@/Components/Clients/MainSearch/MainSearch";
 import Link from "next/link";
 import {useTranslation} from "next-i18next";
 
+
 const Index = ({
                    vacancies, modes, city, categories,
                    educations,
-    vacancyCount
+                   vacancyCount
                }: {
     vacancies: Item[],
     city: select[],
     modes: select[],
     categories: select[],
     educations: select[],
-    vacancyCount:any
+    vacancyCount: any
 }) => {
     const {i18n, t} = useTranslation('common')
 
 
-
     return <>
-        <div className="hero-wrap img" style={{backgroundImage: "url(images/bg_1.jpg)"}}>
-            <div className="overlay"></div>
-            <div>
-                <div style={{padding:'10% 0', position:'absolute', top:"10%"}} className="row col-md-12 d-md-flex no-gutters slider-text align-items-start justify-content-center">
-                    <MainSearch city={city} modes={modes} categories={categories} educations={educations}/>
+        <div className="main-categories">
+            <div className="container">
+                <div className="main-categories-group d-flex justify-content-center flex-wrap">
+                    {categories.map(item => {
+                        const count = Object.entries(vacancyCount).find(vacancyItem => +vacancyItem[0] === +item.id)
+                        return <div key={item.id} className="main-categories-i col-lg-4 col-sm-6 col-12">
+                            <div className="main-categories-i-count">{count?.length ? count[1] : 0}</div>
+                            <Link className="main-categories-i-link"
+                                  href={`/jobs`}>{item.translations.find(item => item.locale === i18n?.language)?.name}
+                                <i className="ion;-ios-arrow-forward"></i></Link>
+                        </div>
+                    })}
                 </div>
             </div>
         </div>
-
-
-        <section className="ftco-section">
-            <div className="container">
-                <div className="row justify-content-center mb-5">
-                    <div data-aos="fade-up" className="col-md-7 heading-section  text-center ">
-                        <span className="subheading">{t('job-categories')}</span>
-                        <h2 className="mb-0">{t('top-categories')}</h2>
-                    </div>
-                </div>
-                <div className="row">
-                    <ul style={{justifyContent: 'space-evenly'}}
-                        className="category  col-md-12 d-flex flex-wrap align-items-center  ">
-                        {categories.map(item => {
-                            const count = Object.entries(vacancyCount).find(vacancyItem => +vacancyItem[0] === +item.id)
-                            return <div key={item.id} data-aos="fade-up" className="col-md-3 category text-center m-1">
-                                <li><Link style={{fontSize: '15px'}}
-                                          href={`/jobs/`}>{item.translations.find(item => item.locale === i18n?.language)?.name}
-                                    <br/><span className="number">{count?.length ? count[1] : 0}</span>
-                                    <span>Open position</span><i className="ion;-ios-arrow-forward"></i></Link></li>
-                            </div>
-                        })}
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <MainSearch city={city} modes={modes} categories={categories} educations={educations}/>
 
         <section className="ftco-section bg-light">
             <div className="container">
@@ -107,7 +89,7 @@ const Index = ({
         </section>
 
 
-        <section className="ftco-section bg-light">
+        <section style={{padding: 0}} className="ftco-section bg-light">
             <div className="container">
                 <div className="row">
                     <div className="col-lg-12 pr-lg-5">
@@ -119,7 +101,7 @@ const Index = ({
                         </div>
                         <div className="row">
                             {vacancies.slice(0, 10).map(item => {
-                                if(item.vacancy_type === 2) {
+                                if (item.vacancy_type === 2) {
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={"/job/" + item.id}>
                                         <div className="job-post-item p-4 d-block d-lg-flex align-items-center">

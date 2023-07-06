@@ -28,14 +28,6 @@ const FourOhFour = () => {
                         />
                     </Link>
                 </div>
-                {/*<p className="mb-4 mx-2">*/}
-                {/*  {translate('404-error')}*/}
-                {/*  <br />*/}
-                {/*  {translate("404-contact")}*/}
-                {/*</p>*/}
-                {/*<Link href="/" className="btn btn-primary">*/}
-                {/*  {translate('404-back')}*/}
-                {/*</Link>*/}
             </div>
         </div>
     );

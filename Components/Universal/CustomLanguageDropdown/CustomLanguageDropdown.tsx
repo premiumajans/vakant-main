@@ -24,7 +24,7 @@ const CustomLanguageDropdown = ({direction, ...args}: { direction: Direction }) 
 
 
     return <>
-        <Dropdown onClick={(e: any) => {
+        <Dropdown className={'nav-i'} onClick={(e: any) => {
             if (e.target.value === 'en' || e.target.value === 'az' || e.target.value === 'ru') {
                 setLanguage(e.target.value)
             }

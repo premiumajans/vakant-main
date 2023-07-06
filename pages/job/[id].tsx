@@ -1,4 +1,3 @@
-import PageTitle from "@/Components/Clients/PageTitle/PageTitle";
 import {Item, select} from "@/interfaces/generalResponses";
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
@@ -26,16 +25,7 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
             <meta property="og:url"
                   content={process.env['NEXT_PUBLIC_MAIN_PATH_WITH_API'] + 'job/' + query.id}/>
         </Head>
-        <div className="hero-wrap hero-wrap-2"
-             style={{backgroundImage: "url(/images/bg_1.jpg)", backgroundPosition: "50% 0%"}}
-             data-stellar-background-ratio="0.5">
-            <div className="overlay"></div>
-            <div className="container">
-                <div className="row no-gutters slider-text align-items-center justify-content-center">
-                    <PageTitle address={vacancy.description?.position} title={vacancy.description?.position}/>
-                </div>
-            </div>
-        </div>
+
         <section className='ftco-section ftco-candidates ftco-candidates-2 bg-light'>
             <div className="container p-4">
                 <div className="">
@@ -61,8 +51,9 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
                                    })?.translations.find(item => item.locale === i18n.language)?.name || categories.find(item => item.id === vacancy.description.category_id)?.translations.find(item => item.locale === i18n.language)?.name} </span>
                             </div>
                         </div>
-                        <div className="post-header-secondary">{t('vacancy-count')}: {vacancy.view_count}<br/> {t('add')}
-                              <span className={'ml-1'}>#{vacancy.id}</span>
+                        <div
+                            className="post-header-secondary">{t('vacancy-count')}: {vacancy.view_count}<br/> {t('add')}
+                            <span className={'ml-1'}>#{vacancy.id}</span>
                             <div className="post-header-share">
                                 <div className="fb-like fb_iframe_widget" data-action="recommend"
                                      data-layout="button_count" data-show-faces="false" fb-xfbml-state="rendered"
@@ -88,7 +79,7 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
                                         <div className=" params-i-label">{t('age')}:</div>
 
                                         <div
-                                            className=" params-i-val"> {vacancy.description.min_age} - {vacancy.description.max_salary} yaş
+                                            className=" params-i-val"> {vacancy.description.min_age} - {vacancy.description.max_age}
                                         </div>
                                     </li>
                                     <li className="params-i">

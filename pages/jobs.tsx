@@ -30,6 +30,7 @@ const Jobs = ({
     const [mode, setMode] = useState('')
     const [cityState, setCityState] = useState('')
 
+
     const filteredValue = useMemo(() => {
         if (category && cityState && mode && vacancies && education) {
             return vacancies.filter(item => {
@@ -113,16 +114,6 @@ const Jobs = ({
 
 
     return <>
-        <div className="hero-wrap hero-wrap-2"
-             style={{backgroundImage: "url(/images/bg_1.jpg)", backgroundPosition: "50% 0%"}}
-             data-stellar-background-ratio="0.5">
-            <div className="overlay"></div>
-            <div className="container">
-                <div className="row no-gutters slider-text align-items-center justify-content-center">
-                    <PageTitle address={t('find-a-job')} title={t('find-a-job')}/>
-                </div>
-            </div>
-        </div>
 
 
         <section data-aos="fade-up" className="ftco-section ftco-no-pb bg-light">
@@ -358,7 +349,7 @@ const Jobs = ({
 
                         <div className="sidebar-box bg-white p-4 ">
                             <h3 className="heading-sidebar">{t("city")}</h3>
-                            <form className="search-form mb-3">
+                            <form className="mb-3">
                                 <select
                                     name="city"
                                     value={cityState}

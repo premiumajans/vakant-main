@@ -2,7 +2,7 @@ import ItemCard from "@/Components/Dashboard/ItemCard/ItemCard";
 import Loading from "@/Components/Dashboard/Loading/Loading";
 import MainWraper from "@/Components/Dashboard/MainWraper/MainWraper";
 import {useDeleteItemMutation, useGetItemsMutation} from "@/Store/Query/Auth";
-import {getUser, setInitialUser} from "@/Store/Slices/User";
+import {getUser} from "@/Store/Slices/User";
 import Head from "next/head";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";

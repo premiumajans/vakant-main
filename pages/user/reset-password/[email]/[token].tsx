@@ -1,5 +1,4 @@
 import ResetPassword from "@/Components/Dashboard/ResetPassword/ResetPassword";
-import { wrapper } from "@/pages/_app";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const ResetPasswordPage = () => {

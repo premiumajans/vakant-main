@@ -5,8 +5,6 @@ import * as yup from "yup";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useRouter} from "next/router";
-import {useDispatch} from "react-redux";
-import {setSearch} from "@/Store/Slices/General";
 
 const MainSearch = ({
                         modes, city, categories,
@@ -21,6 +19,7 @@ const MainSearch = ({
     const {t, i18n} = useTranslation('common')
     // const dispatch = useDispatch()
     const {push} = useRouter()
+    const [search, setSearch] = useState(false)
 
     let schema = yup.object().shape({
         category: yup.string(),
@@ -40,189 +39,142 @@ const MainSearch = ({
     } = useForm({resolver: yupResolver(schema)});
 
     const onSubmit = async (data: any) => {
-        const {category,city,mode,education,position} = data
+        const {category, city, mode, education, position} = data
         // dispatch(setSearch(data))
         push(`/jobs?category=${category}&city=${city}&mode=${mode}&education=${education}&position=${position}`)
     };
 
 
     return <>
-        <div data-aos="fade-up" className="col-md-12 d-flex align-items-start ">
-            <div className="text text-center col-md-12" >
-                <div className="ftco-search ">
-                    <div className="row">
-                        <div className="col-md-12 tab-wrap">
+        <div className={`search-container ${search ? 'search-container_opened' : ''}`}><a className=" search-toggle"
+                                                                                          href="#">
+            <div className="container"><span onClick={() => setSearch(!search)} className="search-toggle-inner"><span
+                className="search-toggle-text">{t('search')}</span></span></div>
+        </a>
+            <div style={{zIndex:1}} className="search-form">
+                <div className="container d-flex justify-content-center">
+                    <form onSubmit={handleSubmit(onSubmit)} className="simple_form new_search text-center"
+                          id="new_search" noValidate={false} action="/vacancies"
+                          accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓"
+                                                                     autoComplete="off"/><input autoComplete="off"
+                                                                                                type="hidden"
+                                                                                                name="search[company_id]"
+                                                                                                id="search_company_id"/>
+                        <div className="search-form-row">
+                            <div className="input select optional search_category_id"><label
+                                className="select optional control-label"
+                                htmlFor="search_category_id">{t("category")}</label><select
+                                {...register('category')}
+                                className="select optional form-control" name="category"
+                                id="search_category_id">
+                                <option value={''}></option>
+                                {categories?.map((el) => {
+                                    return (
+                                        <>
+                                            <optgroup key={el.id}
+                                                      label={el.translations.find(item => item.locale === i18n.language)?.name}>
+                                                {el.alt?.map((el) => {
+                                                    return (
+                                                        <option value={el.id}
+                                                                key={el.id}>
+                                                            {
+                                                                el.translations.find(
+                                                                    (el) => el.locale === i18n.language
+                                                                )?.name
+                                                            }
+                                                        </option>
+                                                    );
+                                                })}
+                                            </optgroup>
+                                        </>
+                                    );
+                                })}
 
-                            <div className="tab-content p-4" id="v-pills-tabContent">
-
-                                <div className={`tab-pane fade show active`} id="v-pills-2" role="tabpanel"
-                                     aria-labelledby="v-pills-performance-tab">
-                                    <form noValidate={true} onSubmit={handleSubmit(onSubmit)} data-aos="fade-up"
-                                          className="search-job">
-                                        <div className="row no-gutters">
-                                            <div className="col-md mr-md-2">
-                                                <div className="form-group">
-                                                    <div className="form-field">
-                                                        <div className="icon"><span
-                                                            className="icon-briefcase"></span></div>
-                                                        <input   {...register('position')} type="text"
-                                                                 className="form-control"
-                                                                 placeholder={t('position').toString()}/>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md mr-md-2">
-                                                <div className="form-group">
-                                                    <div className="form-field">
-                                                        <div className="select-wrap">
-                                                            <div className="icon"><span
-                                                                className="ion-ios-arrow-down"></span>
-                                                            </div>
-                                                            <select
-                                                                {...register('category')}
-                                                                className="form-control"
-                                                                name="category"
-                                                                data-allow-clear="true"
-                                                                required
-                                                            >
-                                                                <option value={''}>{t("category").toString()}</option>
-                                                                {categories?.map((el) => {
-                                                                    return (
-                                                                        <>
-                                                                            <optgroup key={el.id} label={el.translations.find(item => item.locale === i18n.language)?.name}>
-                                                                                {el.alt?.map((el) => {
-                                                                                    return (
-                                                                                        <option value={el.id}
-                                                                                                key={el.id}>
-                                                                                            {
-                                                                                                el.translations.find(
-                                                                                                    (el) => el.locale === i18n.language
-                                                                                                )?.name
-                                                                                            }
-                                                                                        </option>
-                                                                                    );
-                                                                                })}
-                                                                            </optgroup>
-                                                                        </>
-                                                                    );
-                                                                })}
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-md mr-md-2">
-                                                <div className="form-group">
-                                                    <div className="form-field">
-                                                        <div className="icon"><span
-                                                            className="icon-building"></span></div>
-                                                        <select
-                                                            {...register('city')}
-                                                            name="city"
-                                                            className="form-control"
-                                                            data-allow-clear="true"
-                                                            required
-                                                        >
-                                                            <option value={''}>{t("city").toString()}</option>
-                                                            {city?.map((el) => {
-                                                                return (
-                                                                    <>
-                                                                        <option value={el.id} key={el.id}>
-                                                                            {
-                                                                                el.translations.find(
-                                                                                    (el) => el.locale === i18n.language
-                                                                                )?.name
-                                                                            }
-                                                                        </option>
-                                                                    </>
-                                                                );
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="col-md mr-md-2">
-                                                <div className="form-group">
-                                                    <div className="form-field">
-                                                        <div className="icon"><span
-                                                            className="icon-mode_edit"></span></div>
-                                                        <select
-                                                            {...register('mode')}
-                                                            className="form-control"
-                                                            name="mode"
-                                                            data-allow-clear="true"
-                                                            required
-                                                        >
-                                                            <option value={''}>{t("work-mode").toString()}</option>
-                                                            {modes?.map((el) => {
-                                                                return (
-                                                                    <>
-                                                                        <option value={el.id} key={el.id}>
-                                                                            {
-                                                                                el.translations.find(
-                                                                                    (el) => el.locale === i18n.language
-                                                                                )?.name
-                                                                            }
-                                                                        </option>
-                                                                    </>
-                                                                );
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="col-md mr-md-2">
-                                                <div className="form-group">
-                                                    <div className="form-field">
-                                                        <div className="icon"><span
-                                                            className="icon-briefcase"></span></div>
-                                                        <select
-                                                            {...register('education')}
-                                                            className="form-control"
-                                                            name="education"
-                                                            data-allow-clear="true"
-                                                            required
-                                                        >
-                                                            {educations?.map((el) => {
-                                                                return (
-                                                                    <>
-                                                                        <option value={el.id === 1 ? '' : el.id}
-                                                                                key={el.id}>
-                                                                            {
-                                                                                el.translations.find(
-                                                                                    (el) => el.locale === i18n.language
-                                                                                )?.name
-                                                                            }
-                                                                        </option>
-                                                                    </>
-                                                                );
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div className="col-md">
-                                                <div className="form-group">
-                                                    <div className="form-field">
-                                                        <button type="submit"
-                                                                className="form-control btn btn-primary">{t('search')}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                            </select>
                             </div>
+
+                            <div className="input select optional search_region_id"><label
+                                className="select optional control-label"
+                                htmlFor="search_region_id">{t("city")}</label><select   {...register('city')}  className="select optional form-control"
+                                                                                name="city"
+                                                                                id="search_region_id">
+                                <option value={''}></option>
+                                {city?.map((el) => {
+                                    return (
+                                        <>
+                                            <option value={el.id} key={el.id}>
+                                                {
+                                                    el.translations.find(
+                                                        (el) => el.locale === i18n.language
+                                                    )?.name
+                                                }
+                                            </option>
+                                        </>
+                                    );
+                                })}
+
+                            </select></div>
+
+                            <div className="input select optional search_salary"><label
+                                className="select optional control-label" htmlFor="search_salary">{t('position')}</label><input
+                                {...register('position')}
+                                className="select optional form-control" name={'position'}
+                                id="search_salary">
+                            </input></div>
+
+                            <div className="input select optional search_education_id"><label
+                                className="select optional control-label"
+                                htmlFor="search_education_id">{t('education')}</label><select
+                                {...register('education')}
+                                className="select optional form-control" name="education"
+                                id="search_education_id">
+                                {educations?.map((el) => {
+                                    return (
+                                        <>
+                                            <option value={el.id === 1 ? '' : el.id}
+                                                    key={el.id}>
+                                                {
+                                                    el.translations.find(
+                                                        (el) => el.locale === i18n.language
+                                                    )?.name
+                                                }
+                                            </option>
+                                        </>
+                                    );
+                                })}
+                            </select></div>
+
+                            <div className="input select optional search_experience_id"><label
+                                className="select optional control-label" htmlFor="search_experience_id">
+                                {t('work-mode')}
+                            </label>
+                                <select   {...register('mode')}  className="select optional form-control"
+                                                         name="mode" id="search_experience_id">
+                                    <option value={''}></option>
+                                    {modes?.map((el) => {
+                                        return (
+                                            <>
+                                                <option value={el.id} key={el.id}>
+                                                    {
+                                                        el.translations.find(
+                                                            (el) => el.locale === i18n.language
+                                                        )?.name
+                                                    }
+                                                </option>
+                                            </>
+                                        );
+                                    })}
+                            </select></div>
                         </div>
-                    </div>
+                        <div className="btn-container"><input onClick={() => setSearch(!search)} type="submit"
+                                                              name="commit" value={t('search').toString()}
+                                                              className="btn btn btn_load-more"
+                                                              data-disable-with="Axtar"/></div>
+                    </form>
                 </div>
             </div>
         </div>
+
     </>
 };
 

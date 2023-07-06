@@ -1,10 +1,6 @@
 import MainWraper from "@/Components/Dashboard/MainWraper/MainWraper";
 import NewItemForm from "@/Components/Dashboard/NewItemForm/NewItemForm";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { wrapper } from "../_app";
-import { getUser } from "@/Store/Slices/User";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
 import Head from "next/head";
 import { useTranslation } from "next-i18next";
 
