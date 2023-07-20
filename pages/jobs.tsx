@@ -99,6 +99,7 @@ const Jobs = ({
 
     }, [category, cityState, mode, vacancies, education])
 
+
     const {query} = useRouter()
 
     useEffect(() => {
@@ -190,7 +191,7 @@ const Jobs = ({
                                                         <div className="mr-3"><span className="icon-layers"></span>
                                                             <a>{item.description.company}</a></div>
                                                         <div><span className="icon-my_location"></span>
-                                                            <span>{city.find(city => city.id === item.description.city_id)?.translations.find(item => item.locale === i18n?.language)?.name}</span>
+                                                             <span>{city.find(cityItem => cityItem.translations.find(item => item.locale === i18n.language)?.id === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
                                                         </div>
                                                         <div><span className="icon-date_range ml-2"></span>
                                                             <span>{item.shared_time.split(' ')[0]}</span></div>
@@ -220,7 +221,7 @@ const Jobs = ({
                                                         <div className="mr-3"><span className="icon-layers"></span>
                                                             <a>{item.description.company}</a></div>
                                                         <div><span className="icon-my_location"></span>
-                                                            <span>{city.find(city => city.id === item.description.city_id)?.translations.find(item => item.locale === i18n?.language)?.name}</span>
+                                                             <span>{city.find(cityItem => cityItem.translations.find(item => item.locale === i18n.language)?.id === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
                                                         </div>
                                                         <div><span className="icon-date_range ml-2"></span>
                                                             <span>{item.shared_time.split(' ')[0]}</span></div>
@@ -253,7 +254,7 @@ const Jobs = ({
                                                         <div className="mr-3"><span className="icon-layers"></span>
                                                             <a>{item.description.company}</a></div>
                                                         <div><span className="icon-my_location"></span>
-                                                            <span>{city.find(city => city.id === item.description.city_id)?.translations.find(item => item.locale === i18n?.language)?.name}</span>
+                                                             <span>{city.find(cityItem => cityItem.translations.find(item => item.locale === i18n.language)?.id === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
                                                         </div>
                                                         <div><span className="icon-date_range ml-2"></span>
                                                             <span>{item.shared_time.split(' ')[0]}</span></div>
@@ -283,7 +284,7 @@ const Jobs = ({
                                                         <div className="mr-3"><span className="icon-layers"></span>
                                                             <a>{item.description.company}</a></div>
                                                         <div><span className="icon-my_location"></span>
-                                                            <span>{city.find(city => city.id === item.description.city_id)?.translations.find(item => item.locale === i18n?.language)?.name}</span>
+                                                             <span>{city.find(cityItem => cityItem.translations.find(item => item.locale === i18n.language)?.id === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
                                                         </div>
                                                         <div><span className="icon-date_range ml-2"></span>
                                                             <span>{item.shared_time.split(' ')[0]}</span></div>
@@ -363,7 +364,7 @@ const Jobs = ({
                                     {city?.map((el) => {
                                         return (
                                             <>
-                                                <option value={el.id} key={el.id}>
+                                                <option value={el.translations[0].id} key={el.id}>
                                                     {
                                                         el.translations.find(
                                                             (el) => el.locale === i18n.language

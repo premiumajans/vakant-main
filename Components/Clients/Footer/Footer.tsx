@@ -33,7 +33,7 @@ const Footer = () => {
                                 <ul className={'row'} >
                                     {category.map((item) => {
                                         return  <li className={'col-md-6 col-lg-4 col-sm-6 col-12'}  key={item.id}>
-                                            <Link href={'/jobs'}>
+                                            <Link href={`/category-jobs/${item.id}`}>
                                                 {item.translations.find(item => item.locale === i18n?.language)?.name}
                                             </Link>
                                         </li>
@@ -77,7 +77,7 @@ const Footer = () => {
                         <div className="section-padding">
                             <div className="section-container d-flex justify-content-center flex-wrap">
                                 <div className="block-widget-wrap" >
-                                    <p className="copyright text-center" >{t('copyright')} © {new Date().getFullYear()}. | <a
+                                    <p className="copyright text-center" >{t('copyright')} © {new Date().getFullYear()}.  <a style={{display:'block'}}
                                         href="https://www.premium.az/">Premium Advertising</a></p>
                                 </div>
                             </div>

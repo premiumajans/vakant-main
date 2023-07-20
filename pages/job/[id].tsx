@@ -33,8 +33,9 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
                     <div className="post-header d-flex justify-content-between">
                         <div className="post-header-primary">
                             <h1
-                                className="post-title">{vacancy.description.position}</h1>
-
+                                className="post-title">{vacancy.description.position}
+                                {vacancy.vacancy_type !== 1 ? <i className="ml-2 text-warning fas fa-crown"></i> : ''}
+                            </h1>
                             <div className={'d-flex align-items-center'}>
                                 <div className="alert alert-primary mr-2" role="alert"
                                      style={{width: 'max-content', marginBottom: '0'}}>
@@ -161,70 +162,6 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
                         ><i className="fas fa-crown"></i> {t('make-premium')}
                         </button>
                     </div> : ''}
-
-                    {/*<div data-aos="fade-up" className="job-post-item p-4 d-block d-lg-flex align-items-center">*/}
-                    {/*    <div className="one-third mb-4 mb-md-0">*/}
-                    {/*        <div className="full-card">*/}
-                    {/*            <div className="mrg-0 vacancy">*/}
-                    {/*                <h2 className="detail-title">{t('vacancy-detail')}</h2>*/}
-                    {/*                <div className="details-text">*/}
-                    {/*                    <ul className={'ml-3 mt-2'}>*/}
-                    {/*                        <li>{t('salary')}: {vacancy.description.min_salary} - {vacancy.description.max_salary} </li>*/}
-                    {/*                        <li>{t('category')}: {categories.map(item => item.alt).find(item => item?.find(item => {*/}
-                    {/*                            return item.id === vacancy.description.category_id*/}
-                    {/*                        }))?.find(item => {*/}
-                    {/*                            return item.id === vacancy.description.category_id*/}
-                    {/*                        })?.translations.find(item => item.locale === i18n.language)?.name || categories.find(item => item.id === vacancy.description.category_id)?.translations.find(item => item.locale === i18n.language)?.name }</li>*/}
-                    {/*                        <li>{t('company')}: {vacancy.description.company}</li>*/}
-                    {/*                        <li>{t('city')}: {city.find(item => item.id === vacancy.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</li>*/}
-
-                    {/*                        <li>{t('education')}:  {education.find(item => item.id === vacancy.description.education_id)?.translations.find(item => item.locale === i18n.language)?.name}</li>*/}
-                    {/*                        <li>{t('experience')}: {experience.find(item => item.id === vacancy.description.experience_id)?.translations.find(item => item.locale === i18n.language)?.name}</li>*/}
-                    {/*                        <li> {t('age')}: {vacancy.description.min_age} - {vacancy.description.max_age}</li>*/}
-                    {/*                        <li>{t('work-mode')}: {modes.find(item => item.id === vacancy.description.mode_id)?.translations.find(item => item.locale === i18n.language)?.name}</li>*/}
-                    {/*                        <li>{t('share-time')}: {vacancy.shared_time.split(' ')[0]}</li>*/}
-                    {/*                    </ul>*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-
-                    {/*<div data-aos="fade-up" className="job-post-item p-4 d-block d-lg-flex align-items-center">*/}
-                    {/*    <div className="one-third mb-4 mb-md-0">*/}
-                    {/*        <div className="full-card">*/}
-                    {/*            <div className="mrg-0 vacancy">*/}
-                    {/*                <h2 className="detail-title">{t('vacancy-describe')}</h2>*/}
-                    {/*                <div className="details-text">*/}
-                    {/*                    {parse(vacancy.description.job_description)}*/}
-                    {/*                </div>*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-                    {/*<div data-aos="fade-up" className="job-post-item p-4 d-block d-lg-flex align-items-center">*/}
-                    {/*    <div className="one-third mb-4 mb-md-0">*/}
-                    {/*        <div className=" mrg-0 vacancy">*/}
-                    {/*            <h2 className="detail-title">{t('extra-requirement')}</h2>*/}
-                    {/*            <div className="details-text">*/}
-                    {/*                {parse(vacancy.description.candidate_requirement)}*/}
-                    {/*            </div>*/}
-                    {/*        </div>*/}
-
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
-                    {/*<div className="tag-widget post-tag-container">*/}
-                    {/*    <div className="tagcloud">*/}
-                    {/*        {vacancy.description.tags?.indexOf('[') >= 0 && vacancy.description.tags?.indexOf(']') >= 0 ? JSON.parse(vacancy.description.tags)?.map((item, index) => {*/}
-                    {/*            return  <a key={index} className="tag-cloud-link">{item.value}</a>*/}
-                    {/*        }) : vacancy.description.tags && <a className="tag-cloud-link">{vacancy.description.tags}</a> }*/}
-
-                    {/*    </div>*/}
-                    {/*</div>*/}
-
                 </div>
             </div>
 

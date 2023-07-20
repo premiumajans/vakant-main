@@ -304,7 +304,7 @@ const NewItemForm = () => {
                                             data-allow-clear="true"
                                             required
                                         >
-                                            {categories?.map((el) => {
+                                            {categories.categories?.map((el) => {
                                                 return (
                                                     <>
                                                         <optgroup key={el.id} label={el.translations.find(item => item.locale === i18n.language)?.name}>

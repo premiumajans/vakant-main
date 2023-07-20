@@ -853,6 +853,10 @@ a.list-group-item-primary.active, button.list-group-item-primary.active {
   fill: #696cff
 }
 
+.post-col {
+  flex: 1;
+  padding: 0 20px
+}
 .jstree-default .jstree-wholerow-clicked, .jstree-default .jstree-wholerow-hovered {
   background: #e9e9ff
 }

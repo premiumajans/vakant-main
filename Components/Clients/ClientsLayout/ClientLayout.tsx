@@ -21,8 +21,6 @@ const ClientLayout = ({children}: PropsWithChildren) => {
             <link rel="stylesheet" href="/clients/css/flaticon.css"/>
             <link rel="stylesheet" href="/clients/css/icomoon.css"/>
             <link rel="stylesheet" href="/static/vendor/fonts/flag-icons.css"/>
-            <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&amp;display=swap"
-                  rel="stylesheet"/>
         </Head>
 
 

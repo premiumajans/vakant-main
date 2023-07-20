@@ -8,22 +8,33 @@ const Pagination = ({setPagination, data, pagination}: {
 }) => {
 
     const generatePagination = (result: any) => {
-        const paginationList = []
-        const length = Math.ceil(result.length / 10)
+        const paginationList = [];
+        const length = Math.ceil(result.length / 10);
+        const maxVisiblePages = 3; // Number of pagination numbers visible before and after the current page
+
         for (let i = 1; i <= length; i++) {
-            paginationList.push(<li className={i === pagination ? 'active' : ''} key={i}>
-                <span onClick={() => {
-                    setPagination!(i)
-                    window.scrollTo(0, 0);
-                }} style={{cursor: 'pointer'}}
-                      className={"page-numbers"}>
-                    {i}
-                </span>
-            </li>)
+            if (length <= 30 || Math.abs(pagination - i) <= maxVisiblePages || i === 1 || i === length) {
+                paginationList.push(
+                    <li className={i === pagination ? 'active' : ''} key={i}>
+          <span
+              onClick={() => {
+                  setPagination!(i);
+                  window.scrollTo(0, 0);
+              }}
+              style={{ cursor: 'pointer' }}
+              className="page-numbers"
+          >
+            {i}
+          </span>
+                    </li>
+                );
+            } else if (paginationList[paginationList.length - 1]?.key !== 'dots') {
+                paginationList.push(<li key="dots">...</li>);
+            }
         }
 
-        return paginationList
-    }
+        return paginationList;
+    };
 
 
     return <>
