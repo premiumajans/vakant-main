@@ -1,4 +1,3 @@
-import PageTitle from "@/Components/Clients/PageTitle/PageTitle";
 import {Item, select} from "@/interfaces/generalResponses";
 import {useTranslation} from "next-i18next";
 import Pagination from "@/Components/Clients/Pagination/Pagination";
@@ -6,6 +5,7 @@ import {useEffect, useMemo, useRef, useState} from "react";
 import Link from "next/link";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useRouter} from "next/router";
+import parse from "html-react-parser";
 
 
 const Jobs = ({
@@ -108,10 +108,7 @@ const Jobs = ({
         setCategory(query?.category)
         searchRef.current!.value = query?.position || ''
         setCityState(query?.city)
-    },[query])
-
-
-
+    }, [query])
 
 
     return <>
@@ -173,34 +170,46 @@ const Jobs = ({
                 <div className="row">
                     <div className="col-lg-8 pr-lg-4">
                         <div className="row">
-                            {category || cityState || mode || education ?  filteredValue.length ? filteredValue.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).map(item => {
-                                if(item.vacancy_type === 2) {
+                            {category || cityState || mode || education ? filteredValue.length ? filteredValue.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).map(item => {
+                                if (item.vacancy_type === 2) {
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={'/job/' + item.id.toString()}>
                                         <div>
-                                            <div className="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                            <div className="job-post-item jobs p-4 d-block">
                                                 <div className="one-third mb-4 mb-md-0">
                                                     <div className="job-post-item-header align-items-center">
-                                                <span
-                                                    className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}  <span className="text-warning ml-2"> Premium&nbsp; <i
-                                                    className="fas fa-crown"></i></span></span>
-                                                        <h2 className="mr-3 text-black"><a>{item.description.position}</a>
+                                                    <span
+                                                        className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
+                                                        <span className="text-warning ml-2"> Premium&nbsp; <i
+                                                            className="fas fa-crown"></i>
+                                                        </span>
+                                                    </span>
+                                                        <h2 className="mb-4 text-black d-flex align-items-center">
+                                                            <a>{item.description.position}</a>
                                                         </h2>
+
                                                     </div>
-                                                    <div className="job-post-item-body d-block d-md-flex">
+                                                    <div className="alert alert-primary mr-2" role="alert"
+                                                         style={{width: "max-content", marginBottom: 0}}><span
+                                                        className="post-salary salary"
+                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                    </div>
+
+                                                    <div
+                                                        className="job-post-item-header align-items-center description">
+                                                        <div>{parse(item.description.candidate_requirement)}</div>
+                                                    </div>
+                                                    <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
                                                             <a>{item.description.company}</a></div>
                                                         <div><span className="icon-my_location"></span>
-                                                             <span>{city.find(cityItem => cityItem.translations.find(item => item.locale === i18n.language)?.id === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
+                                                            <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
+
+
                                                         </div>
-                                                        <div><span className="icon-date_range ml-2"></span>
+                                                        <div><span className="icon-date_range"></span>
                                                             <span>{item.shared_time.split(' ')[0]}</span></div>
                                                     </div>
-                                                </div>
-
-                                                <div className="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-
-                                                    <a className="btn btn-primary py-2">{t('apply')}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -209,61 +218,83 @@ const Jobs = ({
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={'/job/' + item.id.toString()}>
                                         <div>
-                                            <div className="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                            <div className="job-post-item jobs p-4 d-block">
                                                 <div className="one-third mb-4 mb-md-0">
                                                     <div className="job-post-item-header align-items-center">
-                                                <span
-                                                    className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}</span>
-                                                        <h2 className="mr-3 text-black"><a>{item.description.position}</a>
+                                                    <span
+                                                        className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
+                                                    </span>
+                                                        <h2 className="mb-4 text-black d-flex align-items-center">
+                                                            <a>{item.description.position}</a>
                                                         </h2>
+
                                                     </div>
-                                                    <div className="job-post-item-body d-block d-md-flex">
+                                                    <div className="alert alert-primary mr-2" role="alert"
+                                                         style={{width: "max-content", marginBottom: 0}}><span
+                                                        className="post-salary salary"
+                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                    </div>
+
+                                                    <div
+                                                        className="job-post-item-header align-items-center description">
+                                                        <div>{parse(item.description.candidate_requirement)}</div>
+                                                    </div>
+                                                    <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
                                                             <a>{item.description.company}</a></div>
                                                         <div><span className="icon-my_location"></span>
-                                                             <span>{city.find(cityItem => cityItem.translations.find(item => item.locale === i18n.language)?.id === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
+                                                            <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
+
+
                                                         </div>
-                                                        <div><span className="icon-date_range ml-2"></span>
+                                                        <div><span className="icon-date_range"></span>
                                                             <span>{item.shared_time.split(' ')[0]}</span></div>
                                                     </div>
-                                                </div>
-
-                                                <div className="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-
-                                                    <a className="btn btn-primary py-2">{t('apply')}</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </Link>
                                 }
                             }) : t('empty-filter') : vacancies.length ? vacancies.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).filter(item => item.description.position.indexOf(search) >= 0).map(item => {
-                                if(item.vacancy_type === 2) {
+                                if (item.vacancy_type === 2) {
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={'/job/' + item.id.toString()}>
                                         <div>
-                                            <div className="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                            <div className="job-post-item jobs p-4 d-block">
                                                 <div className="one-third mb-4 mb-md-0">
                                                     <div className="job-post-item-header align-items-center">
-                                                <span
-                                                    className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}  <span className="text-warning ml-2"> Premium&nbsp; <i
-                                                    className="fas fa-crown"></i></span></span>
-                                                        <h2 className="mr-3 text-black"><a>{item.description.position}</a>
+                                                    <span
+                                                        className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
+                                                        <span className="text-warning ml-2"> Premium&nbsp; <i
+                                                            className="fas fa-crown"></i>
+                                                        </span>
+                                                    </span>
+                                                        <h2 className="mb-4 text-black d-flex align-items-center">
+                                                            <a>{item.description.position}</a>
                                                         </h2>
+
                                                     </div>
-                                                    <div className="job-post-item-body d-block d-md-flex">
+                                                    <div className="alert alert-primary mr-2" role="alert"
+                                                         style={{width: "max-content", marginBottom: 0}}><span
+                                                        className="post-salary salary"
+                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                    </div>
+
+                                                    <div
+                                                        className="job-post-item-header align-items-center description">
+                                                        <div>{parse(item.description.candidate_requirement)}</div>
+                                                    </div>
+                                                    <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
                                                             <a>{item.description.company}</a></div>
                                                         <div><span className="icon-my_location"></span>
-                                                             <span>{city.find(cityItem => cityItem.translations.find(item => item.locale === i18n.language)?.id === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
+                                                            <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
+
+
                                                         </div>
-                                                        <div><span className="icon-date_range ml-2"></span>
+                                                        <div><span className="icon-date_range"></span>
                                                             <span>{item.shared_time.split(' ')[0]}</span></div>
                                                     </div>
-                                                </div>
-
-                                                <div className="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-
-                                                    <a className="btn btn-primary py-2">{t('apply')}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -272,28 +303,38 @@ const Jobs = ({
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={'/job/' + item.id.toString()}>
                                         <div>
-                                            <div className="job-post-item p-4 d-block d-lg-flex align-items-center">
+                                            <div className="job-post-item jobs p-4 d-block">
                                                 <div className="one-third mb-4 mb-md-0">
                                                     <div className="job-post-item-header align-items-center">
-                                                <span
-                                                    className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}</span>
-                                                        <h2 className="mr-3 text-black"><a>{item.description.position}</a>
+                                                    <span
+                                                        className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
+                                                    </span>
+                                                        <h2 className="mb-4 text-black d-flex align-items-center">
+                                                            <a>{item.description.position}</a>
                                                         </h2>
+
                                                     </div>
-                                                    <div className="job-post-item-body d-block d-md-flex">
+                                                    <div className="alert alert-primary mr-2" role="alert"
+                                                         style={{width: "max-content", marginBottom: 0}}><span
+                                                        className="post-salary salary"
+                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                    </div>
+
+                                                    <div
+                                                        className="job-post-item-header align-items-center description">
+                                                        <div>{parse(item.description.candidate_requirement)}</div>
+                                                    </div>
+                                                    <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
                                                             <a>{item.description.company}</a></div>
                                                         <div><span className="icon-my_location"></span>
-                                                             <span>{city.find(cityItem => cityItem.translations.find(item => item.locale === i18n.language)?.id === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
+                                                            <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
+
+
                                                         </div>
-                                                        <div><span className="icon-date_range ml-2"></span>
+                                                        <div><span className="icon-date_range"></span>
                                                             <span>{item.shared_time.split(' ')[0]}</span></div>
                                                     </div>
-                                                </div>
-
-                                                <div className="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">
-
-                                                    <a className="btn btn-primary py-2">{t('apply')}</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -328,7 +369,8 @@ const Jobs = ({
                                     {categories?.map((el) => {
                                         return (
                                             <>
-                                                <optgroup  key={el.id} label={el.translations.find(item => item.locale === i18n.language)?.name}>
+                                                <optgroup key={el.id}
+                                                          label={el.translations.find(item => item.locale === i18n.language)?.name}>
                                                     {el.alt?.map((el) => {
                                                         return (
                                                             <option value={el.id} key={el.id}>

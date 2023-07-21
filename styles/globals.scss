@@ -860,6 +860,29 @@ a.list-group-item-primary.active, button.list-group-item-primary.active {
 //    flex:1;
 //  }
 //}
+
+.job-post-item-header {
+  h2 > a, h2 > div {
+    width: max-content !important;
+  }
+}
+
+.params-i-label, .params-i-val {
+  white-space: break-spaces;
+}
+
+.job-post-item-header.description{
+  color: black;
+  max-height: 120px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: break-spaces;
+}
+
+.job-post-item.jobs {
+  height: 100% !important;
+  max-height: 450px;
+}
 .post-col {
   flex: 1;
   padding: 0 20px

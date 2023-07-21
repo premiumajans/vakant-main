@@ -13,7 +13,7 @@ const Pagination = ({setPagination, data, pagination}: {
         const maxVisiblePages = 3; // Number of pagination numbers visible before and after the current page
 
         for (let i = 1; i <= length; i++) {
-            if (length <= 20 || Math.abs(pagination - i) <= maxVisiblePages || i === 1 || i === length) {
+            if (length <= 10 || Math.abs(pagination - i) <= maxVisiblePages || i === 1 || i === length) {
                 paginationList.push(
                     <li className={i === pagination ? 'active' : ''} key={i}>
           <span

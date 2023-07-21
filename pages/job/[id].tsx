@@ -27,16 +27,25 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
         </Head>
 
         <section className='ftco-section ftco-candidates ftco-candidates-2 bg-light'>
-            <div className="container p-4">
+            <div className="container p-md-4">
+                <div
+                    className="post-header-secondary post-col text-right">{t('vacancy-count')}: {vacancy.view_count}<br/> {t('add')}
+                    <span className={'ml-1'}>#{vacancy.id}</span>
+                    <div className="post-header-share">
+                        <div className="fb-like fb_iframe_widget" data-action="recommend"
+                             data-layout="button_count" data-show-faces="false" fb-xfbml-state="rendered"
+                             fb-iframe-plugin-query="action=recommend&amp;app_id=168601233177656&amp;container_width=113&amp;href=https%3A%2F%2Fwww.boss.az%2Fvacancies%2F215133-p&amp;layout=button_count&amp;locale=az_AZ&amp;sdk=joey&amp;show_faces=false">
+                        </div>
+                    </div>
+                </div>
                 <div className="">
-
                     <div className="post-header d-flex justify-content-between">
                         <div className="post-header-primary">
                             <h1
-                                className="post-title">{vacancy.description.position}
+                                className="post-title post-col">{vacancy.description.position}
                                 {vacancy.vacancy_type !== 1 ? <i className="ml-2 text-warning fas fa-crown"></i> : ''}
                             </h1>
-                            <div className={'d-flex align-items-center'}>
+                            <div className={'d-flex align-items-center post-col'}>
                                 <div className="alert alert-primary mr-2" role="alert"
                                      style={{width: 'max-content', marginBottom: '0'}}>
                                 <span
@@ -52,18 +61,6 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
                                    })?.translations.find(item => item.locale === i18n.language)?.name || categories.find(item => item.id === vacancy.description.category_id)?.translations.find(item => item.locale === i18n.language)?.name} </span>
                             </div>
                         </div>
-                        <div
-                            className="post-header-secondary">{t('vacancy-count')}: {vacancy.view_count}<br/> {t('add')}
-                            <span className={'ml-1'}>#{vacancy.id}</span>
-                            <div className="post-header-share">
-                                <div className="fb-like fb_iframe_widget" data-action="recommend"
-                                     data-layout="button_count" data-show-faces="false" fb-xfbml-state="rendered"
-                                     fb-iframe-plugin-query="action=recommend&amp;app_id=168601233177656&amp;container_width=113&amp;href=https%3A%2F%2Fwww.boss.az%2Fvacancies%2F215133-p&amp;layout=button_count&amp;locale=az_AZ&amp;sdk=joey&amp;show_faces=false">
-                                </div>
-                            </div>
-                        </div>
-
-
                     </div>
 
                     <div className="main-highlight mt-3">
