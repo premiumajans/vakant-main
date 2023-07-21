@@ -14276,6 +14276,7 @@ label {
 }
 
 .main-categories-i-link {
+    white-space: break-spaces;
     border-radius: 4px;
     color: #555;
     font-weight: bold;

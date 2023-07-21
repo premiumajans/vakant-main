@@ -243,7 +243,7 @@ const NewItemForm = () => {
         EditorState.createEmpty()
     );
 
-
+    console.log(categories)
 
 
     return (
@@ -304,7 +304,7 @@ const NewItemForm = () => {
                                             data-allow-clear="true"
                                             required
                                         >
-                                            {categories.categories?.map((el) => {
+                                            {categories?.map((el) => {
                                                 return (
                                                     <>
                                                         <optgroup key={el.id} label={el.translations.find(item => item.locale === i18n.language)?.name}>
