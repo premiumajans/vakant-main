@@ -18,6 +18,7 @@ const Index = ({
     vacancyCount: any
 }) => {
 
+
     const {i18n, t} = useTranslation('common')
 
 
@@ -64,23 +65,15 @@ const Index = ({
                                                 <h2 className="mr-3 text-black"><a
                                                     href="#">{item.description.position}</a></h2>
                                             </div>
-                                            <div className="alert alert-primary mr-2" role="alert" style={{width: "max-content", marginBottom: 0}}><span className="post-salary salary" style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span></div>
+                                            <div className="alert alert-primary mr-2" role="alert" style={{width: "max-content", marginBottom: 0}}><span className="post-salary salary" style={{fontWeight: "bold"}}> {`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`}  </span></div>
 
                                             <div className="job-post-item-body d-block d-md-flex flex-column">
                                                 <div className="mr-3"><span className="icon-layers"></span> <a
                                                     href="#">{item.description.company}</a></div>
-                                                {/*<div><span className="icon-my_location"></span>*/}
-                                                {/*    <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>*/}
-                                                {/*</div>*/}
-                                                {/*<div><span className="icon-date_range "></span>*/}
-                                                {/*    <span>{item.shared_time.split(' ')[0]}</span></div>*/}
 
                                             </div>
                                         </div>
 
-                                        {/*<div className="one-forth ml-auto d-flex align-items-center mt-4 md-md-0">*/}
-                                        {/*    <button className="btn btn-primary py-2">{t('apply')}</button>*/}
-                                        {/*</div>*/}
                                     </div>
                                 </Link>
                             })}
@@ -118,7 +111,7 @@ const Index = ({
                                                     <h2 className="mr-3 text-black"><a
                                                         href="#">{item.description.position}</a></h2>
                                                 </div>
-                                                <div className="alert alert-primary" role="alert" style={{width: "max-content", marginBottom: 0}}><span className="post-salary salary" style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span></div>
+                                                <div className="alert alert-primary" role="alert" style={{width: "max-content", marginBottom: 0}}><span className="post-salary salary" style={{fontWeight: "bold"}}> {`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`}  </span></div>
 
                                                 <div className="job-post-item-body d-block d-md-flex flex-column">
                                                     <div className="mr-3"><span className="icon-layers"></span> <a
@@ -149,7 +142,7 @@ const Index = ({
                                                         href="#">{item.description.position}</a></h2>
                                                 </div>
 
-                                                <div className="alert alert-primary mr-2" role="alert" style={{width: "max-content", marginBottom: 0}}><span className="post-salary salary" style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span></div>
+                                                <div className="alert alert-primary mr-2" role="alert" style={{width: "max-content", marginBottom: 0}}><span className="post-salary salary" style={{fontWeight: "bold"}}> {`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`}  </span></div>
 
                                                 <div className="job-post-item-body d-block d-md-flex flex-column">
                                                     <div className="mr-3"><span className="icon-layers"></span> <a

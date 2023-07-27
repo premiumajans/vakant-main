@@ -14334,10 +14334,19 @@ label {
     }
 }
 @media (max-width: 576px) {
+    h2 {
+        font-size: 1.6rem;
+    }
     .nav-secondary {
+        width: 100%;
+        flex-direction: column;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        align-items: center;
+        .nav-i {
+            margin-left: 0;
+        }
     }
     .nav-i {
         margin-bottom: 10px;

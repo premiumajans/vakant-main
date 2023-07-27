@@ -32,72 +32,75 @@ const Jobs = ({
 
 
     const filteredValue = useMemo(() => {
+
+        setSearch(searchRef.current?.value)
+
         if (category && cityState && mode && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.category_id === +category && item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.education_id === +education
+                return item.description.category_id === +category && item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
 
         } else if (cityState && mode && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.education_id === +education
+                return item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (category && mode && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.category_id === +category && item.description.education_id === +education
+                return item.description.mode_id === +mode && item.description.category_id === +category && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (category && cityState && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.city_id === +cityState && item.description.category_id === +category && item.description.education_id === +education
+                return item.description.city_id === +cityState && item.description.category_id === +category && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (category && cityState && vacancies && mode) {
             return vacancies.filter(item => {
-                return item.description.city_id === +cityState && item.description.category_id === +category && item.description.mode_id === +mode
+                return item.description.city_id === +cityState && item.description.category_id === +category && item.description.mode_id === +mode && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (mode && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.education_id === +education
+                return item.description.mode_id === +mode && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (mode && vacancies && category) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.category_id === +category
+                return item.description.mode_id === +mode && item.description.category_id === +category && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (mode && vacancies && cityState) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.city_id === +cityState
+                return item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (education && vacancies && category) {
             return vacancies.filter(item => {
-                return item.description.education_id === +education && item.description.category_id === +category
+                return item.description.education_id === +education && item.description.category_id === +category && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (education && vacancies && cityState) {
             return vacancies.filter(item => {
-                return item.description.education_id === +education && item.description.city_id === +cityState
+                return item.description.education_id === +education && item.description.city_id === +cityState && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (category && vacancies && cityState) {
             return vacancies.filter(item => {
-                return item.description.category_id === +category && item.description.city_id === +cityState
+                return item.description.category_id === +category && item.description.city_id === +cityState && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.education_id === +education
+                return item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (vacancies && category) {
             return vacancies.filter(item => {
-                return item.description.category_id === +category
+                return item.description.category_id === +category && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (vacancies && mode) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode
+                return item.description.mode_id === +mode && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (vacancies && cityState) {
             return vacancies.filter(item => {
-                return item.description.city_id === +cityState
+                return item.description.city_id === +cityState && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else {
             return []
         }
 
-    }, [category, cityState, mode, vacancies, education])
+    }, [category, cityState, mode, vacancies, education, search])
 
 
     const {query} = useRouter()
@@ -109,6 +112,8 @@ const Jobs = ({
         searchRef.current!.value = query?.position || ''
         setCityState(query?.city)
     }, [query])
+
+    console.log(filteredValue)
 
 
     return <>
@@ -192,12 +197,12 @@ const Jobs = ({
                                                     <div className="alert alert-primary mr-2" role="alert"
                                                          style={{width: "max-content", marginBottom: 0}}><span
                                                         className="post-salary salary"
-                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`} </span>
                                                     </div>
 
                                                     <div
                                                         className="job-post-item-header align-items-center description">
-                                                        <div>{parse(item.description.candidate_requirement)}</div>
+                                                        <div >{parse(item.description.candidate_requirement)}</div>
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
@@ -232,12 +237,12 @@ const Jobs = ({
                                                     <div className="alert alert-primary mr-2" role="alert"
                                                          style={{width: "max-content", marginBottom: 0}}><span
                                                         className="post-salary salary"
-                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`} </span>
                                                     </div>
 
                                                     <div
                                                         className="job-post-item-header align-items-center description">
-                                                        <div>{parse(item.description.candidate_requirement)}</div>
+                                                        <div >{parse(item.description.candidate_requirement)}</div>
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
@@ -255,7 +260,7 @@ const Jobs = ({
                                         </div>
                                     </Link>
                                 }
-                            }) : t('empty-filter') : vacancies.length ? vacancies.slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).filter(item => item.description.position.indexOf(search) >= 0).map(item => {
+                            }) : t('empty-filter') : vacancies.length ? vacancies.filter(item => item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0).slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).map(item => {
                                 if (item.vacancy_type === 2) {
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={'/job/' + item.id.toString()}>
@@ -277,12 +282,12 @@ const Jobs = ({
                                                     <div className="alert alert-primary mr-2" role="alert"
                                                          style={{width: "max-content", marginBottom: 0}}><span
                                                         className="post-salary salary"
-                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`}  </span>
                                                     </div>
 
                                                     <div
                                                         className="job-post-item-header align-items-center description">
-                                                        <div>{parse(item.description.candidate_requirement)}</div>
+                                                        <div >{parse(item.description.candidate_requirement)}</div>
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
@@ -317,12 +322,12 @@ const Jobs = ({
                                                     <div className="alert alert-primary mr-2" role="alert"
                                                          style={{width: "max-content", marginBottom: 0}}><span
                                                         className="post-salary salary"
-                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`}  </span>
                                                     </div>
 
                                                     <div
                                                         className="job-post-item-header align-items-center description">
-                                                        <div>{parse(item.description.candidate_requirement)}</div>
+                                                        <div >{parse(item.description.candidate_requirement)}</div>
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
@@ -347,7 +352,7 @@ const Jobs = ({
                         <div className="row mt-5">
                             <div className="col text-center">
                                 <Pagination setPagination={setPagination}
-                                            data={(category || cityState || mode || education && filteredValue) || vacancies.filter(item => item.description.position.indexOf(search) >= 0)}
+                                            data={(category || cityState || mode || education && filteredValue) || vacancies.filter(item => item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0)}
                                             pagination={pagination}/>
                             </div>
                         </div>

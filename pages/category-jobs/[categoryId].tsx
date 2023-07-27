@@ -121,7 +121,7 @@ const Jobs = ({
                                                     <div className="alert alert-primary mr-2" role="alert"
                                                          style={{width: "max-content", marginBottom: 0}}><span
                                                         className="post-salary salary"
-                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                        style={{fontWeight: "bold"}}>{`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`}  </span>
                                                     </div>
 
                                                     <div
@@ -166,7 +166,7 @@ const Jobs = ({
                                                     <div className="alert alert-primary mr-2" role="alert"
                                                          style={{width: "max-content", marginBottom: 0}}><span
                                                         className="post-salary salary"
-                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                        style={{fontWeight: "bold"}}>{`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`}  </span>
                                                     </div>
 
                                                     <div
@@ -206,7 +206,7 @@ const Jobs = ({
                                                     <div className="alert alert-primary mr-2" role="alert"
                                                          style={{width: "max-content", marginBottom: 0}}><span
                                                         className="post-salary salary"
-                                                        style={{fontWeight: "bold"}}> {`${item.description.min_salary} - ${item.description.max_salary} AZN`} </span>
+                                                        style={{fontWeight: "bold"}}>{`${item.description.min_salary === item.description.max_salary ? item.description.min_salary : item.description.min_salary + " - " + item.description.max_salary} AZN`}  </span>
                                                     </div>
 
                                                     <div

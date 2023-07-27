@@ -164,8 +164,12 @@ const MainSearch = ({
                                             </>
                                         );
                                     })}
-                            </select></div>
+                            </select>
+                            </div>
+
                         </div>
+
+
                         <div className="btn-container"><input onClick={() => setSearch(!search)} type="submit"
                                                               name="commit" value={t('search').toString()}
                                                               className="btn btn btn_load-more"

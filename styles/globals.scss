@@ -868,12 +868,24 @@ a.list-group-item-primary.active, button.list-group-item-primary.active {
 }
 
 .params-i-label, .params-i-val {
+  color: black;
   white-space: break-spaces;
+}
+.job-post-item {
+  .alert {
+    margin-bottom: 10px;
+  }
+}
+
+.block-27 {
+  li {
+    margin-left: 5px;
+  }
 }
 
 .job-post-item-header.description{
   color: black;
-  max-height: 120px;
+  max-height: 110px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: break-spaces;
@@ -891,7 +903,7 @@ a.list-group-item-primary.active, button.list-group-item-primary.active {
   background: #e9e9ff
 }
 
-.jstree-default-dark .jstree-wholerow-hovered, .jstree-default-dark .jstree-wholerow-clicked {
+.jstree-default-dark .jstree-wfholerow-hovered, .jstree-default-dark .jstree-wholerow-clicked {
   background: #434d99
 }
 

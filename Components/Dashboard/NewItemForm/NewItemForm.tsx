@@ -243,7 +243,6 @@ const NewItemForm = () => {
         EditorState.createEmpty()
     );
 
-    console.log(categories)
 
 
     return (
