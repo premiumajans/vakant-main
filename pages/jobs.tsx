@@ -32,7 +32,7 @@ const Jobs = ({
 
 
     const filteredValue = useMemo(() => {
-
+        setPagination(1)
         setSearch(searchRef.current?.value)
 
         if (category && cityState && mode && vacancies && education) {
@@ -112,8 +112,6 @@ const Jobs = ({
         searchRef.current!.value = query?.position || ''
         setCityState(query?.city)
     }, [query])
-
-    console.log(filteredValue)
 
 
     return <>
@@ -202,7 +200,7 @@ const Jobs = ({
 
                                                     <div
                                                         className="job-post-item-header align-items-center description">
-                                                        <div >{parse(item.description.candidate_requirement)}</div>
+                                                        <div>{parse(item.description.candidate_requirement)}</div>
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
@@ -242,7 +240,7 @@ const Jobs = ({
 
                                                     <div
                                                         className="job-post-item-header align-items-center description">
-                                                        <div >{parse(item.description.candidate_requirement)}</div>
+                                                        <div>{parse(item.description.candidate_requirement)}</div>
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
@@ -287,7 +285,7 @@ const Jobs = ({
 
                                                     <div
                                                         className="job-post-item-header align-items-center description">
-                                                        <div >{parse(item.description.candidate_requirement)}</div>
+                                                        <div>{parse(item.description.candidate_requirement)}</div>
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
@@ -327,7 +325,7 @@ const Jobs = ({
 
                                                     <div
                                                         className="job-post-item-header align-items-center description">
-                                                        <div >{parse(item.description.candidate_requirement)}</div>
+                                                        <div>{parse(item.description.candidate_requirement)}</div>
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>

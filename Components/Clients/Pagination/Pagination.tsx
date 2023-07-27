@@ -9,7 +9,7 @@ const Pagination = ({setPagination, data, pagination}: {
 
     const generatePagination = (result: any) => {
         const paginationList = [];
-        const length = Math.ceil(result.length / 30);
+        const length = Math.ceil(result.length / 10);
         const maxVisiblePages = 3; // Number of pagination numbers visible before and after the current page
 
         for (let i = 1; i <= length; i++) {
@@ -49,7 +49,7 @@ const Pagination = ({setPagination, data, pagination}: {
                     }}><a href="#">&lt;</a></li>
                     {generatePagination(data)}
                     <li onClick={() => {
-                        if (pagination + 1 <= Math.ceil(data.length / 10)) {
+                        if (pagination + 1 <= Math.ceil(data.length / 10) - 1) {
                             setPagination!(pagination + 1)
                             window.scrollTo(0, 0);
                         }
