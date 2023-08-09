@@ -23,4 +23,5 @@ export interface generalData {
         educationState:string,
         positionState:string
     }
+    adminLoading:boolean
 }

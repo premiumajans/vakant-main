@@ -10,7 +10,8 @@ const initialState = {
       modeState:"",
       educationState:'',
       positionState:''
-    }
+    },
+    adminLoading:false
   } as generalData,
 };
 const General = createSlice({
@@ -19,6 +20,7 @@ const General = createSlice({
   reducers: {
 
     setSearch:(state, action) => {state.data.search = action.payload},
+    setAdminLoading:(state, action) => {state.data.adminLoading = action.payload},
 
   },
   extraReducers: {
@@ -33,7 +35,7 @@ const General = createSlice({
 
 export default General.reducer;
 
-export const {setSearch} = General.actions;
+export const {setSearch,setAdminLoading} = General.actions;
 
 export const getGeneralData = (state: any) => state.General.data as generalData;
 

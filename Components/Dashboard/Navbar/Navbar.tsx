@@ -1,7 +1,7 @@
 import { getUser} from "@/Store/Slices/User";
 
 import React, {PropsWithChildren, useState} from "react";
-import {useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import CustomLanguageDropdown from "@/Components/Universal/CustomLanguageDropdown/CustomLanguageDropdown";
@@ -11,7 +11,7 @@ import SideNav from "@/Components/Dashboard/SideNav/SideNav";
 const Navbar = (props: PropsWithChildren) => {
   const {authorisation:{token},user:{email,name}} = useSelector(getUser)
   const [menu, setMenu] = useState(false)
-  
+  const dispatch = useDispatch()
 
 
 
@@ -25,7 +25,7 @@ const Navbar = (props: PropsWithChildren) => {
       >
         <div style={{height:'100%'}} className="container-fluid">
           <div style={{height:'100%'}} className="navbar-brand app-brand demo d-none d-xl-flex py-0 me-4">
-          <Link href={'/'}>
+          <Link  href={'/'}>
             <Image style={{
               width:'400px',
               height:'100%',

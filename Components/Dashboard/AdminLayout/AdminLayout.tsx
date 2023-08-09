@@ -55,21 +55,24 @@ const AdminLayout = ({children}: PropsWithChildren) => {
 
 
     useEffect(() => {
-        const checkTokenExpiry = () => {
-            const decodedToken = jwt_decode(authorisation?.token);
-            const expirationDate = new Date(decodedToken?.exp * 1000).getTime();
-            const currentTime = Date.now()
-            if (+expirationDate <= +currentTime) {
-                Swal.fire(`${t('token_is_expired')}`, "", "error")
-                    .then(() => {
-                        dispatch(setInitialUser());
-                        router.push("login");
-                    })
+        let interval
+        if(authorisation.token) {
+            const checkTokenExpiry = () => {
+                const decodedToken = jwt_decode(authorisation?.token);
+                const expirationDate = new Date(decodedToken?.exp * 1000).getTime();
+                const currentTime = Date.now()
+                if (+expirationDate <= +currentTime) {
+                    Swal.fire(`${t('token_is_expired')}`, "", "error")
+                        .then(() => {
+                            dispatch(setInitialUser());
+                            router.push("login");
+                        })
 
-            }
-        };
+                }
+            };
 
-        const interval = setInterval(checkTokenExpiry, 1000); // Check every second
+            interval = setInterval(checkTokenExpiry, 1000); // Check every second
+        }
 
         return () => {
             clearInterval(interval); // Clean up the interval when the component unmounts

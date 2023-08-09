@@ -37,64 +37,64 @@ const Jobs = ({
 
         if (category && cityState && mode && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.category_id === +category && item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.category_id === +category && item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.education_id === +education && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
 
         } else if (cityState && mode && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.education_id === +education && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (category && mode && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.category_id === +category && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.mode_id === +mode && item.description.category_id === +category && item.description.education_id === +education && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (category && cityState && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.city_id === +cityState && item.description.category_id === +category && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.city_id === +cityState && item.description.category_id === +category && item.description.education_id === +education && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (category && cityState && vacancies && mode) {
             return vacancies.filter(item => {
-                return item.description.city_id === +cityState && item.description.category_id === +category && item.description.mode_id === +mode && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.city_id === +cityState && item.description.category_id === +category && item.description.mode_id === +mode && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (mode && vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.mode_id === +mode && item.description.education_id === +education && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (mode && vacancies && category) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.category_id === +category && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.mode_id === +mode && item.description.category_id === +category && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (mode && vacancies && cityState) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.city_id === +cityState && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.mode_id === +mode && item.description.city_id === +cityState && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (education && vacancies && category) {
             return vacancies.filter(item => {
-                return item.description.education_id === +education && item.description.category_id === +category && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.education_id === +education && item.description.category_id === +category && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (education && vacancies && cityState) {
             return vacancies.filter(item => {
-                return item.description.education_id === +education && item.description.city_id === +cityState && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.education_id === +education && item.description.city_id === +cityState && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (category && vacancies && cityState) {
             return vacancies.filter(item => {
-                return item.description.category_id === +category && item.description.city_id === +cityState && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.category_id === +category && item.description.city_id === +cityState && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (vacancies && education) {
             return vacancies.filter(item => {
-                return item.description.education_id === +education && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.education_id === +education && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (vacancies && category) {
             return vacancies.filter(item => {
-                return item.description.category_id === +category && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.category_id === +category && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (vacancies && mode) {
             return vacancies.filter(item => {
-                return item.description.mode_id === +mode && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.mode_id === +mode && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else if (vacancies && cityState) {
             return vacancies.filter(item => {
-                return item.description.city_id === +cityState && item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
+                return item.description.city_id === +cityState && item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0
             })
         } else {
             return []
@@ -112,6 +112,7 @@ const Jobs = ({
         searchRef.current!.value = query?.position || ''
         setCityState(query?.city)
     }, [query])
+
 
 
     return <>
@@ -188,7 +189,7 @@ const Jobs = ({
                                                         </span>
                                                     </span>
                                                         <h2 className="mb-4 text-black d-flex align-items-center">
-                                                            <a>{item.description.position}</a>
+                                                            <a>{item.description?.position}</a>
                                                         </h2>
 
                                                     </div>
@@ -228,7 +229,7 @@ const Jobs = ({
                                                         className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
                                                     </span>
                                                         <h2 className="mb-4 text-black d-flex align-items-center">
-                                                            <a>{item.description.position}</a>
+                                                            <a>{item.description?.position}</a>
                                                         </h2>
 
                                                     </div>
@@ -258,7 +259,7 @@ const Jobs = ({
                                         </div>
                                     </Link>
                                 }
-                            }) : t('empty-filter') : vacancies.length ? vacancies.filter(item => item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0).slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).map(item => {
+                            }) : t('empty-filter') : vacancies.length ? vacancies.filter(item => item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0).slice((pagination - 1) * 10, (pagination - 1) * 10 + 10).map(item => {
                                 if (item.vacancy_type === 2) {
                                     return <Link data-aos="fade-up" className="col-md-12" key={item.id}
                                                  href={'/job/' + item.id.toString()}>
@@ -273,7 +274,7 @@ const Jobs = ({
                                                         </span>
                                                     </span>
                                                         <h2 className="mb-4 text-black d-flex align-items-center">
-                                                            <a>{item.description.position}</a>
+                                                            <a>{item.description?.position}</a>
                                                         </h2>
 
                                                     </div>
@@ -313,7 +314,7 @@ const Jobs = ({
                                                         className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
                                                     </span>
                                                         <h2 className="mb-4 text-black d-flex align-items-center">
-                                                            <a>{item.description.position}</a>
+                                                            <a>{item.description?.position}</a>
                                                         </h2>
 
                                                     </div>
@@ -350,7 +351,7 @@ const Jobs = ({
                         <div className="row mt-5">
                             <div className="col text-center">
                                 <Pagination setPagination={setPagination}
-                                            data={(category || cityState || mode || education && filteredValue) || vacancies.filter(item => item.description.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0)}
+                                            data={(category || cityState || mode || education && filteredValue) || vacancies.filter(item => item.description?.position.toLowerCase().indexOf(search?.toLowerCase()) >= 0)}
                                             pagination={pagination}/>
                             </div>
                         </div>

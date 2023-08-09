@@ -71,7 +71,7 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
                                         <div className=" params-i-label">{t('city')}:</div>
 
                                         <div
-                                            className=" params-i-val">{city.find(item => item.id === vacancy.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</div>
+                                            className=" params-i-val">{city.find(cityItem => cityItem.translations[0].id! === vacancy.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</div>
                                     </li>
                                     <li className="params-i">
                                         <div className=" params-i-label">{t('age')}:</div>

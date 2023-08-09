@@ -72,7 +72,7 @@ const Login = () => {
                 style={{ height: "50px" }}
                 className="app-brand justify-content-center"
               >
-                <Link href={'/'}>
+                <Link  href={'/'}>
                   <Image
                       src={"/logo.png"}
                       style={{ objectFit: "cover" }}

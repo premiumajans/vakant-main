@@ -105,7 +105,7 @@ const Register = () => {
                 style={{ height: "50px" }}
                 className="app-brand justify-content-center"
               >
-                <Link href={'/'}><Image
+                <Link  href={'/'}><Image
                     style={{ objectFit: "cover" }}
                     src={"/logo.png"}
                     alt="logo"
