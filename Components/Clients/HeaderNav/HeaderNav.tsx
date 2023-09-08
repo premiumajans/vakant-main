@@ -44,7 +44,7 @@ const HeaderNav = () => {
             </div>
         </div>
         <div style={pathname === '/' ? {marginBottom:30} : {}} className="header" data-lotriver-header="">
-            <div className="container"><Link className="logo"  href="/"><Image style={{height:'60px', objectFit:'cover',width:250}}  width={350} height={350} src={'/clients/images/vakant_white.png'} alt={'logo'}/></Link>
+            <div className="container d-flex justify-content-between align-items-center"><Link className="logo inline-block" style={{height:"60px"}}   href="/"><Image style={{height:'100%', objectFit:'contain',width:150}}  width={250} height={350} src={'/clients/images/vakant-logo.png'} alt={'logo'}/></Link>
                 <div className="nav">
                     <div className="nav-i"></div>
                 </div>

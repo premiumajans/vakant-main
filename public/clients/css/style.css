@@ -12794,7 +12794,7 @@ textarea.form-control {
 .ftco-footer {
     font-size: 16px;
     background: #fff;
-    padding: 6em 0;
+    padding: 6em 0 30px;
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -12805,14 +12805,14 @@ textarea.form-control {
 
 .ftco-footer .ftco-footer-widget h2 {
     font-weight: normal;
-    color: rgba(0, 0, 0, 0.7);
+    color: #000;
     margin-bottom: 20px;
     font-size: 18px;
     font-weight: 400;
 }
 
 .ftco-footer .ftco-footer-widget ul li a {
-    color: rgba(0, 0, 0, 0.4);
+    color: #000;
 }
 
 .ftco-footer .ftco-footer-widget ul li a span {
@@ -13330,7 +13330,7 @@ textarea.form-control {
     width: 40px;
     font-size: 18px;
     padding-top: 2px;
-    color: rgba(0, 0, 0, 0.5);
+    color: #000;
 }
 
 .block-23 ul li a {
@@ -13338,7 +13338,7 @@ textarea.form-control {
 }
 
 .block-23 ul li a .icon {
-    color: rgba(0, 0, 0, 0.5) !important;
+    color: #000 !important;
 }
 
 .block-6 .media-body p {
@@ -13967,9 +13967,7 @@ a.bar-i, .bar-i a {
     padding-top: 0;
 }
 
-.nav-secondary {
-    float: right;
-}
+
 
 .nav, .nav-secondary {
     padding-bottom: 10px;

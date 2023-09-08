@@ -64,7 +64,7 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
                     </div>
 
                     <div className="main-highlight mt-3">
-                        <div className="post-cols d-flex justify-content-between">
+                        <div className="post-cols py-3 d-flex justify-content-between">
                             <div className="post-col">
                                 <ul className="params">
                                     <li className="params-i">
@@ -97,7 +97,12 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
 
                                         <div className=" params-i-val"> {vacancy.shared_time.split(' ')[0]}</div>
                                     </li>
-                                    <li className="params-i">
+                               
+                                </ul>
+                            </div>
+                            <div className="post-col">
+                                <ul className="params params_contacts">
+                                <li className="params-i">
                                         <div className=" params-i-label">{t('vacancy-end-date')}:</div>
 
                                         <div className=" params-i-val"> {vacancy.end_time.split(' ')[0]}</div>
@@ -107,10 +112,6 @@ const Index = ({vacancy, city, modes, categories, education, experience}: {
 
                                         <div className=" params-i-val"> {vacancy.description.company}</div>
                                     </li>
-                                </ul>
-                            </div>
-                            <div className="post-col">
-                                <ul className="params params_contacts">
                                     <li className="params-i">
                                         <div className=" params-i-label">{t('phone')}:</div>
                                         <div className=" params-i-val"><a className="phone"
