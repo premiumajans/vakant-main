@@ -39,7 +39,7 @@ function JobItem({
         <Image src={CustomerImage} alt="customer-image" />
         <div className="company pl-3 pl-xl-4">
           <h3 className="mb-0">{position}</h3>
-          <p className="mb-0"> {company}</p>
+          <p className="mb-0">{company}</p>
         </div>
       </div>
       <div className="d-flex text-center pt-3 pt-md-0 align-items-center job-item-right">
