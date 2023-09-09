@@ -17,7 +17,7 @@ const persistConfig = {
 const reducers = combineReducers({
   User: UserReducer,
   [auth.reducerPath]: auth.reducer,
-  General:GeneralReducer
+  General: GeneralReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
