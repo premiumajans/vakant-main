@@ -44,10 +44,8 @@ const HeaderNav = () => {
             </div>
         </div>
         <div style={pathname === '/' ? {marginBottom:30} : {}} className="header" data-lotriver-header="">
-            <div className="container d-flex justify-content-between align-items-center"><Link className="logo inline-block" style={{height:"60px"}}   href="/"><Image style={{height:'100%', objectFit:'contain',width:150}}  width={250} height={350} src={'/clients/images/vakant-logo.png'} alt={'logo'}/></Link>
-                <div className="nav">
-                    <div className="nav-i"></div>
-                </div>
+            <div id="header-right" className="container d-flex flex-column flex-sm-row justify-content-between align-items-center"><Link className="logo inline-block" style={{height:"60px"}}   href="/"><Image style={{height:'100%', objectFit:'contain',width:185}}  width={250} height={350} src={'/clients/images/vakant-white-logo.png'} alt={'logo'}/></Link>
+               
                 <div className="nav-secondary">
                     <div className="nav-i"><Link className="nav-i-link nav-i-link_current" href="/jobs">{t('find-a-job')}</Link></div>
                     <div className="nav-i"><Link className="btn btn_large" href="/user/login">{t('post-a-job')}</Link></div>
