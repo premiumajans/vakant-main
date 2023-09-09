@@ -73,7 +73,7 @@ const Jobs = ({
                                                     <div className="job-post-item-header align-items-center">
                                                 <span
                                                     className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
-                                                    <span className="text-warning ml-2"> Premium&nbsp; <i
+                                                    <span className="text-warning"> &nbsp; <i
                                                         className="fas fa-crown"></i></span></span>
                                                         <h2 className="mr-3 text-black">
                                                             <a>{item.description.position}</a>
@@ -81,7 +81,7 @@ const Jobs = ({
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex">
                                                         <div className="mr-3"><span className="icon-layers"></span>
-                                                            <a>{item.description.company}</a></div>
+                                                            <a>{item.description.company.replaceAll("&quot;",'"')}</a></div>
                                                         <div><span className="icon-my_location"></span>
                                                             <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
 
@@ -109,7 +109,7 @@ const Jobs = ({
                                                     <div className="job-post-item-header align-items-center">
                                                     <span
                                                         className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
-                                                        <span className="text-warning ml-2"> Premium&nbsp; <i
+                                                        <span className="text-warning"> &nbsp; <i
                                                             className="fas fa-crown"></i>
                                                         </span>
                                                     </span>
@@ -130,7 +130,7 @@ const Jobs = ({
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
-                                                            <a>{item.description.company}</a></div>
+                                                            <a>{item.description.company.replaceAll("&quot;",'"')}</a></div>
                                                         <div><span className="icon-my_location"></span>
                                                             <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
 
@@ -154,7 +154,7 @@ const Jobs = ({
                                                     <div className="job-post-item-header align-items-center">
                                                     <span
                                                         className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
-                                                        <span className="text-warning ml-2"> Premium&nbsp; <i
+                                                        <span className="text-warning"> &nbsp; <i
                                                             className="fas fa-crown"></i>
                                                         </span>
                                                     </span>
@@ -175,7 +175,7 @@ const Jobs = ({
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
-                                                            <a>{item.description.company}</a></div>
+                                                            <a>{item.description.company.replaceAll("&quot;",'"')}</a></div>
                                                         <div><span className="icon-my_location"></span>
                                                             <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
 
@@ -215,7 +215,7 @@ const Jobs = ({
                                                     </div>
                                                     <div className="job-post-item-body d-block d-md-flex flex-column">
                                                         <div className="mr-3"><span className="icon-layers"></span>
-                                                            <a>{item.description.company}</a></div>
+                                                            <a>{item.description.company.replaceAll("&quot;",'"')}</a></div>
                                                         <div><span className="icon-my_location"></span>
                                                             <span>{city.find(cityItem => cityItem.translations[0].id! === item.description.city_id)?.translations.find(item => item.locale === i18n.language)?.name}</span>
 

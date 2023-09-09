@@ -47,6 +47,7 @@ export interface getItems {
 
 
 export interface Item {
+  approved_time: any;
   "id": number,
   end_time:string,
   shared_time:string,

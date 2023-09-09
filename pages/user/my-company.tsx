@@ -171,7 +171,7 @@ const Company = () => {
                                             <div
                                                 className="page-title-box d-sm-flex align-items-center justify-content-between">
 
-                                                <span className="text-warning">Premium&nbsp;<i
+                                                <span className="text-warning">&nbsp;<i
                                                     className="fas fa-crown"></i></span>
                                                 <div style={{textAlign: "right"}} className={'d-flex flex-column'}>
 
