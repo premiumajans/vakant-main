@@ -11729,13 +11729,13 @@ a {
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
   transition: .3s all ease;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 a:hover,
 a:focus {
   text-decoration: none;
-  color: #206dfb;
+  color: #233D4D;
   outline: none !important;
 }
 
@@ -11755,7 +11755,7 @@ h5,
 }
 
 .text-primary {
-  color: #206dfb !important;
+  color: #233D4D !important;
 }
 
 .ftco-navbar-light {
@@ -11863,13 +11863,13 @@ h5,
 
 .ftco-navbar-light .navbar-nav>.nav-item.cta>a {
   color: #fff;
-  border: 1px solid #206dfb;
+  border: 1px solid #233D4D;
   padding-top: .5rem;
   padding-bottom: .5rem;
   padding-left: 20px;
   padding-right: 20px;
   margin-top: 4px;
-  background: #206dfb;
+  background: #233D4D;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -11883,8 +11883,8 @@ h5,
 
 .ftco-navbar-light .navbar-nav>.nav-item.cta>a:hover {
   color: #fff;
-  background: #206dfb;
-  border: 1px solid #206dfb;
+  background: #233D4D;
+  border: 1px solid #233D4D;
 }
 
 .ftco-navbar-light .navbar-nav>.nav-item.cta.cta-colored a {
@@ -11909,7 +11909,7 @@ h5,
 .ftco-navbar-light .navbar-toggler:hover,
 .ftco-navbar-light .navbar-toggler:focus {
   text-decoration: none;
-  color: #206dfb;
+  color: #233D4D;
   outline: none !important;
 }
 
@@ -11933,12 +11933,12 @@ h5,
 }
 
 .ftco-navbar-light.scrolled .nav-item.active>a {
-  color: #206dfb !important;
+  color: #233D4D !important;
 }
 
 .ftco-navbar-light.scrolled .nav-item.cta>a {
   color: #fff !important;
-  background: #206dfb;
+  background: #233D4D;
   border: none !important;
   padding-top: 0.5rem !important;
   padding-bottom: .5rem !important;
@@ -11957,7 +11957,7 @@ h5,
 }
 
 .ftco-navbar-light.scrolled .nav-item.cta.cta-colored span {
-  border-color: #206dfb;
+  border-color: #233D4D;
 }
 
 @media (max-width: 991.98px) {
@@ -11987,7 +11987,7 @@ h5,
 }
 
 .ftco-navbar-light.scrolled .nav-link.active {
-  color: #206dfb !important;
+  color: #233D4D !important;
 }
 
 .ftco-navbar-light.scrolled.awake {
@@ -12106,7 +12106,7 @@ h5,
 
 .hero-wrap .slider-text .btn-custom {
   color: #fff;
-  background: #206dfb;
+  background: #233D4D;
   padding: 10px 20px;
 }
 
@@ -12183,7 +12183,7 @@ h5,
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   margin-top: -10px;
-  color: #206dfb !important;
+  color: #233D4D !important;
   -moz-transition: all 0.7s ease;
   -o-transition: all 0.7s ease;
   -webkit-transition: all 0.7s ease;
@@ -12274,7 +12274,7 @@ h5,
 }
 
 .bg-primary {
-  background: #206dfb;
+  background: #233D4D;
 }
 
 .btn {
@@ -12294,26 +12294,26 @@ h5,
 }
 
 .btn.btn-primary {
-  background: #206dfb !important;
-  border: 1px solid #206dfb !important;
+  background: #233D4D !important;
+  border: 1px solid #233D4D !important;
   color: #fff !important;
 }
 
 .btn.btn-primary:hover {
-  border: 1px solid #206dfb;
+  border: 1px solid #233D4D;
   background: transparent;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .btn.btn-primary.btn-outline-primary {
-  border: 1px solid #206dfb;
+  border: 1px solid #233D4D;
   background: transparent;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .btn.btn-primary.btn-outline-primary:hover {
   border: 1px solid transparent;
-  background: #206dfb;
+  background: #233D4D;
   color: #fff;
 }
 
@@ -12324,9 +12324,9 @@ h5,
 }
 
 .btn.btn-secondary:hover {
-  border: 1px solid #206dfb;
+  border: 1px solid #233D4D;
   background: transparent;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .btn.btn-outline-white {
@@ -12345,7 +12345,7 @@ h5,
 .btn.btn-outline-white:active {
   background: #fff;
   border-color: #fff;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .category-wrap {
@@ -12386,7 +12386,7 @@ h5,
 
 .top-category .icon {
   font-size: 40px;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .top-category p {
@@ -12415,7 +12415,7 @@ h5,
 }
 
 .top-category:hover {
-  background: #206dfb;
+  background: #233D4D;
 }
 
 .category {
@@ -12471,7 +12471,7 @@ h5,
 
 .category li a:hover,
 .category li a:focus {
-  color: #206dfb;
+  color: #233D4D;
   background: #ffefdb;
 }
 
@@ -12526,7 +12526,7 @@ h5,
 
 .job-post-item .one-third .subadge {
   color: rgba(0, 0, 0, 0.3);
-  color: #206dfb;
+  color: #233D4D;
   text-transform: uppercase;
   font-weight: 500;
   font-size: 14px;
@@ -12752,7 +12752,7 @@ h5,
   margin: 5px;
   border-radius: 50%;
   background: #fff !important;
-  border: 1px solid #206dfb;
+  border: 1px solid #233D4D;
 }
 
 .ftco-candidates .owl-dots .owl-dot.active {
@@ -12978,7 +12978,7 @@ h5,
 }
 
 .search-job .form-group .form-control.btn.btn-primary {
-  background: #206dfb !important;
+  background: #233D4D !important;
 }
 
 .search-job .form-group .select-wrap {
@@ -13074,7 +13074,7 @@ h5,
   background-position: center center;
   position: relative;
   padding: 4em 0;
-  background: #206dfb;
+  background: #233D4D;
 }
 
 .ftco-section-parallax .heading-section-white h2 {
@@ -13143,7 +13143,7 @@ textarea.form-control {
 }
 
 .bg-primary {
-  background: #206dfb !important;
+  background: #233D4D !important;
 }
 
 .media-custom {
@@ -13154,7 +13154,7 @@ textarea.form-control {
   font-weight: 500;
   font-size: 16px;
   margin-bottom: 0;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .media-custom .media-body .position {
@@ -13236,7 +13236,7 @@ textarea.form-control {
 }
 
 .ftco-footer a:hover {
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .ftco-footer-social li {
@@ -13252,7 +13252,7 @@ textarea.form-control {
   background: rgba(0, 0, 0, 0.05);
   border-radius: 50%;
   position: relative;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .ftco-footer-social li a span {
@@ -13263,7 +13263,7 @@ textarea.form-control {
   -webkit-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  color: #206dfb !important;
+  color: #233D4D !important;
 }
 
 .ftco-footer-social li a:hover {
@@ -13280,7 +13280,7 @@ textarea.form-control {
 
 .footer-small-nav>li a:hover,
 .footer-small-nav>li a:focus {
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .media .ftco-icon {
@@ -13288,7 +13288,7 @@ textarea.form-control {
 }
 
 .media .ftco-icon span {
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .ftco-media {
@@ -13322,7 +13322,7 @@ textarea.form-control {
 .ftco-media .icon {
   font-size: 50px;
   display: block;
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .ftco-media.text-center .ftco-icon {
@@ -13386,7 +13386,7 @@ textarea.form-control {
   font-size: 12px;
   display: block;
   margin-bottom: 0px;
-  color: #206dfb;
+  color: #233D4D;
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -13514,7 +13514,7 @@ textarea.form-control {
 }
 
 .testimony-section .owl-dots .owl-dot.active {
-  background: #206dfb;
+  background: #233D4D;
 }
 
 .testimony-wrap {
@@ -13604,7 +13604,7 @@ textarea.form-control {
   content: '';
   z-index: -1;
   opacity: .9;
-  background: #206dfb;
+  background: #233D4D;
 }
 
 .ftco-counter {
@@ -13685,7 +13685,7 @@ textarea.form-control {
 .blog-entry .text .heading a:hover,
 .blog-entry .text .heading a:focus,
 .blog-entry .text .heading a:active {
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .blog-entry .text .meta-chat {
@@ -13781,7 +13781,7 @@ textarea.form-control {
 
 .block-27 ul li a,
 .block-27 ul li span {
-  color: #206dfb;
+  color: #233D4D;
   text-align: center;
   display: inline-block;
   width: 40px;
@@ -13793,7 +13793,7 @@ textarea.form-control {
 
 .block-27 ul li.active a,
 .block-27 ul li.active span {
-  background: #206dfb;
+  background: #233D4D;
   color: #fff;
   border: 1px solid transparent;
 }
@@ -13835,7 +13835,7 @@ textarea.form-control {
 .block-21 .text .heading a:hover,
 .block-21 .text .heading a:active,
 .block-21 .text .heading a:focus {
-  color: #206dfb;
+  color: #233D4D;
 }
 
 .block-21 .text .meta>div {

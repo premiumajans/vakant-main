@@ -19,7 +19,7 @@ const JobPost = () => {
                 <div data-aos="fade-up" className="row justify-content-center mb-4">
                     <div className="col-md-7 text-center heading-section ">
                         <span className="subheading">Browse Jobs</span>
-                        <h2 className="mb-4">Advance Search</h2>
+                        <h2 >Advance Search</h2>
                     </div>
                 </div>
                 <div className="row">

@@ -73,7 +73,7 @@ const Jobs = ({
                                                     <div className="job-post-item-header align-items-center">
                                                     <span
                                                         className="subadge">{modes.find(mode => mode.id === item.description.mode_id)?.translations.find(item => item.locale === i18n?.language)?.name}
-                                                        <span className="text-warning ml-2"> Premium&nbsp; <i
+                                                        <span className="text-warning"> &nbsp; <i
                                                             className="fas fa-crown"></i>
                                                         </span>
                                                     </span>
